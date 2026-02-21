@@ -226,22 +226,25 @@ with st.sidebar:
     st.markdown("### ⚙️ 引擎配置")
     model_provider = st.selectbox(
         "选择底层大模型引擎",
-        ("Google Gemini (推荐)", "OpenAI / 兼容接口", "Anthropic Claude")
+        ("Google Gemini (推荐)", "OpenAI", "Anthropic Claude", "第三方/私有兼容接口 (Custom)")
     )
     
     provider_map = {
         "Google Gemini (推荐)": "google",
-        "OpenAI / 兼容接口": "openai",
-        "Anthropic Claude": "anthropic"
+        "OpenAI": "openai",
+        "Anthropic Claude": "anthropic",
+        "第三方/私有兼容接口 (Custom)": "openai" # Most custom APIs use OpenAI format
     }
     
-    api_key = st.text_input("API Key", type="password", help="请提供对应的服务商密钥")
     base_url = None
-    if model_provider == "OpenAI / 兼容接口":
-        base_url = st.text_input("Base URL (可选)", help="如果使用中转代理或私有化部署的兼容模型，请填入地址")
-        custom_model = st.text_input("Model ID (默认 gpt-4o)", placeholder="gpt-4o")
+    if model_provider == "第三方/私有兼容接口 (Custom)":
+        base_url = st.text_input("Base URL (必填)", placeholder="例如: https://api.deepseek.com/v1", help="提供商给您的API网页调用根地址")
+        custom_model = st.text_input("Model ID (必填)", placeholder="例如: deepseek-chat", help="提供商给您的模型名称")
         if custom_model:
-            provider_map["OpenAI / 兼容接口"] = custom_model
+            provider_map["第三方/私有兼容接口 (Custom)"] = custom_model
+
+    api_key = st.text_input("API Key (必填)", type="password", help="请提供对应的服务商鉴权密钥")
+
             
     if not api_key:
         st.warning("⚠️ 未配置密钥。系统将运行在本地 Mock 演示模式。")
