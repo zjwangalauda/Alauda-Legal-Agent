@@ -264,10 +264,21 @@ def render_single_doc_report(report: ComprehensiveReviewReport, output_file: str
     with open(output_file, "w", encoding="utf-8") as f: f.write(md)
 
 def render_multi_doc_report(report: MultiDocReviewReport, output_file: str):
-    md = f"# 🕸️ Alauda AI Legal Agent (V4 Ultimate) 跨文档审计报告\n\n"
-    md += f"> **审计案列**: {report.project_name}\n"
-    md += f"> **审计引擎**: Gemini (Knowledge Graph & Cross-reference)\n\n"
-    # V5 removed overall_assessment
+    md = f"# 🕸️ Alauda AI Agent (V5) 跨文档综合决议报告\n\n"
+    md += f"> **审计案卷**: {report.project_name}\n"
+    md += f"> **智能引擎**: Gemini Pro (Knowledge Graph & Strategic Copilot)\n\n"
+
+    md += f"## 👨‍💼 CXO 最终审批台 (Executive Decision)\n"
+    md += f"- **审批建议**: **{report.cxo_view.approval_recommendation}**\n"
+    md += f"- **致命阻碍 (Deal Breakers)**: {report.cxo_view.deal_breaker_summary}\n"
+    md += f"- **战略博弈指导**: {report.cxo_view.strategic_advice}\n\n"
+    md += "---\n"
+    
+    md += f"## 📈 全局商务运营提炼 (Commercial Operations View)\n"
+    for term in report.commercial_summary:
+        md += f"- **{term.key_metric}**: {term.extracted_value}\n  > *💡 运营影响：{term.operational_impact}*\n\n"
+    md += "---\n"
+
     md += "## 📚 文档效力拓扑图 (Document Hierarchy)\n"
     md += "> *注意：层级 1 (Level 1) 代表发生条款冲突时的最高解释权。*\n\n"
     md += "| 效力层级 | 文档类型 | 文档名称 |\n| :---: | :--- | :--- |\n"
@@ -282,7 +293,6 @@ def render_multi_doc_report(report: MultiDocReviewReport, output_file: str):
         md += f"**💡 致命风险溯源**:\n{item.risk_analysis}\n\n"
         md += f"**✅ 法务强拆建议**:\n```text\n{item.suggested_action}\n```\n\n---\n\n"
     with open(output_file, "w", encoding="utf-8") as f: f.write(md)
-
 # ---------------------------------------------------------
 # 6. 主执行入口 (Main CLI)
 # ---------------------------------------------------------
