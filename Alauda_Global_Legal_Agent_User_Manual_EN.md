@@ -1,411 +1,116 @@
-# Alauda Global Legal Agent User Manual
+# 🚀 Alauda Global Legal Agent (V5 Ultimate) 用户手册
 
-**Version**: 2.0  
-**Last Updated**: February 20, 2026  
-**For**: Alauda Legal Team
-
----
-
-## Table of Contents
-
-1. [Introduction](#1-introduction)
-2. [Agent Persona Configuration](#2-agent-persona-configuration)
-3. [Review Dimensions](#3-review-dimensions)
-   - 3.1 Sales Contract Dimensions
-   - 3.2 Technical Support Contract Dimensions
-4. [Redline Knowledge Base](#4-redline-knowledge-base)
-5. [User Guide](#5-user-guide)
-6. [Output Report Explanation](#6-output-report-explanation)
-7. [FAQ](#7-faq)
-8. [Appendix](#8-appendix)
+**版本**: 5.0 (Multi-Role Copilot & Web Dashboard Edition)  
+**更新日期**: 2026年2月22日  
+**适用对象**: Alauda (灵雀云) 法务、交付、商务与高管团队
 
 ---
 
-## 1. Introduction
+## 目录
 
-This manual provides Alauda's legal team with an AI-powered automated contract review solution. By integrating Red Hat's legal logic with strict commercial risk filtering in OpenCode, the initial review time is reduced from hours to **5 minutes**.
-
-### Key Benefits
-
-| Aspect | Traditional | AI Agent |
-|--------|-------------|----------|
-| Initial Review Time | 2-4 hours | 5 minutes |
-| Risk Coverage | Depends on experience | 13 dimensions covered |
-| Revision Suggestions | Manual drafting | Auto-generated Legal English |
-| Consistency | Varies by reviewer | Unified standards |
+1. [核心愿景与架构演进](#1-核心愿景与架构演进)
+2. [V5 独家特性：三重视角 Copilot](#2-v5-独家特性三重视角-copilot)
+3. [多文档关联审计机制](#3-多文档关联审计机制)
+4. [SaaS 商业红线与法务底线](#4-saas-商业红线与法务底线)
+5. [操作指南 (Web App 与 CLI)](#5-操作指南-web-app-与-cli)
+6. [输出报告实战示例](#6-输出报告实战示例)
 
 ---
 
-## 2. Agent Persona Configuration
+## 1. 核心愿景与架构演进
 
-Create a new role in OpenCode Agent Settings with the following configuration:
+本手册旨在为 **Alauda (灵雀云)** 提供一套基于端到端大语言模型 (LLM) 的自动化合同审查系统。我们的愿景是将资深法务 Partner 的商业嗅觉与 AI 的全景阅读能力结合，从而在极短时间内封堵 B2B 合同中的致命隐患。
 
-### Agent Name
-**Alauda Global Legal & Operations Architect**
-
-### Core Logic (Persona)
-
-```
-You are a legal expert specializing in global laws and open source software, 
-focused on providing contract risk review services for Alauda.
-
-Core Principles:
-1. Liability Cap: Maintain 12 months subscription fee cap, reject any 
-   liability exceeding 12 months paid amount
-2. IP Rights: Distinguish "Custom Deliverables" from "Core Platform". 
-   Alauda must retain ownership of core PaaS platform and derivative works
-3. Acceptance Terms: Convert "subjective acceptance" to "deemed acceptance" 
-   with 10-day buffer period
-4. Exclusivity of Remedies: Ensure Fee Reductions are the sole remedy for 
-   delays or service deficiencies
-
-Contract Type Recognition:
-- Sales Contracts: Focus on liability, IP, acceptance, termination terms
-- Technical Support Contracts: Focus on SLA, support scope, training 
-  commitments, support duration
-```
+经过架构迭代，系统目前已演进至 **V5 (Multi-Role Copilot 版)**：
+- **模型无关化 (Agnostic LLM)**：底层脱离单一模型绑定，动态支持 Google Gemini, OpenAI, Claude 以及公司内网私有化模型网关。
+- **结构化防御 (Pydantic)**：通过强类型 JSON 数据契约，强制大模型根据原文语言（中/英）自适应输出地道的法律修改建议。
+- **现代化 Web UI**：采用 Streamlit 构建了带有 Alauda 企业视觉体系的高级可视化数据看板，彻底告别枯燥的命令行。
 
 ---
 
-## 3. Review Dimensions
+## 2. V5 独家特性：三重视角 Copilot
 
-### 3.1 Sales Contract Dimensions (7)
+V5 版本最大的突破在于：系统不再是一个单纯的“找错机器”，而是化身为拥有“三重人格”的高级商业幕僚。针对每一份上传的合同或案卷，系统会拆解为三层金字塔视角：
 
-| Dimension | Risk Assessment Criteria |
-|-----------|-------------------------|
-| **Subscription Metrics** | RED: Enterprise-wide / Unlimited use → GREEN: Unit-based (Node/Core) |
-| **Liability** | RED: 3x cap / Unlimited → GREEN: 12 months fees (EULA Free: $50) |
-| **IP Rights** | RED: Customer owns all derivatives → GREEN: Alauda retains core |
-| **Acceptance** | RED: Written approval required → GREEN: 10-day deemed acceptance |
-| **Termination** | RED: Immediate termination / No right → GREEN: 30-90 days notice |
-| **Governing Law** | RED: Customer exclusive jurisdiction → GREEN: Neutral forum |
-| **Data Protection** | RED: Supplier solely responsible → GREEN: Mutual compliance |
-
-### 3.2 Technical Support Contract Dimensions (7)
-
-| Dimension | Risk Assessment Criteria |
-|-----------|-------------------------|
-| **SLA Response** | RED: Level 1 < 30 mins → GREEN: Level 1: 30 mins |
-| **Support Scope** | RED: Unlimited / Custom dev / On-site → GREEN: Clear exclusions |
-| **Exclusion of Liability** | RED: Liable for all losses → GREEN: Exclude indirect damages |
-| **Training Commitment** | RED: >100 hrs/year YELLOW: 60-80 hrs → GREEN: <=40 hrs/year |
-| **Support Duration** | RED: Lifetime YELLOW: Entire contract → GREEN: 18 months |
-| **Access Rights** | RED: Direct production access → GREEN: Screen share only |
-| **Support Termination** | RED: No termination right YELLOW: Customer can reject → GREEN: 90 days notice |
+1. 👨‍💼 **首席运营官 (COO) 审批台 (塔尖)**：
+   - 给出极其明确的决策建议（【建议直接签约】/【有条件通过】/【强烈建议拒签】）。
+   - 提炼阻碍签约的“致命因素 (Deal Breakers)”。
+   - 撰写包含利益交换和让步红线的“战略博弈指导”。
+2. 📈 **运营与商务履约看板 (中层)**：
+   - 为 PMO 和财务团队自动提取庞杂文本中的账期、首付比例、服务期、罚金条款。
+   - 自动测算并提示对公司现金流与交付成本的真实业务影响。
+3. ⚖️ **法务合规与红线防御阵地 (基座)**：
+   - 逐条列出违反公司 SaaS 政策的高危/中危条款。
+   - 给出法务溯源分析，以及可直接用于红线谈判的修正建议 (Redline)。
 
 ---
 
-## 4. Redline Knowledge Base
+## 3. 多文档关联审计机制
 
-### 4.1 Sales Contract Redline Matrix
+大型 B2B 客户经常采用**“明修栈道，暗度陈仓”**的策略：在严格的《主协议 GFA》中答应所有底线，却在某个交付团队草签的《服务说明书 SOW》附件中写上“本 SOW 拥有最高优先级，且供应商需承担无限数据连带责任”。
 
-#### Subscription Metrics
-
-| Risk Point | Alauda Standard | Rationale |
-|:-----------|:----------------|:----------|
-| Enterprise-wide or unlimited usage rights | Strictly Unit-based (Node/Core) metric pricing | Ensure commercial revenue matches consumption |
-
-#### Liability
-
-| Risk Point | Alauda Standard | Rationale |
-|:-----------|:----------------|:----------|
-| Liability cap at 3x paid amount or unlimited | Cap at 12 months fees (or $50 for EULA free tier) | Aligns with SaaS risk hedging standards (Red Hat/SUSE benchmarks) |
-
-#### Intellectual Property
-
-| Risk Point | Alauda Standard | Rationale |
-|:-----------|:----------------|:----------|
-| Customer owns all derivative works | Custom parts to Customer, core optimization rights to Alauda | Protect core product distribution rights |
-
-#### Acceptance
-
-| Risk Point | Alauda Standard | Rationale |
-|:-----------|:----------------|:----------|
-| Written customer confirmation required | Deemed accepted if no written rejection within 10 business days | Resolve cash flow delays |
-
-#### Remedies
-
-| Risk Point | Alauda Standard | Rationale |
-|:-----------|:----------------|:----------|
-| Fee reductions exclude further claims | Fee Reductions are the sole remedy for delays | Ensure predictable breach costs |
-
-### 4.2 Technical Support Contract Redline Matrix
-
-#### SLA Response Time
-
-| Risk Point | Alauda Standard | Rationale |
-|:-----------|:----------------|:----------|
-| Level 1 response < 30 mins | 30 mins initial response | Match latest company operational standards |
-| Level 2 response < 2 hours | 2 hours initial response | Same as above |
-| Level 3/4 response < 4/8 hours | 4 hours / 8 hours initial response | Same as above |
-| 24/7 support | Negotiable hours | Consider operational costs |
-
-#### Support Scope
-
-| Risk Point | Alauda Standard | Rationale |
-|:-----------|:----------------|:----------|
-| Custom code development or on-site support included | Explicitly exclude custom development and on-site support | Match Alauda standard SLA and avoid uncontrolled scope |
-| Support for all third-party software | Limit to Alauda explicitly certified environments | Reduce operational burden |
-
-#### Training Commitment
-
-| Risk Point | Alauda Standard | Rationale |
-|:-----------|:----------------|:----------|
-| 72 hours/year | 40 hours/year | Avoid training cost overrun |
-| Any software-related topic | Limited topic list | Control scope creep |
-
-#### Support Duration
-
-| Risk Point | Alauda Standard | Rationale |
-|:-----------|:----------------|:----------|
-| Entire contract period | 18 months (current + previous major version) | Control long-term maintenance costs |
-| All historical versions | Current and one prior major version only | Avoid "zombie version" maintenance burden |
-
-#### Support Termination
-
-| Risk Point | Alauda Standard | Rationale |
-|:-----------|:----------------|:----------|
-| Customer can reject termination | Either party may terminate with 90 days notice | Maintain business flexibility |
+**Agent 的跨文档图谱工作流：**
+1. **构建效力拓扑**：自动抓取所有文件中的 `Order of Precedence`，梳理出一张“谁管谁”的效力层级树。
+2. **后门嗅探 (Backdoor Detection)**：利用百万级 Token 上下文，将高优先级的附件与低优先级主合同的红线进行交叉对比。一旦发现低级别文件中的保护被高级别文件越权推翻，即触发红色防线警报并提供定向爆破条款。
 
 ---
 
-## 5. User Guide
+## 4. SaaS 商业红线与法务底线
 
-### 5.1 Installation
+Agent 严格捍卫以下 6 条 SaaS 商业生命线：
 
+| 监控维度 | 风险红线判定标准与业务逻辑 |
+|------|-----------------|
+| **订阅计量** | 🔴 拒绝买断/无限使用权 → 🟢 必须基于 Node/Core 等具体 Unit 计量。<br>*防范客户购买一套授权后在企业内无限制复制。* |
+| **赔偿责任** | 🔴 拒绝无限赔偿或包含数据丢失 → 🟢 上限为 12个月订阅费 (EULA限$50)。<br>*实施严格的“双轨制”风控，明确排除间接损失。* |
+| **知识产权** | 🔴 拒绝派生品归属客户 (Work for Hire) → 🟢 坚守核心 PaaS 底座所有权。<br>*防止被单一客户买断导致核心代码闭源。* |
+| **验收结项** | 🔴 拒绝单边书面确认或无限循环拒收 → 🟢 必须包含 10 个工作日默示验收。<br>*杜绝客户利用内部流程拖延 FAC 结项，强保尾款结算。* |
+| **SLA响应** | 🔴 拒绝 <30 分钟内 / 24x7 无限支持 → 🟢 匹配 P1 30mins, P2 2hrs 上限。<br>*拒绝脱离一线运维中心 (ROTC) 实际承受能力的承诺。* |
+| **支持范围** | 🔴 拒绝驻场或第三方软件兜底 → 🟢 仅限 Alauda 认证环境内的远程支持。<br>*明确排除定制代码开发和非认证组件排障以控制成本。* |
+
+---
+
+## 5. 操作指南 (Web App 与 CLI)
+
+### 5.1 环境启动与 Web App 访问 (推荐)
 ```bash
-# Script location
-/Users/rootwang/opencode/Legal/alauda_legal_agent.py
-
-# Run permission (first time only)
-chmod +x /Users/rootwang/opencode/Legal/alauda_legal_agent.py
+# 激活环境
+source .venv/bin/activate
+# 启动企业级 Web 看板
+streamlit run web_app.py
 ```
+启动后访问 `http://localhost:8501`。
+- **配置密钥**：在左侧边栏下拉选择所需的底座大模型，并填入 API Key。
+- **单文档模式**：直接上传 PDF/Word。
+- **多文档模式**：将整个案卷打包为 `.zip` 上传，体验震撼的效力拓扑与后门雷达。
 
-### 5.2 Basic Usage
-
-#### Option 1: Direct text input
-
+### 5.2 CLI 极客模式
+对于技术人员批量处理任务，也可使用原生命令行：
 ```bash
-python3 /Users/rootwang/opencode/Legal/alauda_legal_agent.py -t "contract text..."
-```
+# 审查单个文件
+python3 alauda_legal_agent.py -f contract.txt -k $GEMINI_API_KEY -o report.md
 
-#### Option 2: Read from file
-
-```bash
-# Supports .txt, .md, .json formats
-python3 /Users/rootwang/opencode/Legal/alauda_legal_agent.py -f contract.txt
-```
-
-#### Option 3: Save report to file
-
-```bash
-python3 /Users/rootwang/opencode/Legal/alauda_legal_agent.py -f contract.txt --output report.md
-```
-
-### 5.3 Output Format Options
-
-| Parameter | Description |
-|-----------|-------------|
-| `-o markdown` | Output Markdown format (default) |
-| `-o json` | Output JSON format (for system integration) |
-| `--no-mode-b` | Output Mode A only, exclude revision suggestions |
-
-### 5.4 Complete Command Examples
-
-```bash
-# Generate full report (Mode A + Mode B)
-python3 alauda_legal_agent.py -f contract.txt --output review_report.md
-
-# Generate risk comparison table only
-python3 alauda_legal_agent.py -f contract.txt --no-mode-b --output risk_table.md
-
-# Generate JSON format (for system integration)
-python3 alauda_legal_agent.py -f contract.txt -o json --output report.json
+# 审查多文档目录
+python3 alauda_legal_agent.py -d ./customer_bundle/ -k $GEMINI_API_KEY -o report.md
 ```
 
 ---
 
-## 6. Output Report Explanation
+## 6. 输出报告实战示例
 
-### 6.1 Mode A: Risk Comparison Table
+*(以下为针对某金融机构真实案卷 V5 版多角色输出节选)*
 
-Mode A provides a structured risk overview for quick identification of problematic clauses:
+### 👨‍💼 首席运营官 (COO) 审批台
+- **最终决议**：🔴 **【有条件通过(必须强拆后门)】**
+- **致命阻碍 (Deal Breakers)**：SOW附件利用优先权推翻了GFA的赔偿上限，带来针对银行数据的无限索赔敞口；且未包含默示验收。
+- **战略博弈指导 (Strategic Playbook)**：这是战略级标杆客户，且首付高达40%能极大缓解现金流。建议不要直接拒签，应由法务 VP 出面，在最高优先级的 Order Form 中强制打上免责补丁。同时在交付端加派资深架构师对冲验收延期风险。
 
-```
-| Dimension | Clause Summary | Risk Level | Alauda Standard | Risk Reason |
-| :--- | :--- | :---: | :--- | :--- |
-| Liability | ... | RED HIGH | 12 months fees | Cap too high (3x) |
-```
+### 📈 运营与商务履约看板
+| 核心要素 | 合同摘要 | 运营影响测算 |
+| :--- | :--- | :--- |
+| **合同总金额** | 300万人民币 | 大单，高营收，具有战略意义 |
+| **付款节奏** | 20% - 40% - 40% (分三年付) | 首付偏低，存在长达两年的垫资交付期资金压力 |
+| **维保周期** | 自签收后长达36个月 | 维保人力成本极高，需单独核算维保利润率 |
 
-**Risk Level Icons**:
-- **RED HIGH** - Requires immediate modification, not acceptable
-- **YELLOW MEDIUM** - Suggest modification, negotiable
-- **GREEN LOW** - Meets Alauda standards
-- **WHITE N/A** - Relevant clause not detected
-
-### 6.2 Mode B: Suggested Revision Text
-
-Mode B provides ready-to-use Legal English revision suggestions:
-
-```
-### Liability
-
-**Risk**: Liability cap too high (3x)
-
-**Suggested Revision**:
-```
-Supplier's total aggregate liability shall not exceed the total fees 
-paid by Customer in the 12 months preceding the claim.
-```
-```
-
-### 6.3 Review Summary
-
-The report ends with statistical data:
-
-```
-| Risk Level | Count |
-| :---: | :---: |
-| RED High | 1 |
-| YELLOW Medium | 3 |
-| GREEN Low | 9 |
-```
-
----
-
-## 7. FAQ
-
-### Q1: What if the governing law is from a new jurisdiction?
-
-The Agent automatically detects the **Governing Law** clause and alerts legal counsel to jurisdiction-specific considerations. Review standards may need adjustment for different jurisdictions.
-
-### Q2: What if the Agent misses a clause?
-
-Click **"Add to Knowledge"** and it will be recognized next time when reviewing similar contracts (e.g., UOB or OCBC). You can also add new rules to the `benchmark` configuration in the script.
-
-### Q3: How to handle Russian/English mixed contracts?
-
-The script supports multilingual contract recognition and automatically handles Russian (e.g., "поддержк", "обучен") and English mixed text.
-
-### Q4: Can risk levels be adjusted?
-
-Yes. Modify the regex rules in the `risk_rules` configuration in the script. You can move rules from `high` to `medium` or vice versa.
-
-### Q5: How to add new review dimensions?
-
-Add a new category to the `benchmark` dictionary in the script:
-
-```python
-"new_category": {
-    "keywords": [r"keyword1", r"keyword2"],
-    "redline": "Alauda standard requirement",
-    "standard_clause": "Standard clause text",
-    "rationale": "Reason explanation",
-    "risk_rules": {
-        "high": [(r"pattern", "Risk reason")],
-        "medium": [(r"pattern", "Risk reason")]
-    }
-}
-```
-
-### Q6: How to handle Word/PDF format contracts?
-
-**Method 1**: Use macOS built-in tool
-```bash
-textutil -convert txt contract.docx -output contract.txt
-```
-
-**Method 2**: Copy and paste directly
-```bash
-python3 alauda_legal_agent.py -t "$(pbpaste)"
-```
-
----
-
-## 8. Appendix
-
-### 8.1 Complete Review Dimension List
-
-| No. | Dimension Code | Name | Contract Type |
-|:----:|:---------------|:-----|:--------------|
-| 1 | liability | Liability | Sales Contract |
-| 2 | ipr | Intellectual Property | Sales Contract |
-| 3 | acceptance | Acceptance | Sales Contract |
-| 4 | termination | Termination | Sales Contract |
-| 5 | governing_law | Governing Law | Sales Contract |
-| 6 | data_protection | Data Protection | Sales Contract |
-| 7 | sla_response | SLA Response | Technical Support |
-| 8 | support_scope | Support Scope | Technical Support |
-| 9 | exclusion_liability | Exclusion of Liability | Technical Support |
-| 10 | training_commitment | Training Commitment | Technical Support |
-| 11 | support_duration | Support Duration | Technical Support |
-| 12 | access_rights | Access Rights | Technical Support |
-| 13 | termination_support | Support Termination | Technical Support |
-
-### 8.2 Standard Clause Templates
-
-#### Liability
-```
-Supplier's total aggregate liability shall not exceed the total fees 
-paid by Customer in the 12 months preceding the claim.
-```
-
-#### Intellectual Property
-```
-Alauda retains all rights to the pre-existing platform (PaaS) and any 
-derivative works based on its core technology. Customer owns only custom 
-components developed specifically for Customer.
-```
-
-#### Acceptance
-```
-Deliverables are deemed accepted if no written rejection is received 
-within 10 business days of delivery.
-```
-
-#### SLA Response
-```
-Response times: P1 (Critical): 30 minutes initial response; P2 (High): 2 hours; 
-P3 (Medium): 4 hours; P4 (Low): 8 hours. Resolution times 
-to be determined on a best-effort basis.
-```
-
-#### Training Commitment
-```
-Alauda will provide up to 40 hours of online training per year. Additional 
-training may be purchased at agreed rates. Training content and schedule 
-to be mutually agreed.
-```
-
-#### Support Duration
-```
-Warranty support is provided for the current major version and one prior 
-major version, for a maximum of 18 months from general availability of 
-the new major version.
-```
-
-#### Exclusion of Liability
-```
-In no event shall Alauda be liable for any indirect, incidental, special, 
-consequential, or punitive damages, including without limitation loss of 
-profits, data, use, or goodwill, regardless of the form of action.
-```
-
----
-
-## Version History
-
-| Version | Date | Changes |
-|---------|------|---------|
-| 1.0 | 2025-03-03 | Initial version, 6 sales contract dimensions |
-| 2.0 | 2026-02-20 | Added 7 technical support dimensions, multilingual support |
-
----
-
-## Support
-
-For questions or suggestions, please contact the legal team or submit an Issue to the script repository.
-
----
-
-*This manual was created with assistance from Alauda Global Legal Agent*
+### ⚖️ 法务合规与红线防御阵地
+*(详情见 跨文档隐藏后门雷达 模块，此处略)*

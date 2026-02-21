@@ -1,740 +1,162 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Alauda Legal Agent Manual</title>
-    <style>
-:root {
-    --alauda-blue-deeper: #1A6A9A;
-    --alauda-blue-dark: #2A8ABF;
-    --alauda-blue: #3BAEE4;
-    --alauda-blue-light: #6DC4EC;
-    --alauda-blue-lighter: #B8E2F6;
-    --alauda-blue-wash: #EAF6FC;
-    --neutral-900: #111827;
-    --neutral-800: #1E293B;
-    --neutral-600: #475569;
-    --neutral-300: #CBD5E1;
-    --neutral-100: #F1F5F9;
-    --neutral-50: #F8FAFC;
-    --white: #FFFFFF;
-}
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    color: var(--neutral-900);
-    background-color: var(--white);
-    line-height: 1.6;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 40px;
-}
-h1, h2, h3, h4 { color: var(--alauda-blue-deeper); font-weight: 600; margin-top: 1.5em; }
-h1 { border-bottom: 4px solid var(--alauda-blue); padding-bottom: 12px; font-size: 2.2em; }
-h2 { border-bottom: 1px solid var(--neutral-300); padding-bottom: 8px; }
-
-/* 修复目录中链接的颜色不一致问题，统一覆盖 a 标签的色彩 */
-a {
-    color: var(--alauda-blue-deeper);
-    text-decoration: none;
-    font-weight: 500;
-}
-a:hover {
-    color: var(--alauda-blue);
-    text-decoration: underline;
-}
-
-table { border-collapse: collapse; width: 100%; margin: 24px 0; font-size: 0.95em; }
-th, td { border: 1px solid var(--neutral-300); padding: 12px 16px; text-align: left; }
-th { background-color: var(--neutral-50); color: var(--neutral-800); }
-tr:nth-child(even) { background-color: var(--neutral-100); }
-blockquote {
-    margin: 24px 0; padding: 16px 20px;
-    background-color: var(--alauda-blue-wash);
-    border-left: 4px solid var(--alauda-blue);
-    color: var(--neutral-800);
-}
-pre {
-    background-color: var(--neutral-900);
-    color: var(--neutral-100);
-    padding: 16px; border-radius: 8px; overflow-x: auto;
-}
-code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em; }
-p code {
-    background-color: var(--neutral-100);
-    color: var(--neutral-800);
-    padding: 2px 6px;
-    border-radius: 4px;
-}
-</style>
-</head>
-<body>
-<h1>🚀 Alauda Global Legal Agent 用户手册</h1>
-<p><strong>版本</strong>: 2.0<br />
-<strong>更新日期</strong>: 2026年2月20日<br />
-<strong>适用对象</strong>: Alauda (灵雀云) 法务团队</p>
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Alauda Legal Agent</title><style>
+    :root {
+        --alauda-blue-deeper: #1A6A9A;
+        --alauda-blue: #3BAEE4;
+        --alauda-blue-wash: #EAF6FC;
+        --neutral-900: #111827;
+        --neutral-800: #1E293B;
+        --neutral-300: #CBD5E1;
+        --neutral-100: #F1F5F9;
+        --neutral-50: #F8FAFC;
+        --white: #FFFFFF;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; color: var(--neutral-900); background-color: var(--white); line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 40px; }
+    h1, h2, h3, h4, h5 { color: var(--alauda-blue-deeper); font-weight: 600; margin-top: 1.5em; }
+    h1 { border-bottom: 4px solid var(--alauda-blue); padding-bottom: 12px; font-size: 2.2em; }
+    h2 { border-bottom: 1px solid var(--neutral-300); padding-bottom: 8px; }
+    a { color: var(--alauda-blue-deeper); text-decoration: none; font-weight: 500; }
+    table { border-collapse: collapse; width: 100%; margin: 24px 0; font-size: 0.95em; }
+    th, td { border: 1px solid var(--neutral-300); padding: 12px 16px; text-align: left; }
+    th { background-color: var(--neutral-50); color: var(--neutral-800); }
+    tr:nth-child(even) { background-color: var(--neutral-100); }
+    blockquote { margin: 24px 0; padding: 16px 20px; background-color: var(--alauda-blue-wash); border-left: 4px solid var(--alauda-blue); color: var(--neutral-800); }
+    pre { background-color: var(--neutral-900); color: var(--neutral-100); padding: 16px; border-radius: 8px; overflow-x: auto; }
+    code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em; }
+    p code, li code, td code { background-color: var(--neutral-100); color: var(--neutral-800); padding: 2px 6px; border-radius: 4px; }
+    </style></head><body><h1>🚀 Alauda Global Legal Agent (V5 Ultimate) 用户手册</h1>
+<p><strong>版本</strong>: 5.0 (Multi-Role Copilot &amp; Web Dashboard Edition)<br />
+<strong>更新日期</strong>: 2026年2月22日<br />
+<strong>适用对象</strong>: Alauda (灵雀云) 法务、交付、商务与高管团队</p>
 <hr />
 <h2>目录</h2>
 <ol>
-<li><a href="#1-核心愿景">核心愿景</a></li>
-<li><a href="#2-agent-角色配置">Agent 角色配置</a></li>
-<li><a href="#3-审核维度详解">审核维度详解</a></li>
-<li>3.1 销售合同审核维度</li>
-<li>3.2 技术支持合同审核维度</li>
-<li><a href="#4-标准红线知识库">标准红线知识库</a></li>
-<li><a href="#5-操作指南">操作指南</a></li>
-<li><a href="#6-输出报告说明">输出报告说明</a></li>
-<li><a href="#7-常见问题-faq">常见问题 FAQ</a></li>
-<li><a href="#8-附录">附录</a></li>
+<li><a href="#1-核心愿景与架构演进">核心愿景与架构演进</a></li>
+<li><a href="#2-v5-独家特性三重视角-copilot">V5 独家特性：三重视角 Copilot</a></li>
+<li><a href="#3-多文档关联审计机制">多文档关联审计机制</a></li>
+<li><a href="#4-saas-商业红线与法务底线">SaaS 商业红线与法务底线</a></li>
+<li><a href="#5-操作指南-web-app-与-cli">操作指南 (Web App 与 CLI)</a></li>
+<li><a href="#6-输出报告实战示例">输出报告实战示例</a></li>
 </ol>
 <hr />
-<h2>1. 核心愿景</h2>
-<p>本手册旨在为 <strong>Alauda (灵雀云)</strong> 的法务团队提供一套基于 AI 的自动化合同审核方案。通过在 OpenCode 中集成 Red Hat 的法律逻辑与严格的商业风险过滤，将原本数小时的初审缩短至 <strong>5 分钟</strong>。</p>
-<h3>核心价值</h3>
+<h2>1. 核心愿景与架构演进</h2>
+<p>本手册旨在为 <strong>Alauda (灵雀云)</strong> 提供一套基于端到端大语言模型 (LLM) 的自动化合同审查系统。我们的愿景是将资深法务 Partner 的商业嗅觉与 AI 的全景阅读能力结合，从而在极短时间内封堵 B2B 合同中的致命隐患。</p>
+<p>经过架构迭代，系统目前已演进至 <strong>V5 (Multi-Role Copilot 版)</strong>：
+- <strong>模型无关化 (Agnostic LLM)</strong>：底层脱离单一模型绑定，动态支持 Google Gemini, OpenAI, Claude 以及公司内网私有化模型网关。
+- <strong>结构化防御 (Pydantic)</strong>：通过强类型 JSON 数据契约，强制大模型根据原文语言（中/英）自适应输出地道的法律修改建议。
+- <strong>现代化 Web UI</strong>：采用 Streamlit 构建了带有 Alauda 企业视觉体系的高级可视化数据看板，彻底告别枯燥的命令行。</p>
+<hr />
+<h2>2. V5 独家特性：三重视角 Copilot</h2>
+<p>V5 版本最大的突破在于：系统不再是一个单纯的“找错机器”，而是化身为拥有“三重人格”的高级商业幕僚。针对每一份上传的合同或案卷，系统会拆解为三层金字塔视角：</p>
+<ol>
+<li>👨‍💼 <strong>首席运营官 (COO) 审批台 (塔尖)</strong>：</li>
+<li>给出极其明确的决策建议（【建议直接签约】/【有条件通过】/【强烈建议拒签】）。</li>
+<li>提炼阻碍签约的“致命因素 (Deal Breakers)”。</li>
+<li>撰写包含利益交换和让步红线的“战略博弈指导”。</li>
+<li>📈 <strong>运营与商务履约看板 (中层)</strong>：</li>
+<li>为 PMO 和财务团队自动提取庞杂文本中的账期、首付比例、服务期、罚金条款。</li>
+<li>自动测算并提示对公司现金流与交付成本的真实业务影响。</li>
+<li>⚖️ <strong>法务合规与红线防御阵地 (基座)</strong>：</li>
+<li>逐条列出违反公司 SaaS 政策的高危/中危条款。</li>
+<li>给出法务溯源分析，以及可直接用于红线谈判的修正建议 (Redline)。</li>
+</ol>
+<hr />
+<h2>3. 多文档关联审计机制</h2>
+<p>大型 B2B 客户经常采用<strong>“明修栈道，暗度陈仓”</strong>的策略：在严格的《主协议 GFA》中答应所有底线，却在某个交付团队草签的《服务说明书 SOW》附件中写上“本 SOW 拥有最高优先级，且供应商需承担无限数据连带责任”。</p>
+<p><strong>Agent 的跨文档图谱工作流：</strong>
+1. <strong>构建效力拓扑</strong>：自动抓取所有文件中的 <code>Order of Precedence</code>，梳理出一张“谁管谁”的效力层级树。
+2. <strong>后门嗅探 (Backdoor Detection)</strong>：利用百万级 Token 上下文，将高优先级的附件与低优先级主合同的红线进行交叉对比。一旦发现低级别文件中的保护被高级别文件越权推翻，即触发红色防线警报并提供定向爆破条款。</p>
+<hr />
+<h2>4. SaaS 商业红线与法务底线</h2>
+<p>Agent 严格捍卫以下 6 条 SaaS 商业生命线：</p>
 <table>
 <thead>
 <tr>
-<th>维度</th>
-<th>传统方式</th>
-<th>AI Agent 方式</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>初审时间</td>
-<td>2-4 小时</td>
-<td>5 分钟</td>
-</tr>
-<tr>
-<td>风险覆盖</td>
-<td>依赖个人经验</td>
-<td>13 个维度全覆盖</td>
-</tr>
-<tr>
-<td>修订建议</td>
-<td>手动撰写</td>
-<td>自动生成 Legal English</td>
-</tr>
-<tr>
-<td>一致性</td>
-<td>因人而异</td>
-<td>统一标准</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2>2. Agent 角色配置</h2>
-<p>在 OpenCode 的 Agent Settings 中新建角色，填入以下指令：</p>
-<h3>角色名称</h3>
-<p><strong>Alauda 全球法律与运营架构师</strong></p>
-<h3>底层逻辑 (Persona)</h3>
-<pre><code>你是一名精通全球通用法律的开源软件领域专家，专注于为 Alauda (灵雀云) 
-提供合同风险审核服务。
-
-核心原则：
-1. 赔偿限额：坚守 12 个月订阅费原则，拒绝任何超过 12 个月已付金额的赔偿要求
-2. 知识产权 (IP)：区分&quot;定制成果&quot;与&quot;平台核心&quot;。Alauda 必须保留核心 PaaS 平台及其衍生作品的所有权
-3. 验收条款：将&quot;主观验收&quot;转为带有 10 天缓冲期的&quot;默示验收&quot;
-4. 救济排他性：确保 Fee Reductions 是延期或服务不达标的唯一救济措施
-
-合同类型识别：
-- 销售合同：关注赔偿、IP、验收、终止等商业条款
-- 技术支持合同：关注 SLA、支持范围、培训承诺、支持期限等运维条款
-</code></pre>
-<hr />
-<h2>3. 审核维度详解</h2>
-<h3>3.1 销售合同审核维度 (7 个)</h3>
-<table>
-<thead>
-<tr>
-<th>维度</th>
-<th>英文名</th>
-<th>风险等级判定标准</th>
+<th>监控维度</th>
+<th>风险红线判定标准与业务逻辑</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>订阅计量</strong></td>
-<td>Subscription Metrics</td>
-<td>🔴 无限制使用 / 企业级授权 → 🟢 基于核心/节点计量</td>
+<td>🔴 拒绝买断/无限使用权 → 🟢 必须基于 Node/Core 等具体 Unit 计量。<br><em>防范客户购买一套授权后在企业内无限制复制。</em></td>
 </tr>
 <tr>
-<td><strong>赔偿条款</strong></td>
-<td>Liability</td>
-<td>🔴 3倍赔偿 / 无上限 → 🟢 12个月订阅费 (免费版 $50)</td>
+<td><strong>赔偿责任</strong></td>
+<td>🔴 拒绝无限赔偿或包含数据丢失 → 🟢 上限为 12个月订阅费 (EULA限$50)。<br><em>实施严格的“双轨制”风控，明确排除间接损失。</em></td>
 </tr>
 <tr>
 <td><strong>知识产权</strong></td>
-<td>IP</td>
-<td>🔴 客户拥有所有衍生作品 → 🟢 Alauda 保留核心平台权</td>
+<td>🔴 拒绝派生品归属客户 (Work for Hire) → 🟢 坚守核心 PaaS 底座所有权。<br><em>防止被单一客户买断导致核心代码闭源。</em></td>
 </tr>
 <tr>
-<td><strong>验收条款</strong></td>
-<td>Acceptance</td>
-<td>🔴 需书面批准 / 客户满意为准 → 🟢 10天默示验收</td>
+<td><strong>验收结项</strong></td>
+<td>🔴 拒绝单边书面确认或无限循环拒收 → 🟢 必须包含 10 个工作日默示验收。<br><em>杜绝客户利用内部流程拖延 FAC 结项，强保尾款结算。</em></td>
 </tr>
 <tr>
-<td><strong>终止条款</strong></td>
-<td>Termination</td>
-<td>🔴 可立即终止 / 无终止权 → 🟢 30-90天通知期</td>
-</tr>
-<tr>
-<td><strong>适用法律</strong></td>
-<td>Governing Law</td>
-<td>🔴 客户专属管辖 → 🟢 中立法域</td>
-</tr>
-<tr>
-<td><strong>数据保护</strong></td>
-<td>Data Protection</td>
-<td>🔴 供应商独自承担数据责任 → 🟢 双方共同合规</td>
-</tr>
-</tbody>
-</table>
-<h3>3.2 技术支持合同审核维度 (7 个)</h3>
-<table>
-<thead>
-<tr>
-<th>维度</th>
-<th>英文名</th>
-<th>风险等级判定标准</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>SLA 响应时间</strong></td>
-<td>SLA Response</td>
-<td>🔴 Level 1 响应 &lt; 30分钟 → 🟢 Level 1: 30分钟</td>
+<td><strong>SLA响应</strong></td>
+<td>🔴 拒绝 &lt;30 分钟内 / 24x7 无限支持 → 🟢 匹配 P1 30mins, P2 2hrs 上限。<br><em>拒绝脱离一线运维中心 (ROTC) 实际承受能力的承诺。</em></td>
 </tr>
 <tr>
 <td><strong>支持范围</strong></td>
-<td>Support Scope</td>
-<td>🔴 无限制支持 / 驻场 / 包含定制代码 → 🟢 明确排除项及前置认证</td>
-</tr>
-<tr>
-<td><strong>责任排除</strong></td>
-<td>Exclusion of Liability</td>
-<td>🔴 对所有损失负责 → 🟢 排除间接损失</td>
-</tr>
-<tr>
-<td><strong>培训承诺</strong></td>
-<td>Training Commitment</td>
-<td>🔴 &gt;100小时/年 🟡 60-80小时/年 → 🟢 ≤40小时/年</td>
-</tr>
-<tr>
-<td><strong>支持期限</strong></td>
-<td>Support Duration</td>
-<td>🔴 终身支持 🟡 整个合同期 → 🟢 18个月</td>
-</tr>
-<tr>
-<td><strong>访问权限</strong></td>
-<td>Access Rights</td>
-<td>🔴 直接访问生产环境 → 🟢 仅屏幕共享</td>
-</tr>
-<tr>
-<td><strong>支持终止</strong></td>
-<td>Support Termination</td>
-<td>🔴 无终止权 🟡 客户可拒绝 → 🟢 90天通知终止</td>
+<td>🔴 拒绝驻场或第三方软件兜底 → 🟢 仅限 Alauda 认证环境内的远程支持。<br><em>明确排除定制代码开发和非认证组件排障以控制成本。</em></td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2>4. 标准红线知识库</h2>
-<h3>4.1 销售合同红线矩阵</h3>
-<h4>订阅计量 (Subscription Metrics)</h4>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">监控维度</th>
-<th style="text-align: left;">风险点示例</th>
-<th style="text-align: left;">Alauda 标准回改方案</th>
-<th style="text-align: left;">理由</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">授权范围</td>
-<td style="text-align: left;">企业级无限制使用权 (Enterprise-wide/Unlimited)</td>
-<td style="text-align: left;">基于明确的单位(Unit)计量授权</td>
-<td style="text-align: left;">对标RedHat/SUSE商业模式，确保商业收益匹配</td>
-</tr>
-</tbody>
-</table>
-<h4>赔偿条款 (Liability)</h4>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">监控维度</th>
-<th style="text-align: left;">风险点示例</th>
-<th style="text-align: left;">Alauda 标准回改方案</th>
-<th style="text-align: left;">理由</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">赔偿责任</td>
-<td style="text-align: left;">赔偿限额为已付金额的 3 倍 / 免费版无上限</td>
-<td style="text-align: left;">商业版限额过去12个月已付费，EULA免费软件限额$50</td>
-<td style="text-align: left;">实施双轨制风险隔离对冲</td>
-</tr>
-</tbody>
-</table>
-<h4>知识产权 (IP)</h4>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">监控维度</th>
-<th style="text-align: left;">风险点示例</th>
-<th style="text-align: left;">Alauda 标准回改方案</th>
-<th style="text-align: left;">理由</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">IP 归属</td>
-<td style="text-align: left;">衍生作品及增强功能所有权归甲方</td>
-<td style="text-align: left;">定制部分归甲方，但核心架构优化权归 Alauda</td>
-<td style="text-align: left;">保护核心产品分发权，避免被单一银行绑定</td>
-</tr>
-</tbody>
-</table>
-<h4>验收条款 (Acceptance)</h4>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">监控维度</th>
-<th style="text-align: left;">风险点示例</th>
-<th style="text-align: left;">Alauda 标准回改方案</th>
-<th style="text-align: left;">理由</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">验收付款</td>
-<td style="text-align: left;">必须由甲方书面确认才可开票付款</td>
-<td style="text-align: left;">交付 10 个工作日内未书面拒绝则视为验收合格</td>
-<td style="text-align: left;">解决现金流被流程拖延的问题</td>
-</tr>
-</tbody>
-</table>
-<h4>违约救济 (Remedies)</h4>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">监控维度</th>
-<th style="text-align: left;">风险点示例</th>
-<th style="text-align: left;">Alauda 标准回改方案</th>
-<th style="text-align: left;">理由</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">违约赔偿</td>
-<td style="text-align: left;">费用核减不排除进一步索赔</td>
-<td style="text-align: left;">明确 Fee Reductions 是延期等违约的唯一救济手段</td>
-<td style="text-align: left;">确保违约成本的确定性</td>
-</tr>
-</tbody>
-</table>
-<h3>4.2 技术支持合同红线矩阵</h3>
-<h4>SLA 响应时间 (SLA Response)</h4>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">监控维度</th>
-<th style="text-align: left;">风险点</th>
-<th style="text-align: left;">Alauda 标准</th>
-<th style="text-align: left;">理由</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">Level 1 响应</td>
-<td style="text-align: left;">&lt; 30 分钟内响应</td>
-<td style="text-align: left;">30 分钟初始响应</td>
-<td style="text-align: left;">匹配公司最新运营标准</td>
-</tr>
-<tr>
-<td style="text-align: left;">Level 2 响应</td>
-<td style="text-align: left;">&lt; 2 小时内响应</td>
-<td style="text-align: left;">2 小时初始响应</td>
-<td style="text-align: left;">同上</td>
-</tr>
-<tr>
-<td style="text-align: left;">Level 3/4 响应</td>
-<td style="text-align: left;">&lt; 4 小时 / 8 小时</td>
-<td style="text-align: left;">4 小时 / 8 小时初始响应</td>
-<td style="text-align: left;">同上</td>
-</tr>
-<tr>
-<td style="text-align: left;">支持模式</td>
-<td style="text-align: left;">24/7 全天候</td>
-<td style="text-align: left;">可协商时段</td>
-<td style="text-align: left;">考虑运营成本</td>
-</tr>
-</tbody>
-</table>
-<h4>支持范围 (Support Scope)</h4>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">监控维度</th>
-<th style="text-align: left;">风险点</th>
-<th style="text-align: left;">Alauda 标准</th>
-<th style="text-align: left;">理由</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">定制与驻场</td>
-<td style="text-align: left;">包含定制开发(Custom code)或驻场支持(On-site)</td>
-<td style="text-align: left;">明确排除定制开发与现场服务</td>
-<td style="text-align: left;">对标Alauda原厂标准服务条款，避免范围失控</td>
-</tr>
-<tr>
-<td style="text-align: left;">第三方组件</td>
-<td style="text-align: left;">包含所有第三方软件的支持</td>
-<td style="text-align: left;">仅支持Alauda显式认证环境</td>
-<td style="text-align: left;">减轻运维兜底压力</td>
-</tr>
-</tbody>
-</table>
-<h4>培训承诺 (Training Commitment)</h4>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">监控维度</th>
-<th style="text-align: left;">风险点</th>
-<th style="text-align: left;">Alauda 标准</th>
-<th style="text-align: left;">理由</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">年度培训时长</td>
-<td style="text-align: left;">72 小时/年</td>
-<td style="text-align: left;">40 小时/年</td>
-<td style="text-align: left;">避免培训成本失控</td>
-</tr>
-<tr>
-<td style="text-align: left;">培训范围</td>
-<td style="text-align: left;">任何软件相关主题</td>
-<td style="text-align: left;">限定主题列表</td>
-<td style="text-align: left;">控制范围蔓延</td>
-</tr>
-</tbody>
-</table>
-<h4>支持期限 (Support Duration)</h4>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">监控维度</th>
-<th style="text-align: left;">风险点</th>
-<th style="text-align: left;">Alauda 标准</th>
-<th style="text-align: left;">理由</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">支持期限</td>
-<td style="text-align: left;">整个合同期间</td>
-<td style="text-align: left;">18 个月 (当前版本 + 前一版本)</td>
-<td style="text-align: left;">控制长期维护成本</td>
-</tr>
-<tr>
-<td style="text-align: left;">版本支持</td>
-<td style="text-align: left;">所有历史版本</td>
-<td style="text-align: left;">仅限当前及前一主要版本</td>
-<td style="text-align: left;">避免"僵尸版本"维护负担</td>
-</tr>
-</tbody>
-</table>
-<h4>支持终止 (Support Termination)</h4>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">监控维度</th>
-<th style="text-align: left;">风险点</th>
-<th style="text-align: left;">Alauda 标准</th>
-<th style="text-align: left;">理由</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">终止权</td>
-<td style="text-align: left;">客户可拒绝终止</td>
-<td style="text-align: left;">双方均可 90 天通知终止</td>
-<td style="text-align: left;">保持业务灵活性</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2>5. 操作指南</h2>
-<h3>5.1 安装与配置</h3>
-<pre><code class="language-bash"># 1. 脚本位置
-/Users/rootwang/opencode/Legal/alauda_legal_agent.py
+<h2>5. 操作指南 (Web App 与 CLI)</h2>
+<h3>5.1 环境启动与 Web App 访问 (推荐)</h3>
+<pre><code class="language-bash"># 激活环境
+source .venv/bin/activate
+# 启动企业级 Web 看板
+streamlit run web_app.py
+</code></pre>
+<p>启动后访问 <code>http://localhost:8501</code>。
+- <strong>配置密钥</strong>：在左侧边栏下拉选择所需的底座大模型，并填入 API Key。
+- <strong>单文档模式</strong>：直接上传 PDF/Word。
+- <strong>多文档模式</strong>：将整个案卷打包为 <code>.zip</code> 上传，体验震撼的效力拓扑与后门雷达。</p>
+<h3>5.2 CLI 极客模式</h3>
+<p>对于技术人员批量处理任务，也可使用原生命令行：</p>
+<pre><code class="language-bash"># 审查单个文件
+python3 alauda_legal_agent.py -f contract.txt -k $GEMINI_API_KEY -o report.md
 
-# 2. 运行权限 (首次使用)
-chmod +x /Users/rootwang/opencode/Legal/alauda_legal_agent.py
+# 审查多文档目录
+python3 alauda_legal_agent.py -d ./customer_bundle/ -k $GEMINI_API_KEY -o report.md
 </code></pre>
-<h3>5.2 基本使用</h3>
-<h4>方式一：直接输入合同文本</h4>
-<pre><code class="language-bash">python3 /Users/rootwang/opencode/Legal/alauda_legal_agent.py -t &quot;合同文本内容...&quot;
-</code></pre>
-<h4>方式二：从文件读取合同</h4>
-<pre><code class="language-bash"># 支持 .txt, .md, .json 格式
-python3 /Users/rootwang/opencode/Legal/alauda_legal_agent.py -f contract.txt
-</code></pre>
-<h4>方式三：保存报告到文件</h4>
-<pre><code class="language-bash">python3 /Users/rootwang/opencode/Legal/alauda_legal_agent.py -f contract.txt --output report.md
-</code></pre>
-<h3>5.3 输出格式选项</h3>
+<hr />
+<h2>6. 输出报告实战示例</h2>
+<p><em>(以下为针对某金融机构真实案卷 V5 版多角色输出节选)</em></p>
+<h3>👨‍💼 首席运营官 (COO) 审批台</h3>
+<ul>
+<li><strong>最终决议</strong>：🔴 <strong>【有条件通过(必须强拆后门)】</strong></li>
+<li><strong>致命阻碍 (Deal Breakers)</strong>：SOW附件利用优先权推翻了GFA的赔偿上限，带来针对银行数据的无限索赔敞口；且未包含默示验收。</li>
+<li><strong>战略博弈指导 (Strategic Playbook)</strong>：这是战略级标杆客户，且首付高达40%能极大缓解现金流。建议不要直接拒签，应由法务 VP 出面，在最高优先级的 Order Form 中强制打上免责补丁。同时在交付端加派资深架构师对冲验收延期风险。</li>
+</ul>
+<h3>📈 运营与商务履约看板</h3>
 <table>
 <thead>
 <tr>
-<th>参数</th>
-<th>说明</th>
+<th style="text-align: left;">核心要素</th>
+<th style="text-align: left;">合同摘要</th>
+<th style="text-align: left;">运营影响测算</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>-o markdown</code></td>
-<td>输出 Markdown 格式 (默认)</td>
+<td style="text-align: left;"><strong>合同总金额</strong></td>
+<td style="text-align: left;">300万人民币</td>
+<td style="text-align: left;">大单，高营收，具有战略意义</td>
 </tr>
 <tr>
-<td><code>-o json</code></td>
-<td>输出 JSON 格式 (便于程序调用)</td>
+<td style="text-align: left;"><strong>付款节奏</strong></td>
+<td style="text-align: left;">20% - 40% - 40% (分三年付)</td>
+<td style="text-align: left;">首付偏低，存在长达两年的垫资交付期资金压力</td>
 </tr>
 <tr>
-<td><code>--no-mode-b</code></td>
-<td>仅输出 Mode A 对比表，不包含修订建议</td>
+<td style="text-align: left;"><strong>维保周期</strong></td>
+<td style="text-align: left;">自签收后长达36个月</td>
+<td style="text-align: left;">维保人力成本极高，需单独核算维保利润率</td>
 </tr>
 </tbody>
 </table>
-<h3>5.4 完整命令示例</h3>
-<pre><code class="language-bash"># 生成完整报告 (Mode A + Mode B)
-python3 alauda_legal_agent.py -f contract.txt --output review_report.md
-
-# 仅生成风险对比表
-python3 alauda_legal_agent.py -f contract.txt --no-mode-b --output risk_table.md
-
-# 生成 JSON 格式 (用于系统集成)
-python3 alauda_legal_agent.py -f contract.txt -o json --output report.json
-</code></pre>
-<hr />
-<h2>6. 输出报告说明</h2>
-<h3>6.1 Mode A: 风险对比表</h3>
-<p>Mode A 提供结构化的风险概览，便于快速识别问题条款：</p>
-<pre><code>| 监控维度 | 原文摘要 | 风险等级 | Alauda 标准要求 | 风险原因 |
-| :--- | :--- | :---: | :--- | :--- |
-| 赔偿条款 | ... | 🔴 HIGH | 12个月订阅费 | 赔偿倍数过高 (3倍) |
-</code></pre>
-<p><strong>风险等级图标说明</strong>：
-- 🔴 <strong>HIGH</strong> - 需要立即修改，不可接受
-- 🟡 <strong>MEDIUM</strong> - 建议修改，可协商
-- 🟢 <strong>LOW</strong> - 符合 Alauda 标准
-- ⚪ <strong>N/A</strong> - 未检测到相关条款</p>
-<h3>6.2 Mode B: 建议修订文本</h3>
-<p>Mode B 提供可直接使用的 Legal English 修订建议：</p>
-<pre><code>### 赔偿条款 (Liability)
-
-**❌ 原条款风险**: 赔偿倍数过高 (3倍)
-
-**✅ 建议修订**:
-</code></pre>
-<p>Supplier's total aggregate liability shall not exceed the total fees 
-paid by Customer in the 12 months preceding the claim.</p>
-<pre><code></code></pre>
-<h3>6.3 审核摘要</h3>
-<p>报告末尾提供统计数据：</p>
-<pre><code>| 风险等级 | 数量 |
-| :---: | :---: |
-| 🔴 高风险 | 1 |
-| 🟡 中风险 | 3 |
-| 🟢 低风险 | 9 |
-</code></pre>
-<hr />
-<h2>7. 常见问题 FAQ</h2>
-<h3>Q1: 如果不适用新加平台法律怎么办？</h3>
-<p>Agent 会自动检测 <strong>Governing Law</strong> 章节并提醒法务注意司法管辖区差异。不同法域可能需要调整审核标准。</p>
-<h3>Q2: Agent 漏掉了某个条款怎么办？</h3>
-<p>点击 <strong>"Add to Knowledge"</strong>，下次审核同类合同时（如 UOB 或 OCBC）它会自动识别。同时可以将新规则添加到脚本中的 <code>benchmark</code> 配置。</p>
-<h3>Q3: 如何处理俄语/英语混合合同？</h3>
-<p>脚本已支持多语言合同识别，会自动处理俄语 (如 "поддержк", "обучен") 和英语混合文本。</p>
-<h3>Q4: 风险等级是否可以调整？</h3>
-<p>可以。在脚本的 <code>risk_rules</code> 配置中修改正则规则，将某些规则从 <code>high</code> 移到 <code>medium</code> 或反之。</p>
-<h3>Q5: 如何添加新的审核维度？</h3>
-<p>在脚本的 <code>benchmark</code> 字典中添加新类别：</p>
-<pre><code class="language-python">&quot;new_category&quot;: {
-    &quot;keywords&quot;: [r&quot;keyword1&quot;, r&quot;keyword2&quot;],
-    &quot;redline&quot;: &quot;Alauda 标准要求&quot;,
-    &quot;standard_clause&quot;: &quot;标准条款文本&quot;,
-    &quot;rationale&quot;: &quot;理由说明&quot;,
-    &quot;risk_rules&quot;: {
-        &quot;high&quot;: [(r&quot;pattern&quot;, &quot;风险原因&quot;)],
-        &quot;medium&quot;: [(r&quot;pattern&quot;, &quot;风险原因&quot;)]
-    }
-}
-</code></pre>
-<h3>Q6: 如何处理 Word/PDF 格式的合同？</h3>
-<p><strong>方法一</strong>：使用 macOS 自带工具转换</p>
-<pre><code class="language-bash">textutil -convert txt contract.docx -output contract.txt
-</code></pre>
-<p><strong>方法二</strong>：直接复制粘贴合同文本到命令行</p>
-<pre><code class="language-bash">python3 alauda_legal_agent.py -t &quot;$(pbpaste)&quot;
-</code></pre>
-<hr />
-<h2>8. 附录</h2>
-<h3>8.1 审核维度完整列表</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">序号</th>
-<th style="text-align: left;">维度代码</th>
-<th style="text-align: left;">中文名</th>
-<th style="text-align: left;">适用合同类型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;">1</td>
-<td style="text-align: left;">liability</td>
-<td style="text-align: left;">赔偿条款</td>
-<td style="text-align: left;">销售合同</td>
-</tr>
-<tr>
-<td style="text-align: center;">2</td>
-<td style="text-align: left;">ipr</td>
-<td style="text-align: left;">知识产权</td>
-<td style="text-align: left;">销售合同</td>
-</tr>
-<tr>
-<td style="text-align: center;">3</td>
-<td style="text-align: left;">acceptance</td>
-<td style="text-align: left;">验收条款</td>
-<td style="text-align: left;">销售合同</td>
-</tr>
-<tr>
-<td style="text-align: center;">4</td>
-<td style="text-align: left;">termination</td>
-<td style="text-align: left;">终止条款</td>
-<td style="text-align: left;">销售合同</td>
-</tr>
-<tr>
-<td style="text-align: center;">5</td>
-<td style="text-align: left;">governing_law</td>
-<td style="text-align: left;">适用法律</td>
-<td style="text-align: left;">销售合同</td>
-</tr>
-<tr>
-<td style="text-align: center;">6</td>
-<td style="text-align: left;">data_protection</td>
-<td style="text-align: left;">数据保护</td>
-<td style="text-align: left;">销售合同</td>
-</tr>
-<tr>
-<td style="text-align: center;">7</td>
-<td style="text-align: left;">sla_response</td>
-<td style="text-align: left;">SLA 响应时间</td>
-<td style="text-align: left;">技术支持合同</td>
-</tr>
-<tr>
-<td style="text-align: center;">8</td>
-<td style="text-align: left;">support_scope</td>
-<td style="text-align: left;">支持范围</td>
-<td style="text-align: left;">技术支持合同</td>
-</tr>
-<tr>
-<td style="text-align: center;">9</td>
-<td style="text-align: left;">exclusion_liability</td>
-<td style="text-align: left;">责任排除</td>
-<td style="text-align: left;">技术支持合同</td>
-</tr>
-<tr>
-<td style="text-align: center;">10</td>
-<td style="text-align: left;">training_commitment</td>
-<td style="text-align: left;">培训承诺</td>
-<td style="text-align: left;">技术支持合同</td>
-</tr>
-<tr>
-<td style="text-align: center;">11</td>
-<td style="text-align: left;">support_duration</td>
-<td style="text-align: left;">支持期限</td>
-<td style="text-align: left;">技术支持合同</td>
-</tr>
-<tr>
-<td style="text-align: center;">12</td>
-<td style="text-align: left;">access_rights</td>
-<td style="text-align: left;">访问权限</td>
-<td style="text-align: left;">技术支持合同</td>
-</tr>
-<tr>
-<td style="text-align: center;">13</td>
-<td style="text-align: left;">termination_support</td>
-<td style="text-align: left;">支持终止</td>
-<td style="text-align: left;">技术支持合同</td>
-</tr>
-</tbody>
-</table>
-<h3>8.2 标准条款模板库</h3>
-<h4>赔偿条款 (Liability)</h4>
-<pre><code>Supplier's total aggregate liability shall not exceed the total fees 
-paid by Customer in the 12 months preceding the claim.
-</code></pre>
-<h4>知识产权 (IP)</h4>
-<pre><code>Alauda retains all rights to the pre-existing platform (PaaS) and any 
-derivative works based on its core technology. Customer owns only custom 
-components developed specifically for Customer.
-</code></pre>
-<h4>验收条款 (Acceptance)</h4>
-<pre><code>Deliverables are deemed accepted if no written rejection is received 
-within 10 business days of delivery.
-</code></pre>
-<h4>SLA 响应时间 (SLA Response)</h4>
-<pre><code>Response times: P1 (Critical): 30 minutes initial response; P2 (High): 2 hours; 
-P3 (Medium): 4 hours; P4 (Low): 8 hours. Resolution times 
-to be determined on a best-effort basis.
-</code></pre>
-<h4>培训承诺 (Training Commitment)</h4>
-<pre><code>Alauda will provide up to 40 hours of online training per year. Additional 
-training may be purchased at agreed rates. Training content and schedule 
-to be mutually agreed.
-</code></pre>
-<h4>支持期限 (Support Duration)</h4>
-<pre><code>Warranty support is provided for the current major version and one prior 
-major version, for a maximum of 18 months from general availability of 
-the new major version.
-</code></pre>
-<h4>责任排除 (Exclusion of Liability)</h4>
-<pre><code>In no event shall Alauda be liable for any indirect, incidental, special, 
-consequential, or punitive damages, including without limitation loss of 
-profits, data, use, or goodwill, regardless of the form of action.
-</code></pre>
-<hr />
-<h2>版本历史</h2>
-<table>
-<thead>
-<tr>
-<th>版本</th>
-<th>日期</th>
-<th>更新内容</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1.0</td>
-<td>2025-03-03</td>
-<td>初始版本，支持销售合同 6 个维度</td>
-</tr>
-<tr>
-<td>2.0</td>
-<td>2026-02-20</td>
-<td>新增技术支持合同 7 个维度，支持多语言合同</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2>联系支持</h2>
-<p>如有问题或建议，请联系法务团队或提交 Issue 到脚本仓库。</p>
-<hr />
-<p><em>本手册由 Alauda Global Legal Agent 自动生成辅助编写</em></p>
-</body>
-</html>
+<h3>⚖️ 法务合规与红线防御阵地</h3>
+<p><em>(详情见 跨文档隐藏后门雷达 模块，此处略)</em></p></body></html>
