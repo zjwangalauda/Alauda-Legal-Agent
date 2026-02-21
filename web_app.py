@@ -171,9 +171,17 @@ st.markdown("""
         border: 1px solid #CBD5E1 !important;
     }
     
-    /* 侧边栏整体背景强制调浅，防止看不见字 */
+    /* 确保侧边栏可见并强制调浅背景，防止看不见字 */
     [data-testid="stSidebar"] {
         background-color: #F1F5F9 !important;
+        display: block !important;
+        visibility: visible !important;
+    }
+    
+    /* 恢复被可能误杀的 toggle 按钮 */
+    button[kind="header"] {
+        visibility: visible !important;
+        color: #1E293B !important;
     }
 </style>
 """, unsafe_allow_html=True)
