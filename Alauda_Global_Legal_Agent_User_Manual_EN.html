@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Alauda Legal Agent Manual</title>
+    <style>
+:root {
+    --alauda-blue-deeper: #1A6A9A;
+    --alauda-blue-dark: #2A8ABF;
+    --alauda-blue: #3BAEE4;
+    --alauda-blue-light: #6DC4EC;
+    --alauda-blue-lighter: #B8E2F6;
+    --alauda-blue-wash: #EAF6FC;
+    --neutral-900: #111827;
+    --neutral-800: #1E293B;
+    --neutral-600: #475569;
+    --neutral-300: #CBD5E1;
+    --neutral-100: #F1F5F9;
+    --neutral-50: #F8FAFC;
+    --white: #FFFFFF;
+}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--neutral-900);
+    background-color: var(--white);
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px;
+}
+h1, h2, h3, h4 { color: var(--alauda-blue-deeper); font-weight: 600; margin-top: 1.5em; }
+h1 { border-bottom: 4px solid var(--alauda-blue); padding-bottom: 12px; font-size: 2.2em; }
+h2 { border-bottom: 1px solid var(--neutral-300); padding-bottom: 8px; }
+
+/* 修复目录中链接的颜色不一致问题，统一覆盖 a 标签的色彩 */
+a {
+    color: var(--alauda-blue-deeper);
+    text-decoration: none;
+    font-weight: 500;
+}
+a:hover {
+    color: var(--alauda-blue);
+    text-decoration: underline;
+}
+
+table { border-collapse: collapse; width: 100%; margin: 24px 0; font-size: 0.95em; }
+th, td { border: 1px solid var(--neutral-300); padding: 12px 16px; text-align: left; }
+th { background-color: var(--neutral-50); color: var(--neutral-800); }
+tr:nth-child(even) { background-color: var(--neutral-100); }
+blockquote {
+    margin: 24px 0; padding: 16px 20px;
+    background-color: var(--alauda-blue-wash);
+    border-left: 4px solid var(--alauda-blue);
+    color: var(--neutral-800);
+}
+pre {
+    background-color: var(--neutral-900);
+    color: var(--neutral-100);
+    padding: 16px; border-radius: 8px; overflow-x: auto;
+}
+code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em; }
+p code {
+    background-color: var(--neutral-100);
+    color: var(--neutral-800);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+</style>
+</head>
+<body>
+<h1>Alauda Global Legal Agent User Manual</h1>
+<p><strong>Version</strong>: 2.0<br />
+<strong>Last Updated</strong>: February 20, 2026<br />
+<strong>For</strong>: Alauda Legal Team</p>
+<hr />
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#1-introduction">Introduction</a></li>
+<li><a href="#2-agent-persona-configuration">Agent Persona Configuration</a></li>
+<li><a href="#3-review-dimensions">Review Dimensions</a></li>
+<li>3.1 Sales Contract Dimensions</li>
+<li>3.2 Technical Support Contract Dimensions</li>
+<li><a href="#4-redline-knowledge-base">Redline Knowledge Base</a></li>
+<li><a href="#5-user-guide">User Guide</a></li>
+<li><a href="#6-output-report-explanation">Output Report Explanation</a></li>
+<li><a href="#7-faq">FAQ</a></li>
+<li><a href="#8-appendix">Appendix</a></li>
+</ol>
+<hr />
+<h2>1. Introduction</h2>
+<p>This manual provides Alauda's legal team with an AI-powered automated contract review solution. By integrating Red Hat's legal logic with strict commercial risk filtering in OpenCode, the initial review time is reduced from hours to <strong>5 minutes</strong>.</p>
+<h3>Key Benefits</h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Traditional</th>
+<th>AI Agent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Initial Review Time</td>
+<td>2-4 hours</td>
+<td>5 minutes</td>
+</tr>
+<tr>
+<td>Risk Coverage</td>
+<td>Depends on experience</td>
+<td>13 dimensions covered</td>
+</tr>
+<tr>
+<td>Revision Suggestions</td>
+<td>Manual drafting</td>
+<td>Auto-generated Legal English</td>
+</tr>
+<tr>
+<td>Consistency</td>
+<td>Varies by reviewer</td>
+<td>Unified standards</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>2. Agent Persona Configuration</h2>
+<p>Create a new role in OpenCode Agent Settings with the following configuration:</p>
+<h3>Agent Name</h3>
+<p><strong>Alauda Global Legal &amp; Operations Architect</strong></p>
+<h3>Core Logic (Persona)</h3>
+<pre><code>You are a legal expert specializing in global laws and open source software, 
+focused on providing contract risk review services for Alauda.
+
+Core Principles:
+1. Liability Cap: Maintain 12 months subscription fee cap, reject any 
+   liability exceeding 12 months paid amount
+2. IP Rights: Distinguish &quot;Custom Deliverables&quot; from &quot;Core Platform&quot;. 
+   Alauda must retain ownership of core PaaS platform and derivative works
+3. Acceptance Terms: Convert &quot;subjective acceptance&quot; to &quot;deemed acceptance&quot; 
+   with 10-day buffer period
+4. Exclusivity of Remedies: Ensure Fee Reductions are the sole remedy for 
+   delays or service deficiencies
+
+Contract Type Recognition:
+- Sales Contracts: Focus on liability, IP, acceptance, termination terms
+- Technical Support Contracts: Focus on SLA, support scope, training 
+  commitments, support duration
+</code></pre>
+<hr />
+<h2>3. Review Dimensions</h2>
+<h3>3.1 Sales Contract Dimensions (7)</h3>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Risk Assessment Criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Subscription Metrics</strong></td>
+<td>RED: Enterprise-wide / Unlimited use → GREEN: Unit-based (Node/Core)</td>
+</tr>
+<tr>
+<td><strong>Liability</strong></td>
+<td>RED: 3x cap / Unlimited → GREEN: 12 months fees (EULA Free: $50)</td>
+</tr>
+<tr>
+<td><strong>IP Rights</strong></td>
+<td>RED: Customer owns all derivatives → GREEN: Alauda retains core</td>
+</tr>
+<tr>
+<td><strong>Acceptance</strong></td>
+<td>RED: Written approval required → GREEN: 10-day deemed acceptance</td>
+</tr>
+<tr>
+<td><strong>Termination</strong></td>
+<td>RED: Immediate termination / No right → GREEN: 30-90 days notice</td>
+</tr>
+<tr>
+<td><strong>Governing Law</strong></td>
+<td>RED: Customer exclusive jurisdiction → GREEN: Neutral forum</td>
+</tr>
+<tr>
+<td><strong>Data Protection</strong></td>
+<td>RED: Supplier solely responsible → GREEN: Mutual compliance</td>
+</tr>
+</tbody>
+</table>
+<h3>3.2 Technical Support Contract Dimensions (7)</h3>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Risk Assessment Criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SLA Response</strong></td>
+<td>RED: Level 1 &lt; 30 mins → GREEN: Level 1: 30 mins</td>
+</tr>
+<tr>
+<td><strong>Support Scope</strong></td>
+<td>RED: Unlimited / Custom dev / On-site → GREEN: Clear exclusions</td>
+</tr>
+<tr>
+<td><strong>Exclusion of Liability</strong></td>
+<td>RED: Liable for all losses → GREEN: Exclude indirect damages</td>
+</tr>
+<tr>
+<td><strong>Training Commitment</strong></td>
+<td>RED: &gt;100 hrs/year YELLOW: 60-80 hrs → GREEN: &lt;=40 hrs/year</td>
+</tr>
+<tr>
+<td><strong>Support Duration</strong></td>
+<td>RED: Lifetime YELLOW: Entire contract → GREEN: 18 months</td>
+</tr>
+<tr>
+<td><strong>Access Rights</strong></td>
+<td>RED: Direct production access → GREEN: Screen share only</td>
+</tr>
+<tr>
+<td><strong>Support Termination</strong></td>
+<td>RED: No termination right YELLOW: Customer can reject → GREEN: 90 days notice</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>4. Redline Knowledge Base</h2>
+<h3>4.1 Sales Contract Redline Matrix</h3>
+<h4>Subscription Metrics</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Risk Point</th>
+<th style="text-align: left;">Alauda Standard</th>
+<th style="text-align: left;">Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Enterprise-wide or unlimited usage rights</td>
+<td style="text-align: left;">Strictly Unit-based (Node/Core) metric pricing</td>
+<td style="text-align: left;">Ensure commercial revenue matches consumption</td>
+</tr>
+</tbody>
+</table>
+<h4>Liability</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Risk Point</th>
+<th style="text-align: left;">Alauda Standard</th>
+<th style="text-align: left;">Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Liability cap at 3x paid amount or unlimited</td>
+<td style="text-align: left;">Cap at 12 months fees (or $50 for EULA free tier)</td>
+<td style="text-align: left;">Aligns with SaaS risk hedging standards (Red Hat/SUSE benchmarks)</td>
+</tr>
+</tbody>
+</table>
+<h4>Intellectual Property</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Risk Point</th>
+<th style="text-align: left;">Alauda Standard</th>
+<th style="text-align: left;">Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Customer owns all derivative works</td>
+<td style="text-align: left;">Custom parts to Customer, core optimization rights to Alauda</td>
+<td style="text-align: left;">Protect core product distribution rights</td>
+</tr>
+</tbody>
+</table>
+<h4>Acceptance</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Risk Point</th>
+<th style="text-align: left;">Alauda Standard</th>
+<th style="text-align: left;">Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Written customer confirmation required</td>
+<td style="text-align: left;">Deemed accepted if no written rejection within 10 business days</td>
+<td style="text-align: left;">Resolve cash flow delays</td>
+</tr>
+</tbody>
+</table>
+<h4>Remedies</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Risk Point</th>
+<th style="text-align: left;">Alauda Standard</th>
+<th style="text-align: left;">Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Fee reductions exclude further claims</td>
+<td style="text-align: left;">Fee Reductions are the sole remedy for delays</td>
+<td style="text-align: left;">Ensure predictable breach costs</td>
+</tr>
+</tbody>
+</table>
+<h3>4.2 Technical Support Contract Redline Matrix</h3>
+<h4>SLA Response Time</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Risk Point</th>
+<th style="text-align: left;">Alauda Standard</th>
+<th style="text-align: left;">Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Level 1 response &lt; 30 mins</td>
+<td style="text-align: left;">30 mins initial response</td>
+<td style="text-align: left;">Match latest company operational standards</td>
+</tr>
+<tr>
+<td style="text-align: left;">Level 2 response &lt; 2 hours</td>
+<td style="text-align: left;">2 hours initial response</td>
+<td style="text-align: left;">Same as above</td>
+</tr>
+<tr>
+<td style="text-align: left;">Level 3/4 response &lt; 4/8 hours</td>
+<td style="text-align: left;">4 hours / 8 hours initial response</td>
+<td style="text-align: left;">Same as above</td>
+</tr>
+<tr>
+<td style="text-align: left;">24/7 support</td>
+<td style="text-align: left;">Negotiable hours</td>
+<td style="text-align: left;">Consider operational costs</td>
+</tr>
+</tbody>
+</table>
+<h4>Support Scope</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Risk Point</th>
+<th style="text-align: left;">Alauda Standard</th>
+<th style="text-align: left;">Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Custom code development or on-site support included</td>
+<td style="text-align: left;">Explicitly exclude custom development and on-site support</td>
+<td style="text-align: left;">Match Alauda standard SLA and avoid uncontrolled scope</td>
+</tr>
+<tr>
+<td style="text-align: left;">Support for all third-party software</td>
+<td style="text-align: left;">Limit to Alauda explicitly certified environments</td>
+<td style="text-align: left;">Reduce operational burden</td>
+</tr>
+</tbody>
+</table>
+<h4>Training Commitment</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Risk Point</th>
+<th style="text-align: left;">Alauda Standard</th>
+<th style="text-align: left;">Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">72 hours/year</td>
+<td style="text-align: left;">40 hours/year</td>
+<td style="text-align: left;">Avoid training cost overrun</td>
+</tr>
+<tr>
+<td style="text-align: left;">Any software-related topic</td>
+<td style="text-align: left;">Limited topic list</td>
+<td style="text-align: left;">Control scope creep</td>
+</tr>
+</tbody>
+</table>
+<h4>Support Duration</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Risk Point</th>
+<th style="text-align: left;">Alauda Standard</th>
+<th style="text-align: left;">Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Entire contract period</td>
+<td style="text-align: left;">18 months (current + previous major version)</td>
+<td style="text-align: left;">Control long-term maintenance costs</td>
+</tr>
+<tr>
+<td style="text-align: left;">All historical versions</td>
+<td style="text-align: left;">Current and one prior major version only</td>
+<td style="text-align: left;">Avoid "zombie version" maintenance burden</td>
+</tr>
+</tbody>
+</table>
+<h4>Support Termination</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Risk Point</th>
+<th style="text-align: left;">Alauda Standard</th>
+<th style="text-align: left;">Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Customer can reject termination</td>
+<td style="text-align: left;">Either party may terminate with 90 days notice</td>
+<td style="text-align: left;">Maintain business flexibility</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>5. User Guide</h2>
+<h3>5.1 Installation</h3>
+<pre><code class="language-bash"># Script location
+/Users/rootwang/opencode/Legal/alauda_legal_agent.py
+
+# Run permission (first time only)
+chmod +x /Users/rootwang/opencode/Legal/alauda_legal_agent.py
+</code></pre>
+<h3>5.2 Basic Usage</h3>
+<h4>Option 1: Direct text input</h4>
+<pre><code class="language-bash">python3 /Users/rootwang/opencode/Legal/alauda_legal_agent.py -t &quot;contract text...&quot;
+</code></pre>
+<h4>Option 2: Read from file</h4>
+<pre><code class="language-bash"># Supports .txt, .md, .json formats
+python3 /Users/rootwang/opencode/Legal/alauda_legal_agent.py -f contract.txt
+</code></pre>
+<h4>Option 3: Save report to file</h4>
+<pre><code class="language-bash">python3 /Users/rootwang/opencode/Legal/alauda_legal_agent.py -f contract.txt --output report.md
+</code></pre>
+<h3>5.3 Output Format Options</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-o markdown</code></td>
+<td>Output Markdown format (default)</td>
+</tr>
+<tr>
+<td><code>-o json</code></td>
+<td>Output JSON format (for system integration)</td>
+</tr>
+<tr>
+<td><code>--no-mode-b</code></td>
+<td>Output Mode A only, exclude revision suggestions</td>
+</tr>
+</tbody>
+</table>
+<h3>5.4 Complete Command Examples</h3>
+<pre><code class="language-bash"># Generate full report (Mode A + Mode B)
+python3 alauda_legal_agent.py -f contract.txt --output review_report.md
+
+# Generate risk comparison table only
+python3 alauda_legal_agent.py -f contract.txt --no-mode-b --output risk_table.md
+
+# Generate JSON format (for system integration)
+python3 alauda_legal_agent.py -f contract.txt -o json --output report.json
+</code></pre>
+<hr />
+<h2>6. Output Report Explanation</h2>
+<h3>6.1 Mode A: Risk Comparison Table</h3>
+<p>Mode A provides a structured risk overview for quick identification of problematic clauses:</p>
+<pre><code>| Dimension | Clause Summary | Risk Level | Alauda Standard | Risk Reason |
+| :--- | :--- | :---: | :--- | :--- |
+| Liability | ... | RED HIGH | 12 months fees | Cap too high (3x) |
+</code></pre>
+<p><strong>Risk Level Icons</strong>:
+- <strong>RED HIGH</strong> - Requires immediate modification, not acceptable
+- <strong>YELLOW MEDIUM</strong> - Suggest modification, negotiable
+- <strong>GREEN LOW</strong> - Meets Alauda standards
+- <strong>WHITE N/A</strong> - Relevant clause not detected</p>
+<h3>6.2 Mode B: Suggested Revision Text</h3>
+<p>Mode B provides ready-to-use Legal English revision suggestions:</p>
+<pre><code>### Liability
+
+**Risk**: Liability cap too high (3x)
+
+**Suggested Revision**:
+</code></pre>
+<p>Supplier's total aggregate liability shall not exceed the total fees 
+paid by Customer in the 12 months preceding the claim.</p>
+<pre><code></code></pre>
+<h3>6.3 Review Summary</h3>
+<p>The report ends with statistical data:</p>
+<pre><code>| Risk Level | Count |
+| :---: | :---: |
+| RED High | 1 |
+| YELLOW Medium | 3 |
+| GREEN Low | 9 |
+</code></pre>
+<hr />
+<h2>7. FAQ</h2>
+<h3>Q1: What if the governing law is from a new jurisdiction?</h3>
+<p>The Agent automatically detects the <strong>Governing Law</strong> clause and alerts legal counsel to jurisdiction-specific considerations. Review standards may need adjustment for different jurisdictions.</p>
+<h3>Q2: What if the Agent misses a clause?</h3>
+<p>Click <strong>"Add to Knowledge"</strong> and it will be recognized next time when reviewing similar contracts (e.g., UOB or OCBC). You can also add new rules to the <code>benchmark</code> configuration in the script.</p>
+<h3>Q3: How to handle Russian/English mixed contracts?</h3>
+<p>The script supports multilingual contract recognition and automatically handles Russian (e.g., "поддержк", "обучен") and English mixed text.</p>
+<h3>Q4: Can risk levels be adjusted?</h3>
+<p>Yes. Modify the regex rules in the <code>risk_rules</code> configuration in the script. You can move rules from <code>high</code> to <code>medium</code> or vice versa.</p>
+<h3>Q5: How to add new review dimensions?</h3>
+<p>Add a new category to the <code>benchmark</code> dictionary in the script:</p>
+<pre><code class="language-python">&quot;new_category&quot;: {
+    &quot;keywords&quot;: [r&quot;keyword1&quot;, r&quot;keyword2&quot;],
+    &quot;redline&quot;: &quot;Alauda standard requirement&quot;,
+    &quot;standard_clause&quot;: &quot;Standard clause text&quot;,
+    &quot;rationale&quot;: &quot;Reason explanation&quot;,
+    &quot;risk_rules&quot;: {
+        &quot;high&quot;: [(r&quot;pattern&quot;, &quot;Risk reason&quot;)],
+        &quot;medium&quot;: [(r&quot;pattern&quot;, &quot;Risk reason&quot;)]
+    }
+}
+</code></pre>
+<h3>Q6: How to handle Word/PDF format contracts?</h3>
+<p><strong>Method 1</strong>: Use macOS built-in tool</p>
+<pre><code class="language-bash">textutil -convert txt contract.docx -output contract.txt
+</code></pre>
+<p><strong>Method 2</strong>: Copy and paste directly</p>
+<pre><code class="language-bash">python3 alauda_legal_agent.py -t &quot;$(pbpaste)&quot;
+</code></pre>
+<hr />
+<h2>8. Appendix</h2>
+<h3>8.1 Complete Review Dimension List</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">No.</th>
+<th style="text-align: left;">Dimension Code</th>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Contract Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">liability</td>
+<td style="text-align: left;">Liability</td>
+<td style="text-align: left;">Sales Contract</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">ipr</td>
+<td style="text-align: left;">Intellectual Property</td>
+<td style="text-align: left;">Sales Contract</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">acceptance</td>
+<td style="text-align: left;">Acceptance</td>
+<td style="text-align: left;">Sales Contract</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">termination</td>
+<td style="text-align: left;">Termination</td>
+<td style="text-align: left;">Sales Contract</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">governing_law</td>
+<td style="text-align: left;">Governing Law</td>
+<td style="text-align: left;">Sales Contract</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">data_protection</td>
+<td style="text-align: left;">Data Protection</td>
+<td style="text-align: left;">Sales Contract</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">sla_response</td>
+<td style="text-align: left;">SLA Response</td>
+<td style="text-align: left;">Technical Support</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">support_scope</td>
+<td style="text-align: left;">Support Scope</td>
+<td style="text-align: left;">Technical Support</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">exclusion_liability</td>
+<td style="text-align: left;">Exclusion of Liability</td>
+<td style="text-align: left;">Technical Support</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">training_commitment</td>
+<td style="text-align: left;">Training Commitment</td>
+<td style="text-align: left;">Technical Support</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: left;">support_duration</td>
+<td style="text-align: left;">Support Duration</td>
+<td style="text-align: left;">Technical Support</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: left;">access_rights</td>
+<td style="text-align: left;">Access Rights</td>
+<td style="text-align: left;">Technical Support</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td style="text-align: left;">termination_support</td>
+<td style="text-align: left;">Support Termination</td>
+<td style="text-align: left;">Technical Support</td>
+</tr>
+</tbody>
+</table>
+<h3>8.2 Standard Clause Templates</h3>
+<h4>Liability</h4>
+<pre><code>Supplier's total aggregate liability shall not exceed the total fees 
+paid by Customer in the 12 months preceding the claim.
+</code></pre>
+<h4>Intellectual Property</h4>
+<pre><code>Alauda retains all rights to the pre-existing platform (PaaS) and any 
+derivative works based on its core technology. Customer owns only custom 
+components developed specifically for Customer.
+</code></pre>
+<h4>Acceptance</h4>
+<pre><code>Deliverables are deemed accepted if no written rejection is received 
+within 10 business days of delivery.
+</code></pre>
+<h4>SLA Response</h4>
+<pre><code>Response times: P1 (Critical): 30 minutes initial response; P2 (High): 2 hours; 
+P3 (Medium): 4 hours; P4 (Low): 8 hours. Resolution times 
+to be determined on a best-effort basis.
+</code></pre>
+<h4>Training Commitment</h4>
+<pre><code>Alauda will provide up to 40 hours of online training per year. Additional 
+training may be purchased at agreed rates. Training content and schedule 
+to be mutually agreed.
+</code></pre>
+<h4>Support Duration</h4>
+<pre><code>Warranty support is provided for the current major version and one prior 
+major version, for a maximum of 18 months from general availability of 
+the new major version.
+</code></pre>
+<h4>Exclusion of Liability</h4>
+<pre><code>In no event shall Alauda be liable for any indirect, incidental, special, 
+consequential, or punitive damages, including without limitation loss of 
+profits, data, use, or goodwill, regardless of the form of action.
+</code></pre>
+<hr />
+<h2>Version History</h2>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td>2025-03-03</td>
+<td>Initial version, 6 sales contract dimensions</td>
+</tr>
+<tr>
+<td>2.0</td>
+<td>2026-02-20</td>
+<td>Added 7 technical support dimensions, multilingual support</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Support</h2>
+<p>For questions or suggestions, please contact the legal team or submit an Issue to the script repository.</p>
+<hr />
+<p><em>This manual was created with assistance from Alauda Global Legal Agent</em></p>
+</body>
+</html>
