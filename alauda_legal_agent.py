@@ -191,7 +191,7 @@ def get_mock_response(mode: str):
                 CommercialTerm(key_metric="验收账期", extracted_value="需30天内签署纸质报告", operational_impact="极长，可能导致后续商单转化遥遥无期")
             ],
             legal_reviews=[
-                ClauseReview(
+                LegalReview(
                     dimension="验收条款 (Acceptance)",
                     original_text="Deliverables shall not be deemed accepted until Bank issues a formal Final Acceptance Certificate in writing.",
                     risk_level="MEDIUM",
