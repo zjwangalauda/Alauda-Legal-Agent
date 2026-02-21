@@ -112,5 +112,23 @@ python3 alauda_legal_agent.py -d ./customer_bundle/ -k $GEMINI_API_KEY -o report
 | **付款节奏** | 20% - 40% - 40% (分三年付) | 首付偏低，存在长达两年的垫资交付期资金压力 |
 | **维保周期** | 自签收后长达36个月 | 维保人力成本极高，需单独核算维保利润率 |
 
-### ⚖️ 法务合规与红线防御阵地
-*(详情见 跨文档隐藏后门雷达 模块，此处略)*
+### ⚖️ 法务合规与红线防御阵地 (Legal Risk Matrix)
+
+**💥 发现后门 #1：知识产权 (IP Rights) - 平台衍生品强制归属客户 🔴 HIGH**
+- **🏰 主协议防线 (Master Clause)**:
+  > GFA 11.1(3): MegaBank owns all rights, title and interest in and to Intellectual Property Rights developed during the course of providing Services... including enhancements, modifications or derivative works of materials...
+
+- **🗡️ 越权覆盖点 (Overriding Clause in `General Terms.docx`)**:
+  > Software Module 5.2 再次强化: Ownership of the Intellectual Property Rights in any customisations... will be governed by the relevant Service Module.
+
+**💡 致命风险溯源分析 (Risk Trace Analysis)**:
+客户在主框架中规定，无论原先是谁的知识产权（包括 Alauda 核心底座），只要在服务过程中产生了 enhancements(增强) 或 derivative works(衍生品)，所有权全部归属客户。这意味着 Alauda 实施团队在驻场时写的外围插件、架构优化脚本都会在法律上被收归银行所有，严重阻碍 Alauda 将这些实践标准化进下一次产品迭代的权利。
+
+**✅ 法务强拆建议 (Suggested Counter-Measure)**:
+```text
+删除 GFA 11.1(3) 中的 'enhancements, modifications or derivative works...' 并在 Order Form 中利用最高优先级添加特约保护：
+'Notwithstanding General Terms 11.1, Supplier retains all ownership to its pre-existing core platform and any derivative works thereof. MegaBank only owns custom deliverables explicitly stated as Work for Hire.'
+```
+
+---
+*Alauda Global Legal Agent - 您的智能法务与商务中枢引擎。*
