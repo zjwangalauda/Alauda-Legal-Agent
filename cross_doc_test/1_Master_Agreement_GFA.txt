@@ -1,0 +1,13 @@
+GENERAL FRAMEWORK AGREEMENT (GFA)
+Between: Alauda (Supplier) and MegaBank (Customer)
+Date: Jan 1, 2026
+
+1. STRUCTURE AND ORDER OF PRECEDENCE
+This GFA forms the master framework. In the event of any conflict or inconsistency between this GFA and any Order Form, Service Statement (SOW), or Appendix, the terms of this GFA shall prevail unless the subordinate document expressly states that it overrides a specific clause of this GFA.
+
+11. INTELLECTUAL PROPERTY
+11.1 Supplier retains all ownership to its pre-existing core platform. Customer owns any custom configurations specifically paid for.
+
+14. LIMITATION OF LIABILITY
+14.1 The total aggregate liability of Supplier under this Agreement, whether in contract, tort, or otherwise, shall not exceed the total fees paid by Customer in the twelve (12) months preceding the claim.
+14.2 Indirect Damages: Neither party shall be liable for indirect, incidental, or consequential damages.

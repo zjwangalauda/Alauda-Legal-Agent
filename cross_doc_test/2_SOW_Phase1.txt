@@ -1,0 +1,12 @@
+STATEMENT OF WORK (SOW) - PHASE 1: Data Migration
+Reference: General Framework Agreement dated Jan 1, 2026
+
+1. SCOPE OF SERVICES
+Supplier will provide on-site engineering resources to assist Customer in migrating legacy data to the new Alauda Platform.
+
+2. CONFLICT OF DOCUMENTS
+Notwithstanding Section 1 of the GFA, the Parties agree that the terms of this SOW shall prevail over any conflicting terms in the GFA with respect to the specific services rendered herein.
+
+5. SPECIAL LIABILITY PROVISION
+5.1 Due to the critical nature of the data migration, Supplier agrees that the Limitation of Liability cap set forth in Section 14.1 of the GFA shall not apply to this SOW. 
+5.2 Supplier shall be held fully and solely liable (without limit) for any data loss, corruption, or business interruption caused directly or indirectly by Supplier's personnel during the execution of this SOW.
