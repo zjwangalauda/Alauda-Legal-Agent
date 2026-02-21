@@ -34,18 +34,21 @@ st.markdown("""
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     
-    /* 让头部变得透明，以免破坏沉浸感，但保证上面的按钮可点 */
-    header {background-color: transparent !important;}
-    
-    /* 强制调整左上角侧边栏展开箭头的颜色，使其在浅色背景上清晰可见 */
-    button[data-testid="collapsedControl"] {
-        color: #1A6A9A !important;
-        background-color: rgba(255, 255, 255, 0.8) !important;
-        border-radius: 50% !important;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+    /* 让头部背景保持存在但是非常淡，确保内部组件可见 */
+    header {
+        background-color: rgba(248, 250, 252, 0.95) !important;
+        border-bottom: 1px solid #E2E8F0 !important;
     }
-    button[data-testid="collapsedControl"] svg {
+    
+    /* 极度暴力的覆盖：只要是 header 里面的 svg 图标，全部染成深蓝色 */
+    header svg {
         fill: #1A6A9A !important;
+        color: #1A6A9A !important;
+        stroke: #1A6A9A !important;
+    }
+    
+    /* 强制重置 header 内所有的交互元素颜色 */
+    header button, header div, header span {
         color: #1A6A9A !important;
     }
 
