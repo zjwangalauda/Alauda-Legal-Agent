@@ -36,6 +36,18 @@ st.markdown("""
     
     /* 让头部变得透明，以免破坏沉浸感，但保证上面的按钮可点 */
     header {background-color: transparent !important;}
+    
+    /* 强制调整左上角侧边栏展开箭头的颜色，使其在浅色背景上清晰可见 */
+    button[data-testid="collapsedControl"] {
+        color: #1A6A9A !important;
+        background-color: rgba(255, 255, 255, 0.8) !important;
+        border-radius: 50% !important;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+    }
+    button[data-testid="collapsedControl"] svg {
+        fill: #1A6A9A !important;
+        color: #1A6A9A !important;
+    }
 
     /* 顶部导航栏 / Hero Section 样式 */
     .hero-container {
