@@ -303,28 +303,28 @@ with col2:
                     """
                     
                     if is_multi:
-                        html_card += f"""
-                        <div class="risk-section-title">🏰 主协议防线 (Master Defense)</div>
-                        <div class="original-text">{item.master_clause}</div>
-                        <div class="risk-section-title">🗡️ 越权攻击点 ({item.source_doc})</div>
-                        <div class="original-text">{item.overriding_clause}</div>
-                        <div class="risk-section-title">💡 致命风险溯源 (Risk Analysis)</div>
-                        <div class="rationale-text">{item.risk_analysis}</div>
-                        <div class="risk-section-title">✅ 法务强制拦截方案 (Suggested Action)</div>
-                        <div class="revision-box">{item.suggested_action}</div>
-                        """
+                        html_card += f'''
+<div class="risk-section-title">🏰 主协议防线 (Master Defense)</div>
+<div class="original-text">{item.master_clause}</div>
+<div class="risk-section-title">🗡️ 越权攻击点 ({item.source_doc})</div>
+<div class="original-text">{item.overriding_clause}</div>
+<div class="risk-section-title">💡 致命风险溯源 (Risk Analysis)</div>
+<div class="rationale-text">{item.risk_analysis}</div>
+<div class="risk-section-title">✅ 法务强制拦截方案 (Suggested Action)</div>
+<div class="revision-box">{item.suggested_action}</div>
+'''
                     else:
-                        html_card += f"""
-                        <div class="risk-section-title">❌ 风险原文摘录 (Original Text)</div>
-                        <div class="original-text">{item.original_text}</div>
-                        <div class="risk-section-title">💡 商业与法务推理 (Rationale)</div>
-                        <div class="rationale-text">{item.rationale}</div>
-                        """
+                        html_card += f'''
+<div class="risk-section-title">❌ 风险原文摘录 (Original Text)</div>
+<div class="original-text">{item.original_text}</div>
+<div class="risk-section-title">💡 商业与法务推理 (Rationale)</div>
+<div class="rationale-text">{item.rationale}</div>
+'''
                         if item.suggested_revision:
-                            html_card += f"""
-                            <div class="risk-section-title">✅ Legal English 建议回改条款 (Redline)</div>
-                            <div class="revision-box">{item.suggested_revision}</div>
-                            """
+                            html_card += f'''
+<div class="risk-section-title">✅ 建议回改条款 (Redline)</div>
+<div class="revision-box">{item.suggested_revision}</div>
+'''
                     
                     html_card += "</div>"
                     st.markdown(html_card, unsafe_allow_html=True)
