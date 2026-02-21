@@ -311,27 +311,45 @@ with col2:
 
         # 结果渲染
         if report:
-            # 执行成功提示
-            st.success("审计完成！报告已生成。")
+            st.success("🎯 综合审计决议已生成！")
             
-            # 渲染摘要
-            st.markdown("#### 📝 Executive Summary (全局视角)")
-            st.write(report.overall_assessment)
+            # 1. 渲染 COO 视角
+            st.markdown("### 👨‍💼 首席运营官 (COO) 审批台")
+            coo_color = "#16A34A" if "直接签约" in report.coo_view.approval_recommendation else "#DC2626" if "拒签" in report.coo_view.approval_recommendation else "#D97706"
+            st.markdown(f"""
+            <div style="background: white; border-top: 5px solid {coo_color}; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px;">
+                <h4 style="margin-top:0;">最终决议：<span style="color: {coo_color};">{report.coo_view.approval_recommendation}</span></h4>
+                <p><b>💥 致命阻碍 (Deal Breakers):</b> {report.coo_view.deal_breaker_summary}</p>
+                <div style="background-color: #F1F5F9; padding: 15px; border-radius: 6px; border-left: 4px solid #94A3B8;">
+                    <b>💡 战略博弈指导 (Strategic Playbook):</b><br>
+                    <span style="color: #475569;">{report.coo_view.strategic_advice}</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
             
-            # 多文档特有：拓扑图
+            # 2. 渲染商务运营视角
+            st.markdown("### 📈 运营与商务履约看板")
+            st.info("以下核心要素已从错综复杂的长文本中自动提炼，供 PMO 与财务侧做履约及现金流测算。")
+            comm_data = [{"核心要素": c.key_metric, "合同摘要": c.extracted_value, "运营影响测算": c.operational_impact} for c in report.commercial_summary]
+            st.table(comm_data)
+            st.markdown("---")
+
+            # 3. 渲染法务视角
+            st.markdown("### ⚖️ 法务合规与红线防御阵地")
+            
             if mode != "📄 单文档快速审计 (Single-Doc)":
-                st.markdown("#### 📚 Document Hierarchy (效力拓扑)")
+                st.markdown("#### 📚 案卷效力层级 (Document Hierarchy)")
                 hierarchy_data = [{"层级 (Level)": f"Level {n.precedence_level}", "文档类型": n.doc_type, "文件名": n.doc_name} for n in sorted(report.document_hierarchy, key=lambda x: x.precedence_level)]
                 st.table(hierarchy_data)
-                st.markdown("#### 🚨 Hidden Backdoors (隐藏后门雷达)")
+                st.markdown("#### 🚨 跨文档隐藏后门雷达")
             else:
-                st.markdown("#### 🚨 Semantic Risk Matrix (语义风险矩阵)")
+                st.markdown("#### 🚨 合同红线风险审查矩阵")
 
             # 渲染具体的风险卡片
-            items = getattr(report, 'hidden_backdoors', None) or getattr(report, 'reviews', None)
+            items = getattr(report, 'hidden_backdoors', None) or getattr(report, 'legal_reviews', None)
             
             if not items:
-                st.info("🎉 完美！未检测到任何突破商业红线的高危条款。可以安全放行。")
+                st.success("🎉 法务通关！未检测到任何突破商业红线的高危条款。")
             else:
                 for item in items:
                     # 单双模式字段兼容处理
