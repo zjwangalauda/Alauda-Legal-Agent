@@ -204,14 +204,14 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # 3. 页面顶部 Hero Section
-st.markdown("""
+st.markdown(f"""
 <div class="hero-container">
-    <div style="background-color: white; padding: 12px; border-radius: 12px; height: 70px; width: 70px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PHRpdGxlPkFzc2V0IDI4PC90aXRsZT48ZyBpZD0iZmU3ZmI1NWEtM2QwOS00NjgwLWI1OTktN2VhODQ1ZTRiYTgzIiBkYXRhLW5hbWU9IkxheWVyIDIiPjxnIGlkPSI5YzYxYzA1Ny1hZTY0LTQ3Y2ItYTEwNS0yZjY3Zjg2ZDBmMjkiIGRhdGEtbmFtZT0iQnJhbmQgTG9nbyI+PHBhdGggZD0iTTE2LDh2OEgxMi40OVY4QTQuNDUsNC40NSwwLDAsMCwzLjgsNi41OGwtMS4zMi42NSwxLjExLjkyYy4xMiwyLjE5LjksNS44Niw3LjMxLDcuODVIOGE4LDgsMCwxLDEsOC04WiIgZmlsbD0iIzNiYWVlNCIvPjxwYXRoIGQ9Ik03LjA2LDguMzRhLjkzLjkzLDAsMSwxLS45Mi0uOTNBLjkyLjkyLDAsMCwxLDcuMDYsOC4zNFoiIGZpbGw9IiMzYmFlZTQiLz48L2c+PC9nPjwvc3ZnPg==" style="width: 100%; height: 100%;">
+    <div style="background-color: transparent; height: 50px; display: flex; align-items: center; justify-content: center; margin-right: 10px;">
+        <img src="https://www.alauda.cn/Public/Home/images/new_header/logo_new_230524.png" style="height: 100%; object-fit: contain; filter: brightness(0) invert(1);">
     </div>
     <div>
         <h1 class="hero-title">Global Legal Agent</h1>
-        <p class="hero-subtitle">V4 Semantic AI Edition · 专为企业级 SaaS/PaaS 商业模式打造的自动化合同审查大脑</p>
+        <p class="hero-subtitle">V5 Semantic AI Edition · 专为企业级 SaaS/PaaS 商业模式打造的自动化合同审查大脑</p>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -219,7 +219,7 @@ st.markdown("""
 # 4. 侧边栏配置
 with st.sidebar:
     st.markdown(
-        '''<div style='text-align: center; margin-bottom: 20px;'><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PHRpdGxlPkFzc2V0IDI4PC90aXRsZT48ZyBpZD0iZmU3ZmI1NWEtM2QwOS00NjgwLWI1OTktN2VhODQ1ZTRiYTgzIiBkYXRhLW5hbWU9IkxheWVyIDIiPjxnIGlkPSI5YzYxYzA1Ny1hZTY0LTQ3Y2ItYTEwNS0yZjY3Zjg2ZDBmMjkiIGRhdGEtbmFtZT0iQnJhbmQgTG9nbyI+PHBhdGggZD0iTTE2LDh2OEgxMi40OVY4QTQuNDUsNC40NSwwLDAsMCwzLjgsNi41OGwtMS4zMi42NSwxLjExLjkyYy4xMiwyLjE5LjksNS44Niw3LjMxLDcuODVIOGE4LDgsMCwxLDEsOC04WiIgZmlsbD0iIzNiYWVlNCIvPjxwYXRoIGQ9Ik03LjA2LDguMzRhLjkzLjkzLDAsMSwxLS45Mi0uOTNBLjkyLjkyLDAsMCwxLDcuMDYsOC4zNFoiIGZpbGw9IiMzYmFlZTQiLz48L2c+PC9nPjwvc3ZnPg==" width="80" style="margin-bottom:20px;"><br><span style='color: #1A6A9A !important; font-weight: 800; font-size: 24px; letter-spacing: 1px;'>ALAUDA</span></div>''',
+        f"<div style='text-align: center; margin-bottom: 30px;'><img src='https://www.alauda.cn/Public/Home/images/new_header/logo_new_230524.png' width='180'></div>", 
         unsafe_allow_html=True
     )
     st.info("💡 提示：使用键盘快捷键 `Cmd/Ctrl + .` 可以快速展开或收起本侧边栏。")
