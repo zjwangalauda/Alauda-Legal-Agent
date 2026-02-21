@@ -23,158 +23,158 @@
     pre { background-color: var(--neutral-900); color: var(--neutral-100); padding: 16px; border-radius: 8px; overflow-x: auto; }
     code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em; }
     p code, li code, td code { background-color: var(--neutral-100); color: var(--neutral-800); padding: 2px 6px; border-radius: 4px; }
-    </style></head><body><h1>🚀 Alauda Global Legal Agent (V5 Ultimate) 用户手册</h1>
-<p><strong>版本</strong>: 5.0 (Multi-Role Copilot &amp; Web Dashboard Edition)<br />
-<strong>更新日期</strong>: 2026年2月22日<br />
-<strong>适用对象</strong>: Alauda (灵雀云) 法务、交付、商务与高管团队</p>
+    </style></head><body><h1>🚀 Alauda Global Legal Agent (V5 Ultimate) User Manual</h1>
+<p><strong>Version</strong>: 5.0 (Multi-Role Copilot &amp; Web Dashboard Edition)<br />
+<strong>Last Updated</strong>: February 22, 2026<br />
+<strong>Target Audience</strong>: Alauda Legal, Delivery, Commercial, and CXO Executive Teams</p>
 <hr />
-<h2>目录</h2>
+<h2>Table of Contents</h2>
 <ol>
-<li><a href="#1-核心愿景与架构演进">核心愿景与架构演进</a></li>
-<li><a href="#2-v5-独家特性三重视角-copilot">V5 独家特性：三重视角 Copilot</a></li>
-<li><a href="#3-多文档关联审计机制">多文档关联审计机制</a></li>
-<li><a href="#4-saas-商业红线与法务底线">SaaS 商业红线与法务底线</a></li>
-<li><a href="#5-操作指南-web-app-与-cli">操作指南 (Web App 与 CLI)</a></li>
-<li><a href="#6-输出报告实战示例">输出报告实战示例</a></li>
+<li><a href="#1-core-vision--architectural-evolution">Core Vision &amp; Architectural Evolution</a></li>
+<li><a href="#2-v5-exclusive-feature-multi-role-copilot">V5 Exclusive Feature: Multi-Role Copilot</a></li>
+<li><a href="#3-multi-doc-dependency-graph-auditing">Multi-Doc Dependency Graph Auditing</a></li>
+<li><a href="#4-saas-commercial--legal-baselines">SaaS Commercial &amp; Legal Baselines</a></li>
+<li><a href="#5-operational-guide-web-app--cli">Operational Guide (Web App &amp; CLI)</a></li>
+<li><a href="#6-output-report-case-study">Output Report Case Study</a></li>
 </ol>
 <hr />
-<h2>1. 核心愿景与架构演进</h2>
-<p>本手册旨在为 <strong>Alauda (灵雀云)</strong> 提供一套基于端到端大语言模型 (LLM) 的自动化合同审查系统。我们的愿景是将资深法务 Partner 的商业嗅觉与 AI 的全景阅读能力结合，从而在极短时间内封堵 B2B 合同中的致命隐患。</p>
-<p>经过架构迭代，系统目前已演进至 <strong>V5 (Multi-Role Copilot 版)</strong>：
-- <strong>模型无关化 (Agnostic LLM)</strong>：底层脱离单一模型绑定，动态支持 Google Gemini, OpenAI, Claude 以及公司内网私有化模型网关。
-- <strong>结构化防御 (Pydantic)</strong>：通过强类型 JSON 数据契约，强制大模型根据原文语言（中/英）自适应输出地道的法律修改建议。
-- <strong>现代化 Web UI</strong>：采用 Streamlit 构建了带有 Alauda 企业视觉体系的高级可视化数据看板，彻底告别枯燥的命令行。</p>
+<h2>1. Core Vision &amp; Architectural Evolution</h2>
+<p>This manual provides guidance for the <strong>Alauda Global Legal Agent</strong>, an automated contract review system powered by an end-to-end Large Language Model (LLM). Our vision is to combine the commercial acumen of a senior legal partner with the panoramic reading capabilities of AI to seal fatal loopholes in B2B contracts within seconds.</p>
+<p>Following rapid architectural iterations, the system has now evolved to the <strong>V5 Ultimate (Multi-Role Copilot Edition)</strong>:
+- <strong>Agnostic LLM Engine</strong>: Decoupled from a single provider, dynamically supporting Google Gemini, OpenAI, Claude, or internal private model gateways.
+- <strong>Structured Defense (Pydantic)</strong>: Utilizes strict JSON data contracts to force the LLM to adaptively output idiomatic legal revision suggestions based on the original language (English/Chinese) of the contract.
+- <strong>Modern Web UI</strong>: Features an advanced visual dashboard built with Streamlit, incorporating Alauda's corporate design system, leaving behind the tedious command line.</p>
 <hr />
-<h2>2. V5 独家特性：三重视角 Copilot</h2>
-<p>V5 版本最大的突破在于：系统不再是一个单纯的“找错机器”，而是化身为拥有“三重人格”的高级商业幕僚。针对每一份上传的合同或案卷，系统会拆解为三层金字塔视角：</p>
+<h2>2. V5 Exclusive Feature: Multi-Role Copilot</h2>
+<p>The greatest breakthrough in V5 is that the system is no longer a simple "spell checker," but has transformed into an advanced commercial strategist with a "triple persona." For every uploaded dossier, the system deconstructs it into a three-tier pyramid perspective:</p>
 <ol>
-<li>👨‍💼 <strong>首席运营官 (CXO) 审批台 (塔尖)</strong>：</li>
-<li>给出极其明确的决策建议（【建议直接签约】/【有条件通过】/【强烈建议拒签】）。</li>
-<li>提炼阻碍签约的“致命因素 (Deal Breakers)”。</li>
-<li>撰写包含利益交换和让步红线的“战略博弈指导”。</li>
-<li>📈 <strong>运营与商务履约看板 (中层)</strong>：</li>
-<li>为 PMO 和财务团队自动提取庞杂文本中的账期、首付比例、服务期、罚金条款。</li>
-<li>自动测算并提示对公司现金流与交付成本的真实业务影响。</li>
-<li>⚖️ <strong>法务合规与红线防御阵地 (基座)</strong>：</li>
-<li>逐条列出违反公司 SaaS 政策的高危/中危条款。</li>
-<li>给出法务溯源分析，以及可直接用于红线谈判的修正建议 (Redline)。</li>
+<li>👨‍💼 <strong>CXO Executive Decision Desk (The Apex)</strong>:</li>
+<li>Provides an unequivocal approval recommendation (e.g., [Sign Directly] / [Conditional Approval] / [Reject]).</li>
+<li>Distills fatal impediments ("Deal Breakers").</li>
+<li>Authors a "Strategic Playbook" containing trade-off strategies and redline boundaries for executives.</li>
+<li>📈 <strong>Commercial &amp; Operations Dashboard (The Middle)</strong>:</li>
+<li>Automatically extracts critical commercial metrics hidden in voluminous texts—such as total contract value, payment terms, service periods, and penalty clauses—specifically for PMO and Finance.</li>
+<li>Calculates and highlights the real operational and cash flow impact of these terms.</li>
+<li>⚖️ <strong>Legal &amp; Compliance Defense Matrix (The Foundation)</strong>:</li>
+<li>Itemizes all high/medium risk clauses that violate company SaaS policies.</li>
+<li>Provides legal rationale and ready-to-use Redline revisions.</li>
 </ol>
 <hr />
-<h2>3. 多文档关联审计机制</h2>
-<p>大型 B2B 客户经常采用<strong>“明修栈道，暗度陈仓”</strong>的策略：在严格的《主协议 GFA》中答应所有底线，却在某个交付团队草签的《服务说明书 SOW》附件中写上“本 SOW 拥有最高优先级，且供应商需承担无限数据连带责任”。</p>
-<p><strong>Agent 的跨文档图谱工作流：</strong>
-1. <strong>构建效力拓扑</strong>：自动抓取所有文件中的 <code>Order of Precedence</code>，梳理出一张“谁管谁”的效力层级树。
-2. <strong>后门嗅探 (Backdoor Detection)</strong>：利用百万级 Token 上下文，将高优先级的附件与低优先级主合同的红线进行交叉对比。一旦发现低级别文件中的保护被高级别文件越权推翻，即触发红色防线警报并提供定向爆破条款。</p>
+<h2>3. Multi-Doc Dependency Graph Auditing</h2>
+<p>In large B2B procurements, clients often employ a "Trojan Horse" strategy: agreeing to all baselines in the strict Master Agreement (GFA), only to secretly insert an overriding clause into a Statement of Work (SOW) signed by a delivery team, claiming: <em>"This SOW holds the highest priority, and the supplier assumes unlimited data liability."</em></p>
+<p><strong>The Agent's Cross-Document Graph Workflow:</strong>
+1. <strong>Topology Construction</strong>: Automatically extracts the <code>Order of Precedence</code> from all files, constructing a hierarchical tree of authority.
+2. <strong>Backdoor Detection</strong>: Utilizing a million-token context, it cross-references high-priority appendices against the protective redlines of the low-priority master contract. If lower-level protections are overridden, it triggers a red alert and provides a targeted demolition clause.</p>
 <hr />
-<h2>4. SaaS 商业红线与法务底线</h2>
-<p>Agent 严格捍卫以下 6 条 SaaS 商业生命线：</p>
+<h2>4. SaaS Commercial &amp; Legal Baselines</h2>
+<p>The Agent strictly defends the following 6 SaaS commercial lifelines:</p>
 <table>
 <thead>
 <tr>
-<th>监控维度</th>
-<th>风险红线判定标准与业务逻辑</th>
+<th>Monitoring Dimension</th>
+<th>Risk Baseline &amp; Business Logic</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>订阅计量</strong></td>
-<td>🔴 拒绝买断/无限使用权 → 🟢 必须基于 Node/Core 等具体 Unit 计量。<br><em>防范客户购买一套授权后在企业内无限制复制。</em></td>
+<td><strong>Subscription Metrics</strong></td>
+<td>🔴 Reject perpetual/unlimited use → 🟢 Must be measured by specific Units (Node/Core).<br><em>Prevents customers from duplicating a single license enterprise-wide.</em></td>
 </tr>
 <tr>
-<td><strong>赔偿责任</strong></td>
-<td>🔴 拒绝无限赔偿或包含数据丢失 → 🟢 上限为 12个月订阅费 (EULA限$50)。<br><em>实施严格的“双轨制”风控，明确排除间接损失。</em></td>
+<td><strong>Liability Cap</strong></td>
+<td>🔴 Reject unlimited liability or data loss inclusion → 🟢 Capped at 12 months subscription fees (EULA free tier capped at $50).<br><em>Enforces strict dual-track risk control, explicitly excluding indirect losses.</em></td>
 </tr>
 <tr>
-<td><strong>知识产权</strong></td>
-<td>🔴 拒绝派生品归属客户 (Work for Hire) → 🟢 坚守核心 PaaS 底座所有权。<br><em>防止被单一客户买断导致核心代码闭源。</em></td>
+<td><strong>IP Rights</strong></td>
+<td>🔴 Reject derivatives owned by customer (Work for Hire) → 🟢 Retain ownership of core PaaS foundation.<br><em>Prevents single-customer buyout leading to closed-sourcing of core code.</em></td>
 </tr>
 <tr>
-<td><strong>验收结项</strong></td>
-<td>🔴 拒绝单边书面确认或无限循环拒收 → 🟢 必须包含 10 个工作日默示验收。<br><em>杜绝客户利用内部流程拖延 FAC 结项，强保尾款结算。</em></td>
+<td><strong>Acceptance</strong></td>
+<td>🔴 Reject unilateral written confirmation or infinite rejection loops → 🟢 Must include a 10-business-day Deemed Acceptance mechanism.<br><em>Prevents customers from delaying the FAC to secure prompt SaaS payment settlement.</em></td>
 </tr>
 <tr>
-<td><strong>SLA响应</strong></td>
-<td>🔴 拒绝 &lt;30 分钟内 / 24x7 无限支持 → 🟢 匹配 P1 30mins, P2 2hrs 上限。<br><em>拒绝脱离一线运维中心 (ROTC) 实际承受能力的承诺。</em></td>
+<td><strong>SLA Response</strong></td>
+<td>🔴 Reject &lt;30 min / 24x7 unlimited support → 🟢 Match operational caps of P1 30mins, P2 2hrs.<br><em>Rejects commitments that exceed the frontline Operations Center's (ROTC) capacity.</em></td>
 </tr>
 <tr>
-<td><strong>支持范围</strong></td>
-<td>🔴 拒绝驻场或第三方软件兜底 → 🟢 仅限 Alauda 认证环境内的远程支持。<br><em>明确排除定制代码开发和非认证组件排障以控制成本。</em></td>
+<td><strong>Support Scope</strong></td>
+<td>🔴 Reject on-site or third-party software catch-alls → 🟢 Remote support only within Alauda certified environments.<br><em>Explicitly excludes custom code development to control fulfillment costs.</em></td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2>5. 操作指南 (Web App 与 CLI)</h2>
-<h3>5.1 环境启动与 Web App 访问 (推荐)</h3>
-<pre><code class="language-bash"># 激活环境
+<h2>5. Operational Guide (Web App &amp; CLI)</h2>
+<h3>5.1 Environment Startup &amp; Web App (Recommended)</h3>
+<pre><code class="language-bash"># Activate the virtual environment
 source .venv/bin/activate
-# 启动企业级 Web 看板
+# Launch the enterprise-grade Web Dashboard
 streamlit run web_app.py
 </code></pre>
-<p>启动后访问 <code>http://localhost:8501</code>。
-- <strong>配置密钥</strong>：在左侧边栏下拉选择所需的底座大模型，并填入 API Key。
-- <strong>单文档模式</strong>：直接上传 PDF/Word。
-- <strong>多文档模式</strong>：将整个案卷打包为 <code>.zip</code> 上传，体验震撼的效力拓扑与后门雷达。</p>
-<h3>5.2 CLI 极客模式</h3>
-<p>对于技术人员批量处理任务，也可使用原生命令行：</p>
-<pre><code class="language-bash"># 审查单个文件
+<p>Once launched, navigate to <code>http://localhost:8501</code>.
+- <strong>Configure Key</strong>: Use the left sidebar to select your preferred LLM engine and input the API Key.
+- <strong>Single-Doc Mode</strong>: Upload a PDF/Word document directly.
+- <strong>Multi-Doc Mode</strong>: Package the entire dossier into a <code>.zip</code> file for a breathtaking topology and backdoor radar experience.</p>
+<h3>5.2 CLI Geek Mode</h3>
+<p>For technical users handling batch tasks, the native command line is available:</p>
+<pre><code class="language-bash"># Review a single file
 python3 alauda_legal_agent.py -f contract.txt -k $GEMINI_API_KEY -o report.md
 
-# 审查多文档目录
+# Review a multi-document directory
 python3 alauda_legal_agent.py -d ./customer_bundle/ -k $GEMINI_API_KEY -o report.md
 </code></pre>
 <hr />
-<h2>6. 输出报告实战示例</h2>
-<p><em>(以下为针对某金融机构真实案卷 V5 版多角色输出节选)</em></p>
-<h3>👨‍💼 首席运营官 (CXO) 审批台</h3>
+<h2>6. Output Report Case Study</h2>
+<p><em>(The following is an excerpt from a V5 Multi-Role output based on a real dossier from a major financial institution)</em></p>
+<h3>👨‍💼 CXO Executive Decision Desk</h3>
 <ul>
-<li><strong>最终决议</strong>：🔴 <strong>【有条件通过(必须强拆后门)】</strong></li>
-<li><strong>致命阻碍 (Deal Breakers)</strong>：SOW附件利用优先权推翻了GFA的赔偿上限，带来针对银行数据的无限索赔敞口；且未包含默示验收。</li>
-<li><strong>战略博弈指导 (Strategic Playbook)</strong>：这是战略级标杆客户，且首付高达40%能极大缓解现金流。建议不要直接拒签，应由法务 VP 出面，在最高优先级的 Order Form 中强制打上免责补丁。同时在交付端加派资深架构师对冲验收延期风险。</li>
+<li><strong>Final Decision</strong>: 🔴 <strong>[Conditional Approval (Must dismantle backdoors)]</strong></li>
+<li><strong>Deal Breakers</strong>: The SOW appendix uses precedence rules to override the GFA's liability cap, introducing an unlimited data claim exposure; additionally, it lacks a deemed acceptance mechanism.</li>
+<li><strong>Strategic Playbook</strong>: This is a strategic benchmark client, and the 40% upfront payment significantly eases cash flow. It is advised not to reject outright. Instead, the VP of Legal should step in to mandate an overriding protection clause in the highest-priority Order Form. Simultaneously, assign senior architects to the delivery end to mitigate acceptance delay risks.</li>
 </ul>
-<h3>📈 运营与商务履约看板</h3>
+<h3>📈 Commercial &amp; Operations Dashboard</h3>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">核心要素</th>
-<th style="text-align: left;">合同摘要</th>
-<th style="text-align: left;">运营影响测算</th>
+<th style="text-align: left;">Core Metric</th>
+<th style="text-align: left;">Contract Extract</th>
+<th style="text-align: left;">Operational Impact Analysis</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>合同总金额</strong></td>
-<td style="text-align: left;">300万人民币</td>
-<td style="text-align: left;">大单，高营收，具有战略意义</td>
+<td style="text-align: left;"><strong>Total Contract Value</strong></td>
+<td style="text-align: left;">3 Million RMB</td>
+<td style="text-align: left;">Major deal, high revenue, high strategic significance.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>付款节奏</strong></td>
-<td style="text-align: left;">20% - 40% - 40% (分三年付)</td>
-<td style="text-align: left;">首付偏低，存在长达两年的垫资交付期资金压力</td>
+<td style="text-align: left;"><strong>Payment Terms</strong></td>
+<td style="text-align: left;">20% - 40% - 40% (Over 3 years)</td>
+<td style="text-align: left;">Low upfront payment creates significant working capital pressure during a two-year delivery phase.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>维保周期</strong></td>
-<td style="text-align: left;">自签收后长达36个月</td>
-<td style="text-align: left;">维保人力成本极高，需单独核算维保利润率</td>
+<td style="text-align: left;"><strong>Warranty Period</strong></td>
+<td style="text-align: left;">36 months post-acceptance</td>
+<td style="text-align: left;">Extremely high maintenance labor costs; warranty margin requires separate accounting.</td>
 </tr>
 </tbody>
 </table>
-<h3>⚖️ 法务合规与红线防御阵地 (Legal Risk Matrix)</h3>
-<p><strong>💥 发现后门 #1：知识产权 (IP Rights) - 平台衍生品强制归属客户 🔴 HIGH</strong>
-- <strong>🏰 主协议防线 (Master Clause)</strong>:</p>
+<h3>⚖️ Legal Risk Matrix</h3>
+<p><strong>💥 Backdoor #1: IP Rights - Forced Customer Ownership of Platform Derivatives 🔴 HIGH</strong>
+- <strong>🏰 Master Clause Defense</strong>:</p>
 <blockquote>
 <p>GFA 11.1(3): MegaBank owns all rights, title and interest in and to Intellectual Property Rights developed during the course of providing Services... including enhancements, modifications or derivative works of materials...</p>
 </blockquote>
 <ul>
-<li><strong>🗡️ 越权覆盖点 (Overriding Clause in <code>General Terms.docx</code>)</strong>:<blockquote>
-<p>Software Module 5.2 再次强化: Ownership of the Intellectual Property Rights in any customisations... will be governed by the relevant Service Module.</p>
+<li><strong>🗡️ Overriding Clause in <code>General Terms.docx</code></strong>:<blockquote>
+<p>Software Module 5.2 reinforcement: Ownership of the Intellectual Property Rights in any customisations... will be governed by the relevant Service Module.</p>
 </blockquote>
 </li>
 </ul>
-<p><strong>💡 致命风险溯源分析 (Risk Trace Analysis)</strong>:
-客户在主框架中规定，无论原先是谁的知识产权（包括 Alauda 核心底座），只要在服务过程中产生了 enhancements(增强) 或 derivative works(衍生品)，所有权全部归属客户。这意味着 Alauda 实施团队在驻场时写的外围插件、架构优化脚本都会在法律上被收归银行所有，严重阻碍 Alauda 将这些实践标准化进下一次产品迭代的权利。</p>
-<p><strong>✅ 法务强拆建议 (Suggested Counter-Measure)</strong>:</p>
-<pre><code class="language-text">删除 GFA 11.1(3) 中的 'enhancements, modifications or derivative works...' 并在 Order Form 中利用最高优先级添加特约保护：
+<p><strong>💡 Risk Trace Analysis</strong>:
+The customer stipulates in the master framework that regardless of original IP ownership (including Alauda's core foundation), any enhancements or derivative works generated during service provision belong entirely to the customer. This means any peripheral plugins or architectural optimization scripts written by the Alauda delivery team on-site are legally confiscated by the bank, severely hindering Alauda's right to standardize these practices into the next product iteration.</p>
+<p><strong>✅ Suggested Counter-Measure</strong>:</p>
+<pre><code class="language-text">Delete 'enhancements, modifications or derivative works...' from GFA 11.1(3) and add a special protection utilizing the highest priority in the Order Form:
 'Notwithstanding General Terms 11.1, Supplier retains all ownership to its pre-existing core platform and any derivative works thereof. MegaBank only owns custom deliverables explicitly stated as Work for Hire.'
 </code></pre>
 <hr />
-<p><em>Alauda Global Legal Agent - 您的智能法务与商务中枢引擎。</em></p></body></html>
+<p><em>Alauda Global Legal Agent - Your intelligent legal and commercial command center.</em></p></body></html>
