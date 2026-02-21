@@ -267,7 +267,7 @@ def render_multi_doc_report(report: MultiDocReviewReport, output_file: str):
     md = f"# 🕸️ Alauda AI Legal Agent (V4 Ultimate) 跨文档审计报告\n\n"
     md += f"> **审计案列**: {report.project_name}\n"
     md += f"> **审计引擎**: Gemini (Knowledge Graph & Cross-reference)\n\n"
-    md += f"## 📝 案卷全景总结\n{report.overall_assessment}\n\n"
+    # V5 removed overall_assessment
     md += "## 📚 文档效力拓扑图 (Document Hierarchy)\n"
     md += "> *注意：层级 1 (Level 1) 代表发生条款冲突时的最高解释权。*\n\n"
     md += "| 效力层级 | 文档类型 | 文档名称 |\n| :---: | :--- | :--- |\n"
