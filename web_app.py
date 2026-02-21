@@ -12,10 +12,10 @@ st.set_page_config(
     page_title="Alauda Legal Agent | 灵雀云法务合规智能体",
     page_icon="⚖️",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded"  # 强制展开侧边栏
 )
 
-# 2. 注入深度定制的 CSS (对标 Alauda 官网企业级视觉设计，修复字体颜色和可见性)
+# 2. 注入深度定制的 CSS
 st.markdown("""
 <style>
     /* 全局背景与字体 */
@@ -25,7 +25,8 @@ st.markdown("""
     }
     
     /* 强制重置各种基础元素的字体颜色，避免在浅色背景下字体变白 */
-    body, p, h1, h2, h3, h4, h5, h6, span, div, li, label, .stMarkdown {
+    /* 不要覆盖所有的 div 和 span，否则会破坏 Streamlit 侧边栏自带的结构样式 */
+    p, h1, h2, h3, h4, h5, h6, li, label, .stMarkdown {
         color: #111827 !important;
     }
     
@@ -45,23 +46,30 @@ st.markdown("""
         align-items: center;
         gap: 20px;
     }
-    .hero-logo {
+    /* SVG无法直接作为img的src时，我们可以使用文字Logo作为Fallback */
+    .hero-logo-box {
         background-color: white;
-        padding: 10px;
+        padding: 10px 20px;
         border-radius: 8px;
         height: 60px;
-        object-fit: contain;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        font-size: 24px;
+        color: #1A6A9A !important;
+        letter-spacing: 1px;
     }
     .hero-title {
         font-size: 2.2rem !important;
         font-weight: 700;
         margin: 0;
         letter-spacing: -0.5px;
-        color: #FFFFFF !important; /* Hero里的字必须是白色的 */
+        color: #FFFFFF !important;
     }
     .hero-subtitle {
         font-size: 1.1rem !important;
-        color: #EAF6FC !important; /* Hero副标题淡蓝白色 */
+        color: #EAF6FC !important;
         margin-top: 5px;
         opacity: 0.9;
     }
@@ -105,12 +113,8 @@ st.markdown("""
         box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         border: 1px solid #E2E8F0;
     }
-    .risk-high {
-        border-left: 6px solid #EF4444; /* Tailwind Red 500 */
-    }
-    .risk-medium {
-        border-left: 6px solid #F59E0B; /* Tailwind Yellow 500 */
-    }
+    .risk-high { border-left: 6px solid #EF4444; }
+    .risk-medium { border-left: 6px solid #F59E0B; }
     
     .risk-title {
         font-size: 1.25rem !important;
@@ -150,7 +154,7 @@ st.markdown("""
         line-height: 1.6;
     }
     .revision-box {
-        background-color: #F0FDF4; /* Green tint for solution */
+        background-color: #F0FDF4;
         border: 1px solid #BBF7D0;
         color: #166534 !important;
         padding: 16px;
@@ -160,15 +164,16 @@ st.markdown("""
         margin-top: 10px;
     }
     
-    /* 左侧 Sidebar 专属颜色调整 */
-    section[data-testid="stSidebar"] * {
-        color: #1E293B !important;
-    }
-    
-    /* 修正输入框提示字和帮助文本颜色 */
-    .stTextInput input, .stSelectbox select {
+    /* 修正输入框颜色 */
+    .stTextInput input {
         color: #111827 !important;
         background-color: white !important;
+        border: 1px solid #CBD5E1 !important;
+    }
+    
+    /* 侧边栏整体背景强制调浅，防止看不见字 */
+    [data-testid="stSidebar"] {
+        background-color: #F1F5F9 !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -176,7 +181,7 @@ st.markdown("""
 # 3. 页面顶部 Hero Section
 st.markdown("""
 <div class="hero-container">
-    <img src="https://www.alauda.cn/images/v2/logo-dark.svg" class="hero-logo" alt="Alauda Logo">
+    <div class="hero-logo-box">ALAUDA</div>
     <div>
         <h1 class="hero-title">Global Legal Agent</h1>
         <p class="hero-subtitle">V4 Semantic AI Edition · 专为企业级 SaaS/PaaS 商业模式打造的自动化合同审查大脑</p>
@@ -186,8 +191,7 @@ st.markdown("""
 
 # 4. 侧边栏配置
 with st.sidebar:
-    st.image("https://www.alauda.cn/images/v2/logo-dark.svg", width=150)
-    st.markdown("---")
+    st.markdown("<h2 style='color: #1A6A9A !important; font-weight: 800; font-size: 28px; text-align: center; margin-bottom: 20px;'>ALAUDA</h2>", unsafe_allow_html=True)
     st.markdown("### ⚙️ 引擎配置")
     api_key = st.text_input("Gemini Pro API Key", type="password", help="请提供您的密钥以激活底层的百万上下文推理引擎。")
     if not api_key:
