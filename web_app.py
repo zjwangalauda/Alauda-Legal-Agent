@@ -15,13 +15,18 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# 2. 注入深度定制的 CSS (对标 Alauda 官网企业级视觉设计)
+# 2. 注入深度定制的 CSS (对标 Alauda 官网企业级视觉设计，修复字体颜色和可见性)
 st.markdown("""
 <style>
     /* 全局背景与字体 */
     .stApp {
         background-color: #F8FAFC;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+    
+    /* 强制重置各种基础元素的字体颜色，避免在浅色背景下字体变白 */
+    body, p, h1, h2, h3, h4, h5, h6, span, div, li, label, .stMarkdown {
+        color: #111827 !important;
     }
     
     /* 隐藏 Streamlit 默认的 Header 和 Footer */
@@ -34,7 +39,6 @@ st.markdown("""
         background: linear-gradient(135deg, #0F2B46 0%, #1A6A9A 100%);
         padding: 40px 30px;
         border-radius: 12px;
-        color: white;
         margin-bottom: 30px;
         box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         display: flex;
@@ -49,14 +53,15 @@ st.markdown("""
         object-fit: contain;
     }
     .hero-title {
-        font-size: 2.2rem;
+        font-size: 2.2rem !important;
         font-weight: 700;
         margin: 0;
         letter-spacing: -0.5px;
+        color: #FFFFFF !important; /* Hero里的字必须是白色的 */
     }
     .hero-subtitle {
-        font-size: 1.1rem;
-        color: #EAF6FC;
+        font-size: 1.1rem !important;
+        color: #EAF6FC !important; /* Hero副标题淡蓝白色 */
         margin-top: 5px;
         opacity: 0.9;
     }
@@ -71,8 +76,8 @@ st.markdown("""
 
     /* 主按钮美化 */
     .stButton>button {
-        background-color: #3BAEE4;
-        color: white;
+        background-color: #3BAEE4 !important;
+        color: white !important;
         border: none;
         border-radius: 8px;
         padding: 0.5rem 2rem;
@@ -82,8 +87,11 @@ st.markdown("""
         width: 100%;
         box-shadow: 0 4px 6px rgba(59, 174, 228, 0.2);
     }
+    .stButton>button * {
+        color: white !important;
+    }
     .stButton>button:hover {
-        background-color: #2A8ABF;
+        background-color: #2A8ABF !important;
         transform: translateY(-2px);
         box-shadow: 0 6px 12px rgba(59, 174, 228, 0.3);
     }
@@ -105,51 +113,62 @@ st.markdown("""
     }
     
     .risk-title {
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: #1E293B;
+        font-size: 1.25rem !important;
+        font-weight: 600 !important;
+        color: #1E293B !important;
         margin-bottom: 15px;
         display: flex;
         align-items: center;
         gap: 10px;
     }
     .risk-badge-high {
-        background: #FEE2E2; color: #DC2626; padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: bold;
+        background: #FEE2E2; color: #DC2626 !important; padding: 4px 10px; border-radius: 20px; font-size: 0.85rem !important; font-weight: bold;
     }
     .risk-badge-medium {
-        background: #FEF3C7; color: #D97706; padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: bold;
+        background: #FEF3C7; color: #D97706 !important; padding: 4px 10px; border-radius: 20px; font-size: 0.85rem !important; font-weight: bold;
     }
 
     .risk-section-title {
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: #64748B;
+        font-size: 0.95rem !important;
+        font-weight: 600 !important;
+        color: #64748B !important;
         text-transform: uppercase;
         margin-top: 15px;
         margin-bottom: 8px;
     }
     .original-text {
         background-color: #F8FAFC;
-        color: #475569;
+        color: #475569 !important;
         font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
         padding: 12px;
         border-radius: 6px;
         border: 1px solid #E2E8F0;
-        font-size: 0.9rem;
+        font-size: 0.9rem !important;
     }
     .rationale-text {
-        color: #334155;
+        color: #334155 !important;
         line-height: 1.6;
     }
     .revision-box {
         background-color: #F0FDF4; /* Green tint for solution */
         border: 1px solid #BBF7D0;
-        color: #166534;
+        color: #166534 !important;
         padding: 16px;
         border-radius: 8px;
         font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-        font-size: 0.95rem;
+        font-size: 0.95rem !important;
         margin-top: 10px;
+    }
+    
+    /* 左侧 Sidebar 专属颜色调整 */
+    section[data-testid="stSidebar"] * {
+        color: #1E293B !important;
+    }
+    
+    /* 修正输入框提示字和帮助文本颜色 */
+    .stTextInput input, .stSelectbox select {
+        color: #111827 !important;
+        background-color: white !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -177,11 +196,11 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("### 🎯 审核基线雷达")
     st.markdown("""
-    <div style='background: white; padding: 15px; border-radius: 8px; border: 1px solid #E2E8F0; font-size: 0.9rem; color: #475569;'>
-        <div style='margin-bottom: 8px;'>🛡️ <b>双轨制赔偿</b> <br><span style='color: #94A3B8; font-size: 0.8rem;'>上限 12个月 / 排除数据兜底</span></div>
-        <div style='margin-bottom: 8px;'>🛡️ <b>知识产权防御</b> <br><span style='color: #94A3B8; font-size: 0.8rem;'>平台底座及衍生品所有权保留</span></div>
-        <div style='margin-bottom: 8px;'>🛡️ <b>默示验收机制</b> <br><span style='color: #94A3B8; font-size: 0.8rem;'>10 个工作日强制结项</span></div>
-        <div style='margin-bottom: 8px;'>🛡️ <b>支持范围限缩</b> <br><span style='color: #94A3B8; font-size: 0.8rem;'>拒绝驻场 / 拒绝无边界定制</span></div>
+    <div style='background: white; padding: 15px; border-radius: 8px; border: 1px solid #E2E8F0; font-size: 0.9rem; color: #475569 !important;'>
+        <div style='margin-bottom: 8px; color: #1E293B !important;'>🛡️ <b>双轨制赔偿</b> <br><span style='color: #64748B !important; font-size: 0.8rem;'>上限 12个月 / 排除数据兜底</span></div>
+        <div style='margin-bottom: 8px; color: #1E293B !important;'>🛡️ <b>知识产权防御</b> <br><span style='color: #64748B !important; font-size: 0.8rem;'>平台底座及衍生品所有权保留</span></div>
+        <div style='margin-bottom: 8px; color: #1E293B !important;'>🛡️ <b>默示验收机制</b> <br><span style='color: #64748B !important; font-size: 0.8rem;'>10 个工作日强制结项</span></div>
+        <div style='margin-bottom: 8px; color: #1E293B !important;'>🛡️ <b>支持范围限缩</b> <br><span style='color: #64748B !important; font-size: 0.8rem;'>拒绝驻场 / 拒绝无边界定制</span></div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -311,9 +330,9 @@ with col2:
     elif not start_btn:
         # 初始空白状态提示
         st.markdown("""
-        <div style="text-align: center; padding: 50px; background: white; border-radius: 12px; border: 1px dashed #CBD5E1; color: #94A3B8;">
+        <div style="text-align: center; padding: 50px; background: white; border-radius: 12px; border: 1px dashed #CBD5E1; color: #94A3B8 !important;">
             <p style="font-size: 3rem; margin-bottom: 10px;">🛡️</p>
-            <h3>等待案卷摄入</h3>
-            <p>请在左侧上传文件并启动引擎。支持自动多模态解析及跨文档溯源。</p>
+            <h3 style="color: #64748B !important;">等待案卷摄入</h3>
+            <p style="color: #94A3B8 !important;">请在左侧上传文件并启动引擎。支持自动多模态解析及跨文档溯源。</p>
         </div>
         """, unsafe_allow_html=True)
