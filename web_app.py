@@ -217,6 +217,7 @@ st.markdown("""
 # 4. 侧边栏配置
 with st.sidebar:
     st.markdown("<h2 style='color: #1A6A9A !important; font-weight: 800; font-size: 28px; text-align: center; margin-bottom: 20px;'>ALAUDA</h2>", unsafe_allow_html=True)
+    st.info("💡 提示：使用键盘快捷键 `Cmd/Ctrl + .` 可以快速展开或收起本侧边栏。")
     st.markdown("### ⚙️ 引擎配置")
     api_key = st.text_input("Gemini Pro API Key", type="password", help="请提供您的密钥以激活底层的百万上下文推理引擎。")
     if not api_key:
