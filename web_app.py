@@ -313,16 +313,16 @@ with col2:
         if report:
             st.success("🎯 综合审计决议已生成！")
             
-            # 1. 渲染 COO 视角
-            st.markdown("### 👨‍💼 首席运营官 (COO) 审批台")
-            coo_color = "#16A34A" if "直接签约" in report.coo_view.approval_recommendation else "#DC2626" if "拒签" in report.coo_view.approval_recommendation else "#D97706"
+            # 1. 渲染 CXO 视角
+            st.markdown("### 👨‍💼 首席执行官群 (CXO) 审批台")
+            cxo_color = "#16A34A" if "直接签约" in report.cxo_view.approval_recommendation else "#DC2626" if "拒签" in report.cxo_view.approval_recommendation else "#D97706"
             st.markdown(f"""
-            <div style="background: white; border-top: 5px solid {coo_color}; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px;">
-                <h4 style="margin-top:0;">最终决议：<span style="color: {coo_color};">{report.coo_view.approval_recommendation}</span></h4>
-                <p><b>💥 致命阻碍 (Deal Breakers):</b> {report.coo_view.deal_breaker_summary}</p>
+            <div style="background: white; border-top: 5px solid {cxo_color}; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px;">
+                <h4 style="margin-top:0;">最终决议：<span style="color: {cxo_color};">{report.cxo_view.approval_recommendation}</span></h4>
+                <p><b>💥 致命阻碍 (Deal Breakers):</b> {report.cxo_view.deal_breaker_summary}</p>
                 <div style="background-color: #F1F5F9; padding: 15px; border-radius: 6px; border-left: 4px solid #94A3B8;">
                     <b>💡 战略博弈指导 (Strategic Playbook):</b><br>
-                    <span style="color: #475569;">{report.coo_view.strategic_advice}</span>
+                    <span style="color: #475569;">{report.cxo_view.strategic_advice}</span>
                 </div>
             </div>
             """, unsafe_allow_html=True)
