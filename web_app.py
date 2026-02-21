@@ -30,10 +30,12 @@ st.markdown("""
         color: #111827 !important;
     }
     
-    /* 隐藏 Streamlit 默认的 Header 和 Footer */
+    /* 隐藏 Streamlit 默认的 Footer 和三条杠菜单，但保留 Header 保证侧边栏按钮存活 */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
-    header {visibility: hidden;}
+    
+    /* 让头部变得透明，以免破坏沉浸感，但保证上面的按钮可点 */
+    header {background-color: transparent !important;}
 
     /* 顶部导航栏 / Hero Section 样式 */
     .hero-container {
