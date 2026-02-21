@@ -219,7 +219,25 @@ with st.sidebar:
     st.markdown("<h2 style='color: #1A6A9A !important; font-weight: 800; font-size: 28px; text-align: center; margin-bottom: 20px;'>ALAUDA</h2>", unsafe_allow_html=True)
     st.info("💡 提示：使用键盘快捷键 `Cmd/Ctrl + .` 可以快速展开或收起本侧边栏。")
     st.markdown("### ⚙️ 引擎配置")
-    api_key = st.text_input("Gemini Pro API Key", type="password", help="请提供您的密钥以激活底层的百万上下文推理引擎。")
+    model_provider = st.selectbox(
+        "选择底层大模型引擎",
+        ("Google Gemini (推荐)", "OpenAI / 兼容接口", "Anthropic Claude")
+    )
+    
+    provider_map = {
+        "Google Gemini (推荐)": "google",
+        "OpenAI / 兼容接口": "openai",
+        "Anthropic Claude": "anthropic"
+    }
+    
+    api_key = st.text_input("API Key", type="password", help="请提供对应的服务商密钥")
+    base_url = None
+    if model_provider == "OpenAI / 兼容接口":
+        base_url = st.text_input("Base URL (可选)", help="如果使用中转代理或私有化部署的兼容模型，请填入地址")
+        custom_model = st.text_input("Model ID (默认 gpt-4o)", placeholder="gpt-4o")
+        if custom_model:
+            provider_map["OpenAI / 兼容接口"] = custom_model
+            
     if not api_key:
         st.warning("⚠️ 未配置密钥。系统将运行在本地 Mock 演示模式。")
     
@@ -266,7 +284,7 @@ with col2:
                     tmp_path = tmp_file.name
                 
                 text = extract_text_from_file(tmp_path)
-                report = run_llm_inference(text, "single", api_key)
+                report = run_llm_inference(text, "single", api_key, model_provider=provider_map[model_provider], base_url=base_url)
                 os.unlink(tmp_path)
                 
             else:
@@ -289,7 +307,7 @@ with col2:
                                     all_text += f"\n\n================ DOCUMENT: {file} ================\n\n"
                                     all_text += content
                     
-                    report = run_llm_inference(all_text, "multi", api_key)
+                    report = run_llm_inference(all_text, "multi", api_key, model_provider=provider_map[model_provider], base_url=base_url)
 
         # 结果渲染
         if report:
