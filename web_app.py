@@ -340,63 +340,72 @@ with col2:
                     
                     report = run_llm_inference(all_text, "multi", api_key, model_provider=provider_map[model_provider], base_url=base_url)
 
-        # 结果渲染
-        if report:
-            st.success("🎯 综合审计决议已生成！")
-            
-            # 1. 渲染 CXO 视角
-            st.markdown("### 👨‍💼 首席执行官群 (CXO) 审批台")
-            cxo_color = "#16A34A" if "直接签约" in report.cxo_view.approval_recommendation else "#DC2626" if "拒签" in report.cxo_view.approval_recommendation else "#D97706"
-            st.markdown(f"""
-            <div style="background: white; border-top: 5px solid {cxo_color}; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px;">
-                <h4 style="margin-top:0;">最终决议：<span style="color: {cxo_color};">{report.cxo_view.approval_recommendation}</span></h4>
-                <p><b>💥 致命阻碍 (Deal Breakers):</b> {report.cxo_view.deal_breaker_summary}</p>
-                <div style="background-color: #F1F5F9; padding: 15px; border-radius: 6px; border-left: 4px solid #94A3B8;">
-                    <b>💡 战略博弈指导 (Strategic Playbook):</b><br>
-                    <span style="color: #475569;">{report.cxo_view.strategic_advice}</span>
-                </div>
+                st.session_state['current_report'] = report
+                st.session_state['redlined_path'] = None
+                st.session_state['report_mode'] = mode
+
+    # 独立于按钮点击的渲染模块，只要 session_state 里有数据就渲染
+    report = st.session_state.get('current_report', None)
+    redlined_path = st.session_state.get('redlined_path', None)
+    render_mode = st.session_state.get('report_mode', mode)
+
+    # 结果渲染
+    if report:
+        st.success("🎯 综合审计决议已生成！")
+        
+        # 1. 渲染 CXO 视角
+        st.markdown("### 👨‍💼 首席执行官群 (CXO) 审批台")
+        cxo_color = "#16A34A" if "直接签约" in report.cxo_view.approval_recommendation else "#DC2626" if "拒签" in report.cxo_view.approval_recommendation else "#D97706"
+        st.markdown(f"""
+        <div style="background: white; border-top: 5px solid {cxo_color}; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px;">
+            <h4 style="margin-top:0;">最终决议：<span style="color: {cxo_color};">{report.cxo_view.approval_recommendation}</span></h4>
+            <p><b>💥 致命阻碍 (Deal Breakers):</b> {report.cxo_view.deal_breaker_summary}</p>
+            <div style="background-color: #F1F5F9; padding: 15px; border-radius: 6px; border-left: 4px solid #94A3B8;">
+                <b>💡 战略博弈指导 (Strategic Playbook):</b><br>
+                <span style="color: #475569;">{report.cxo_view.strategic_advice}</span>
             </div>
-            """, unsafe_allow_html=True)
-            
-            # 2. 渲染商务运营视角
-            st.markdown("### 📈 运营与商务履约看板")
-            st.info("以下核心要素已从错综复杂的长文本中自动提炼，供 PMO 与财务侧做履约及现金流测算。")
-            comm_data = [{"核心要素": c.key_metric, "合同摘要": c.extracted_value, "运营影响测算": c.operational_impact} for c in report.commercial_summary]
-            st.table(comm_data)
-            st.markdown("---")
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # 2. 渲染商务运营视角
+        st.markdown("### 📈 运营与商务履约看板")
+        st.info("以下核心要素已从错综复杂的长文本中自动提炼，供 PMO 与财务侧做履约及现金流测算。")
+        comm_data = [{"核心要素": c.key_metric, "合同摘要": c.extracted_value, "运营影响测算": c.operational_impact} for c in report.commercial_summary]
+        st.table(comm_data)
+        st.markdown("---")
 
-            # 3. 渲染法务视角
-            st.markdown("### ⚖️ 法务合规与红线防御阵地")
-            
-            if render_mode != "📄 单文档快速审计 (Single-Doc)":
-                st.markdown("#### 📚 案卷效力层级 (Document Hierarchy)")
-                hierarchy_data = [{"层级 (Level)": f"Level {n.precedence_level}", "文档类型": n.doc_type, "文件名": n.doc_name} for n in sorted(report.document_hierarchy, key=lambda x: x.precedence_level)]
-                st.table(hierarchy_data)
-                st.markdown("#### 🚨 跨文档隐藏后门雷达")
-            else:
-                st.markdown("#### 🚨 合同红线风险审查矩阵")
+        # 3. 渲染法务视角
+        st.markdown("### ⚖️ 法务合规与红线防御阵地")
+        
+        if render_mode != "📄 单文档快速审计 (Single-Doc)":
+            st.markdown("#### 📚 案卷效力层级 (Document Hierarchy)")
+            hierarchy_data = [{"层级 (Level)": f"Level {n.precedence_level}", "文档类型": n.doc_type, "文件名": n.doc_name} for n in sorted(report.document_hierarchy, key=lambda x: x.precedence_level)]
+            st.table(hierarchy_data)
+            st.markdown("#### 🚨 跨文档隐藏后门雷达")
+        else:
+            st.markdown("#### 🚨 合同红线风险审查矩阵")
 
-            # 渲染具体的风险卡片
-            items = getattr(report, 'hidden_backdoors', None) or getattr(report, 'legal_reviews', None)
-            
-            if not items:
-                st.success("🎉 法务通关！未检测到任何突破商业红线的高危条款。")
-            else:
-                for item in items:
-                    # 单双模式字段兼容处理
-                    is_multi = hasattr(item, 'master_clause')
-                    
-                    dim = item.dimension
-                    risk_badge = '<span class="risk-badge-high">🔴 HIGH RISK</span>' if (not is_multi and item.risk_level == "HIGH") or is_multi else '<span class="risk-badge-medium">🟡 MEDIUM RISK</span>'
-                    card_class = "risk-high" if (not is_multi and item.risk_level == "HIGH") or is_multi else "risk-medium"
-                    
-                    html_card = f"""
-                    <div class="risk-card {card_class}">
-                        <div class="risk-title">{dim} {risk_badge}</div>
-                    """
-                    
-                    if is_multi:
-                        html_card += f'''
+        # 渲染具体的风险卡片
+        items = getattr(report, 'hidden_backdoors', None) or getattr(report, 'legal_reviews', None)
+        
+        if not items:
+            st.success("🎉 法务通关！未检测到任何突破商业红线的高危条款。")
+        else:
+            for item in items:
+                # 单双模式字段兼容处理
+                is_multi = hasattr(item, 'master_clause')
+                
+                dim = item.dimension
+                risk_badge = '<span class="risk-badge-high">🔴 HIGH RISK</span>' if (not is_multi and item.risk_level == "HIGH") or is_multi else '<span class="risk-badge-medium">🟡 MEDIUM RISK</span>'
+                card_class = "risk-high" if (not is_multi and item.risk_level == "HIGH") or is_multi else "risk-medium"
+                
+                html_card = f"""
+                <div class="risk-card {card_class}">
+                    <div class="risk-title">{dim} {risk_badge}</div>
+                """
+                
+                if is_multi:
+                    html_card += f'''
 <div class="risk-section-title">🏰 主协议防线 (Master Defense)</div>
 <div class="original-text">{item.master_clause}</div>
 <div class="risk-section-title">🗡️ 越权攻击点 ({item.source_doc})</div>
@@ -406,50 +415,50 @@ with col2:
 <div class="risk-section-title">✅ 法务强制拦截方案 (Suggested Action)</div>
 <div class="revision-box">{item.suggested_action}</div>
 '''
-                    else:
-                        html_card += f'''
+                else:
+                    html_card += f'''
 <div class="risk-section-title">❌ 风险原文摘录 (Original Text)</div>
 <div class="original-text">{item.original_text}</div>
 <div class="risk-section-title">💡 商业与法务推理 (Rationale)</div>
 <div class="rationale-text">{item.rationale}</div>
 '''
-                        if item.suggested_revision:
-                            html_card += f'''
+                    if item.suggested_revision:
+                        html_card += f'''
 <div class="risk-section-title">✅ 建议回改条款 (Redline)</div>
 <div class="revision-box">{item.suggested_revision}</div>
 '''
-                    
-                    html_card += "</div>"
-                    st.markdown(html_card, unsafe_allow_html=True)
-                    
-            # Render Download Buttons at the bottom
-            st.markdown("---")
-            col_dl1, col_dl2 = st.columns(2)
-            with col_dl1:
-                md_export = f"# {report.contract_name if hasattr(report, 'contract_name') else report.project_name} 综合审计决议报告\n\n"
-                md_export += f"## 👨‍💼 CXO 审批建议\n{report.cxo_view.approval_recommendation}\n\n"
-                md_export += f"**战略指导**: {report.cxo_view.strategic_advice}\n"
-                st.download_button("⬇️ 导出审计报告 (.md)", data=md_export, file_name="review_report.md")
-            
-            if 'redlined_path' in locals() and redlined_path and os.path.exists(redlined_path):
-                with col_dl2:
-                    with open(redlined_path, "rb") as f:
-                        st.download_button(
-                            label="📝 下载原生批注版合同 (.docx)",
-                            data=f,
-                            file_name=f"Redlined_Contract.docx",
-                            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                        )
-        elif start_btn:
-            st.error("处理失败，请检查网络或确认文档内容是否有效。")
+                
+                html_card += "</div>"
+                st.markdown(html_card, unsafe_allow_html=True)
+                
+        # Render Download Buttons at the bottom
+        st.markdown("---")
+        col_dl1, col_dl2 = st.columns(2)
+        with col_dl1:
+            md_export = f"# {report.contract_name if hasattr(report, 'contract_name') else report.project_name} 综合审计决议报告\n\n"
+            md_export += f"## 👨‍💼 CXO 审批建议\n{report.cxo_view.approval_recommendation}\n\n"
+            md_export += f"**战略指导**: {report.cxo_view.strategic_advice}\n"
+            st.download_button("⬇️ 导出审计报告 (.md)", data=md_export, file_name="review_report.md")
+        
+        if 'redlined_path' in locals() and redlined_path and os.path.exists(redlined_path):
+            with col_dl2:
+                with open(redlined_path, "rb") as f:
+                    st.download_button(
+                        label="📝 下载原生批注版合同 (.docx)",
+                        data=f,
+                        file_name=f"Redlined_Contract.docx",
+                        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    )
+    elif start_btn:
+        st.error("处理失败，请检查网络或确认文档内容是否有效。")
 
     report = st.session_state.get('current_report', None)
     if not report and not start_btn:
-        # 初始空白状态提示
-        st.markdown("""
-        <div style="text-align: center; padding: 50px; background: white; border-radius: 12px; border: 1px dashed #CBD5E1; color: #94A3B8 !important;">
-            <p style="font-size: 3rem; margin-bottom: 10px;">🛡️</p>
-            <h3 style="color: #64748B !important;">等待案卷摄入</h3>
-            <p style="color: #94A3B8 !important;">请在左侧上传文件并启动引擎。支持自动多模态解析及跨文档溯源。</p>
-        </div>
-        """, unsafe_allow_html=True)
+    # 初始空白状态提示
+    st.markdown("""
+    <div style="text-align: center; padding: 50px; background: white; border-radius: 12px; border: 1px dashed #CBD5E1; color: #94A3B8 !important;">
+        <p style="font-size: 3rem; margin-bottom: 10px;">🛡️</p>
+        <h3 style="color: #64748B !important;">等待案卷摄入</h3>
+        <p style="color: #94A3B8 !important;">请在左侧上传文件并启动引擎。支持自动多模态解析及跨文档溯源。</p>
+    </div>
+    """, unsafe_allow_html=True)
