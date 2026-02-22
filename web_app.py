@@ -302,55 +302,59 @@ with col2:
         with st.spinner("⏳ 正在唤醒大模型引擎..."):
             
             # 临时沙盒处理
-            if mode == "📄 单文档快速审计 (Single-Doc)":
-                with tempfile.NamedTemporaryFile(delete=False, suffix=Path(uploaded_file.name).suffix) as tmp_file:
-                    tmp_file.write(uploaded_file.getvalue())
-                    tmp_path = tmp_file.name
-                
-                text = extract_text_from_file(tmp_path)
-                report = run_llm_inference(text, "single", api_key, model_provider=provider_map[model_provider], base_url=base_url)
-                
-                # V6 Native Redlining Logic
-                redlined_path = None
-                if enable_redline and report and tmp_path.lower().endswith('.docx') and report.legal_reviews:
-                    redlined_path = tmp_path.replace(".docx", "_redlined.docx")
-                    try:
-                        shutil.copy(tmp_path, redlined_path)
-                        engine = WordRedlineEngine(redlined_path)
-                        for rev in report.legal_reviews:
-                            engine.apply_redline(rev.original_text, rev.suggested_revision, f"[{rev.dimension}] \n{rev.rationale}")
-                        engine.save(redlined_path)
-                    except Exception as e:
-                        print(f"Redlining failed: {e}")
-                        redlined_path = None
-                
-                os.unlink(tmp_path)
-                
-            else:
-                with tempfile.TemporaryDirectory() as temp_dir:
-                    zip_path = os.path.join(temp_dir, "bundle.zip")
-                    with open(zip_path, "wb") as f:
-                        f.write(uploaded_file.getvalue())
+            try:
+                if mode == "📄 单文档快速审计 (Single-Doc)":
+                    with tempfile.NamedTemporaryFile(delete=False, suffix=Path(uploaded_file.name).suffix) as tmp_file:
+                        tmp_file.write(uploaded_file.getvalue())
+                        tmp_path = tmp_file.name
                     
-                    extract_dir = os.path.join(temp_dir, "extracted")
-                    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-                        zip_ref.extractall(extract_dir)
+                    text = extract_text_from_file(tmp_path)
+                    report = run_llm_inference(text, "single", api_key, model_provider=provider_map[model_provider], base_url=base_url)
                     
-                    all_text = ""
-                    for root, _, files in os.walk(extract_dir):
-                        for file in files:
-                            if file.endswith(('.pdf', '.docx', '.txt')):
-                                file_path = os.path.join(root, file)
-                                content = extract_text_from_file(file_path)
-                                if content:
-                                    all_text += f"\n\n================ DOCUMENT: {file} ================\n\n"
-                                    all_text += content
+                    # V6 Native Redlining Logic
+                    redlined_path = None
+                    if enable_redline and report and tmp_path.lower().endswith('.docx') and report.legal_reviews:
+                        redlined_path = tmp_path.replace(".docx", "_redlined.docx")
+                        try:
+                            shutil.copy(tmp_path, redlined_path)
+                            engine = WordRedlineEngine(redlined_path)
+                            for rev in report.legal_reviews:
+                                engine.apply_redline(rev.original_text, rev.suggested_revision, f"[{rev.dimension}] \n{rev.rationale}")
+                            engine.save(redlined_path)
+                        except Exception as e:
+                            print(f"Redlining failed: {e}")
+                            redlined_path = None
                     
-                    report = run_llm_inference(all_text, "multi", api_key, model_provider=provider_map[model_provider], base_url=base_url)
+                    os.unlink(tmp_path)
+                    
+                else:
+                    with tempfile.TemporaryDirectory() as temp_dir:
+                        zip_path = os.path.join(temp_dir, "bundle.zip")
+                        with open(zip_path, "wb") as f:
+                            f.write(uploaded_file.getvalue())
+                        
+                        extract_dir = os.path.join(temp_dir, "extracted")
+                        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+                            zip_ref.extractall(extract_dir)
+                        
+                        all_text = ""
+                        for root, _, files in os.walk(extract_dir):
+                            for file in files:
+                                if file.endswith(('.pdf', '.docx', '.txt')):
+                                    file_path = os.path.join(root, file)
+                                    content = extract_text_from_file(file_path)
+                                    if content:
+                                        all_text += f"\n\n================ DOCUMENT: {file} ================\n\n"
+                                        all_text += content
+                        
+                        report = run_llm_inference(all_text, "multi", api_key, model_provider=provider_map[model_provider], base_url=base_url)
 
                 st.session_state['current_report'] = report
-                st.session_state['redlined_path'] = None
+                st.session_state['redlined_path'] = redlined_path if mode == "📄 单文档快速审计 (Single-Doc)" else None
                 st.session_state['report_mode'] = mode
+            except Exception as e:
+                st.error(f"处理失败: {e}")
+                report = None
 
     # 独立于按钮点击的渲染模块，只要 session_state 里有数据就渲染
     report = st.session_state.get('current_report', None)
