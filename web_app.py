@@ -454,11 +454,11 @@ with col2:
 
     report = st.session_state.get('current_report', None)
     if not report and not start_btn:
-    # 初始空白状态提示
-    st.markdown("""
-    <div style="text-align: center; padding: 50px; background: white; border-radius: 12px; border: 1px dashed #CBD5E1; color: #94A3B8 !important;">
-        <p style="font-size: 3rem; margin-bottom: 10px;">🛡️</p>
-        <h3 style="color: #64748B !important;">等待案卷摄入</h3>
-        <p style="color: #94A3B8 !important;">请在左侧上传文件并启动引擎。支持自动多模态解析及跨文档溯源。</p>
-    </div>
-    """, unsafe_allow_html=True)
+        # 初始空白状态提示
+        st.markdown("""
+        <div style="text-align: center; padding: 50px; background: white; border-radius: 12px; border: 1px dashed #CBD5E1; color: #94A3B8 !important;">
+            <p style="font-size: 3rem; margin-bottom: 10px;">🛡️</p>
+            <h3 style="color: #64748B !important;">等待案卷摄入</h3>
+            <p style="color: #94A3B8 !important;">请在左侧上传文件并启动引擎。支持自动多模态解析及跨文档溯源。</p>
+        </div>
+        """, unsafe_allow_html=True)
