@@ -366,7 +366,7 @@ with col2:
             # 3. 渲染法务视角
             st.markdown("### ⚖️ 法务合规与红线防御阵地")
             
-            if mode != "📄 单文档快速审计 (Single-Doc)":
+            if render_mode != "📄 单文档快速审计 (Single-Doc)":
                 st.markdown("#### 📚 案卷效力层级 (Document Hierarchy)")
                 hierarchy_data = [{"层级 (Level)": f"Level {n.precedence_level}", "文档类型": n.doc_type, "文件名": n.doc_name} for n in sorted(report.document_hierarchy, key=lambda x: x.precedence_level)]
                 st.table(hierarchy_data)
@@ -438,10 +438,10 @@ with col2:
                             file_name=f"Redlined_Contract.docx",
                             mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                         )
-        else:
+        elif start_btn:
             st.error("处理失败，请检查网络或确认文档内容是否有效。")
 
-    elif not start_btn:
+    if not report and not start_btn:
         # 初始空白状态提示
         st.markdown("""
         <div style="text-align: center; padding: 50px; background: white; border-radius: 12px; border: 1px dashed #CBD5E1; color: #94A3B8 !important;">
