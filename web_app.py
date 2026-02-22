@@ -6,6 +6,7 @@ import shutil
 from pathlib import Path
 
 from alauda_legal_agent import extract_text_from_file, run_llm_inference
+from docx_redline_engine import WordRedlineEngine
 
 # 1. 页面级基础设置
 st.set_page_config(
@@ -293,6 +294,21 @@ with col2:
                 
                 text = extract_text_from_file(tmp_path)
                 report = run_llm_inference(text, "single", api_key, model_provider=provider_map[model_provider], base_url=base_url)
+                
+                # V6 Native Redlining Logic
+                redlined_path = None
+                if report and tmp_path.lower().endswith('.docx') and report.legal_reviews:
+                    redlined_path = tmp_path.replace(".docx", "_redlined.docx")
+                    try:
+                        shutil.copy(tmp_path, redlined_path)
+                        engine = WordRedlineEngine(redlined_path)
+                        for rev in report.legal_reviews:
+                            engine.apply_redline(rev.original_text, rev.suggested_revision, f"[{rev.dimension}] \n{rev.rationale}")
+                        engine.save(redlined_path)
+                    except Exception as e:
+                        print(f"Redlining failed: {e}")
+                        redlined_path = None
+                
                 os.unlink(tmp_path)
                 
             else:
