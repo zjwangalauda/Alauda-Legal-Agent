@@ -1,0 +1,8 @@
+streamlit
+pydantic
+docx2txt
+pypdf
+google-genai
+openai
+python-docx
+anthropic
