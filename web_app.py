@@ -274,6 +274,11 @@ with col1:
     if mode == "📄 单文档快速审计 (Single-Doc)":
         st.info("💡 适合处理单一的 Master Agreement、EULA 或 Order Form。支持 PDF, Word, TXT 格式。")
         uploaded_file = st.file_uploader("拖拽合同文件至此", type=['pdf', 'docx', 'txt'])
+        
+        # V6 Feature Toggle
+        st.markdown("##### 🚀 高级选项 (Advanced Options)")
+        enable_redline = st.checkbox("自动生成原生 Word 批注版 (.docx Track Changes)", value=True, help="如果勾选，系统将深入 Word 底层 AST，直接在原文件中打上红色修订标记和侧边栏法务批注。注意：仅对上传的 .docx 文件有效。")
+        
         start_btn = st.button("开始深度语义扫描 ⚡")
     else:
         st.info("💡 适合处理包含附件的大型采购案。系统将自动构建文档效力拓扑，探测高级别附件对主框架的越权覆盖。请上传 ZIP 压缩包。")
@@ -297,7 +302,7 @@ with col2:
                 
                 # V6 Native Redlining Logic
                 redlined_path = None
-                if report and tmp_path.lower().endswith('.docx') and report.legal_reviews:
+                if enable_redline and report and tmp_path.lower().endswith('.docx') and report.legal_reviews:
                     redlined_path = tmp_path.replace(".docx", "_redlined.docx")
                     try:
                         shutil.copy(tmp_path, redlined_path)
