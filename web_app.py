@@ -271,6 +271,8 @@ with col1:
         ("📄 单文档快速审计 (Single-Doc)", "🗂️ 全案卷交叉审计 (Multi-Doc)")
     )
     
+    start_btn = False
+    enable_redline = False
     if mode == "📄 单文档快速审计 (Single-Doc)":
         st.info("💡 适合处理单一的 Master Agreement、EULA 或 Order Form。支持 PDF, Word, TXT 格式。")
         uploaded_file = st.file_uploader("拖拽合同文件至此", type=['pdf', 'docx', 'txt'])
@@ -441,6 +443,7 @@ with col2:
         elif start_btn:
             st.error("处理失败，请检查网络或确认文档内容是否有效。")
 
+    report = st.session_state.get('current_report', None)
     if not report and not start_btn:
         # 初始空白状态提示
         st.markdown("""
