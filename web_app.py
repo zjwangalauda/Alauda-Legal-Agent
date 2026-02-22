@@ -419,6 +419,25 @@ with col2:
                     
                     html_card += "</div>"
                     st.markdown(html_card, unsafe_allow_html=True)
+                    
+            # Render Download Buttons at the bottom
+            st.markdown("---")
+            col_dl1, col_dl2 = st.columns(2)
+            with col_dl1:
+                md_export = f"# {report.contract_name if hasattr(report, 'contract_name') else report.project_name} 综合审计决议报告\n\n"
+                md_export += f"## 👨‍💼 CXO 审批建议\n{report.cxo_view.approval_recommendation}\n\n"
+                md_export += f"**战略指导**: {report.cxo_view.strategic_advice}\n"
+                st.download_button("⬇️ 导出审计报告 (.md)", data=md_export, file_name="review_report.md")
+            
+            if 'redlined_path' in locals() and redlined_path and os.path.exists(redlined_path):
+                with col_dl2:
+                    with open(redlined_path, "rb") as f:
+                        st.download_button(
+                            label="📝 下载原生批注版合同 (.docx)",
+                            data=f,
+                            file_name=f"Redlined_Contract.docx",
+                            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                        )
         else:
             st.error("处理失败，请检查网络或确认文档内容是否有效。")
 
