@@ -162,43 +162,49 @@ class WordRedlineEngine:
         rels_path = 'word/_rels/document.xml.rels'
         if os.path.exists(os.path.join(self.temp_dir, rels_path)):
             rels_tree = self._read_xml(rels_path)
+            # Find the root element and namespace
+            root_elem = rels_tree
+            rel_ns = root_elem.nsmap.get(None, 'http://schemas.openxmlformats.org/package/2006/relationships')
+            
             # Check if it already exists
             found = False
-            for rel in rels_tree:
-                if 'comments' in rel.attrib.get('Target', ''):
+            for rel in root_elem:
+                if 'comments.xml' in rel.attrib.get('Target', ''):
                     found = True
                     break
             if not found:
-                # Add relationship
-                # max id
+                # Find max id
                 max_id = 1
-                for rel in rels_tree:
+                for rel in root_elem:
                     r_id = rel.attrib.get('Id', '')
                     if r_id.startswith('rId'):
                         try: max_id = max(max_id, int(r_id[3:]))
                         except: pass
                 
-                new_rel = etree.Element("Relationship", Target="comments.xml", 
+                new_rel = etree.Element(f"{{{rel_ns}}}Relationship", Target="comments.xml", 
                                         Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments", 
                                         Id=f"rId{max_id+1}")
-                rels_tree.append(new_rel)
+                root_elem.append(new_rel)
                 self._write_xml(rels_tree, rels_path)
                 
         # Add to [Content_Types].xml
         ct_path = '[Content_Types].xml'
-        ct_tree = self._read_xml(ct_path)
-        ct_ns = {'ct': 'http://schemas.openxmlformats.org/package/2006/content-types'}
-        found = False
-        for override in ct_tree.findall('.//ct:Override', namespaces=ct_ns):
-            if override.attrib.get('PartName') == '/word/comments.xml':
-                found = True
-                break
-        if not found:
-            override = etree.Element(f"{{{ct_ns['ct']}}}Override", 
-                                     PartName="/word/comments.xml", 
-                                     ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml")
-            ct_tree.append(override)
-            self._write_xml(ct_tree, ct_path)
+        if os.path.exists(os.path.join(self.temp_dir, ct_path)):
+            ct_tree = self._read_xml(ct_path)
+            root_elem = ct_tree
+            ct_ns = root_elem.nsmap.get(None, 'http://schemas.openxmlformats.org/package/2006/content-types')
+            
+            found = False
+            for override in root_elem.findall(f'.//{{{ct_ns}}}Override'):
+                if override.attrib.get('PartName') == '/word/comments.xml':
+                    found = True
+                    break
+            if not found:
+                override = etree.Element(f"{{{ct_ns}}}Override", 
+                                         PartName="/word/comments.xml", 
+                                         ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml")
+                root_elem.append(override)
+                self._write_xml(ct_tree, ct_path)
 
     def save(self, output_path):
         # Package it back up

@@ -99,6 +99,14 @@ st.markdown("""
         border-radius: 12px;
         padding: 30px;
     }
+    
+    /* 修复上传文件后的文件名文字颜色，防止和白色背景冲突 */
+    [data-testid="stFileUploadDropzone"] * {
+        color: #1E293B !important;
+    }
+    [data-testid="stUploadedFile"] * {
+        color: #1E293B !important;
+    }
 
     /* 主按钮美化 */
     .stButton>button {
