@@ -1,5 +1,28 @@
 # 🚀 Alauda Global Legal Agent - Release Notes
 
+## [v6.1] - 2026-02-26 (Cloud-Native & Production Hardening Edition)
+
+### 🔥 核心突破 (Major Features)
+- **内置免费 AI 引擎 (Built-in Free AI Engine)**: 系统现已内置 Claude Haiku 推理引擎，用户无需配置任何 API Key 即可直接使用全部核心功能。零配置、开箱即用。
+- **Streamlit Cloud 全球部署**: 系统已正式部署至 Streamlit Community Cloud，实现 7x24 小时全球在线访问，免运维高可用。
+- **Redline 引擎全面重建 (DocxRedlineEngine Overhaul)**:
+  - 文本匹配精度从 20 字符提升至 80 字符，大幅降低误标记率。
+  - 引入 DOM 缓存机制，避免每次 `apply_redline()` 重复解析 XML，性能显著提升。
+  - 新增视觉删除线标记 (Strikethrough Markup)，风险条款在 Word 文档中一目了然。
+
+### 🔧 优化与修复 (Improvements & Fixes) — 共 9 项生产级缺陷修复
+- **LangChain 依赖解耦**: 将 `has_langchain` (核心框架) 与 `has_google` (可选 Google 模型) 分离。修复了当 `langchain-google-genai` 未安装时，所有 LLM 路径（含 OpenAI/Claude）均回退至 Mock 模式的致命缺陷。
+- **MultiDocReviewReport 安全访问**: Redline 引擎现使用 `hasattr()` 安全检查 `legal_reviews` / `hidden_backdoors` 字段，避免因数据结构差异导致的 `AttributeError` 崩溃。
+- **Markdown 导出修复**: 修复了多文档报告导出时内容截断和格式错乱的问题，确保完整的三层视角报告可被完整导出。
+- **Streamlit Secrets 注入修复**: 使用 `try/except` 包裹 `st.secrets.get()` 调用，解决无 `secrets.toml` 文件时抛出异常（而非返回空值）的问题。环境变量注入逻辑改为始终覆盖 (`if val:`)，确保 Cloud 环境 Secrets 正确传导至底层模块。
+- **CLI 渲染器兼容**: 修复命令行模式下因 V5 数据结构变更导致的报告渲染崩溃。
+- **`.doc` 格式声明移除**: 移除了对旧版 `.doc` 格式的虚假支持声明（仅支持 `.docx`/`.pdf`/`.txt`）。
+- **依赖清单完善**: `requirements.txt` 补全了 `langchain-core`, `langchain-openai`, `langchain-anthropic`, `lxml` 等遗漏依赖。
+- **安全加固**: `.gitignore` 强化，确保 `.env`, `.streamlit/secrets.toml`, `.venv/`, `.DS_Store` 等敏感文件永不进入版本控制。
+- **冗余文件清理**: 移除了 `.html`, `.pdf`, `.png` 等构建产物，保持仓库整洁。
+
+---
+
 ## [v5.0] - 2026-02-22 (Multi-Role Copilot & Web Dashboard Edition)
 
 ### 🔥 核心突破 (Major Features)

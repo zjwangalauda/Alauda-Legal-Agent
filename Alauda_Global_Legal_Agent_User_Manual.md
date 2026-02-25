@@ -1,8 +1,15 @@
-# 🚀 Alauda Global Legal Agent (V5 Ultimate) 用户手册
+# 🚀 Alauda Global Legal Agent (V6.1) 用户手册
 
-**版本**: 5.0 (Multi-Role Copilot & Web Dashboard Edition)  
-**更新日期**: 2026年2月22日  
+**版本**: 6.1 (Cloud-Native & Production Hardening Edition)  
+**更新日期**: 2026年2月26日  
 **适用对象**: Alauda (灵雀云) 法务、交付、商务与高管团队
+
+---
+
+## 云端访问
+
+- **Streamlit Cloud 官方地址**: [Alauda Global Legal Agent](https://alauda-legal-agent.streamlit.app/)
+*(建议收藏此链接，支持电脑与移动端访问，无需安装任何软件)*
 
 ---
 
@@ -21,10 +28,12 @@
 
 本手册旨在为 **Alauda (灵雀云)** 提供一套基于端到端大语言模型 (LLM) 的自动化合同审查系统。我们的愿景是将资深法务 Partner 的商业嗅觉与 AI 的全景阅读能力结合，从而在极短时间内封堵 B2B 合同中的致命隐患。
 
-经过架构迭代，系统目前已演进至 **V5 (Multi-Role Copilot 版)**：
+经过架构迭代，系统目前已演进至 **V6.1 (Cloud-Native & Production Hardening Edition)**：
+- **内置免费 AI 引擎**：系统已内置 Claude Haiku 推理引擎。用户无需配置 API Key 即可使用全部核心功能，开箱即用。高级用户仍可在侧边栏切换至 OpenAI/Anthropic/Google 等自有模型。
 - **模型无关化 (Agnostic LLM)**：底层脱离单一模型绑定，动态支持 Google Gemini, OpenAI, Claude 以及公司内网私有化模型网关。
 - **结构化防御 (Pydantic)**：通过强类型 JSON 数据契约，强制大模型根据原文语言（中/英）自适应输出地道的法律修改建议。
 - **现代化 Web UI**：采用 Streamlit 构建了带有 Alauda 企业视觉体系的高级可视化数据看板，彻底告别枯燥的命令行。
+- **Redline 引擎重建**：全新的 Word 文档 Track Changes 引擎，支持 80 字符精准匹配、DOM 缓存与视觉删除线标记。
 
 ---
 
@@ -72,7 +81,15 @@ Agent 严格捍卫以下 6 条 SaaS 商业生命线：
 
 ## 5. 操作指南 (Web App 与 CLI)
 
-### 5.1 环境启动与 Web App 访问 (推荐)
+### 5.1 云端直接使用 (推荐)
+访问 [Alauda Global Legal Agent](https://alauda-legal-agent.streamlit.app/) 即可立即使用，无需安装任何软件。
+
+系统已内置免费 AI 引擎 (Claude Haiku)，**无需配置 API Key**。
+- **单文档模式**：直接上传 PDF/Word (.docx)。
+- **多文档模式**：将整个案卷打包为 `.zip` 上传，体验震撼的效力拓扑与后门雷达。
+- **自带模型 (可选)**：高级用户可在左侧边栏下拉切换至 OpenAI/Anthropic/Google 等自有模型并填入 API Key。
+
+### 5.2 本地部署 (开发者)
 ```bash
 # 激活环境
 source .venv/bin/activate
@@ -80,18 +97,15 @@ source .venv/bin/activate
 streamlit run web_app.py
 ```
 启动后访问 `http://localhost:8501`。
-- **配置密钥**：在左侧边栏下拉选择所需的底座大模型，并填入 API Key。
-- **单文档模式**：直接上传 PDF/Word。
-- **多文档模式**：将整个案卷打包为 `.zip` 上传，体验震撼的效力拓扑与后门雷达。
 
-### 5.2 CLI 极客模式
+### 5.3 CLI 极客模式
 对于技术人员批量处理任务，也可使用原生命令行：
 ```bash
 # 审查单个文件
-python3 alauda_legal_agent.py -f contract.txt -k $GEMINI_API_KEY -o report.md
+python3 alauda_legal_agent.py -f contract.txt -o report.md
 
 # 审查多文档目录
-python3 alauda_legal_agent.py -d ./customer_bundle/ -k $GEMINI_API_KEY -o report.md
+python3 alauda_legal_agent.py -d ./customer_bundle/ -o report.md
 ```
 
 ---

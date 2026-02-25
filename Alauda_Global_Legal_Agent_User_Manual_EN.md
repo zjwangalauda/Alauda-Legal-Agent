@@ -1,8 +1,15 @@
-# 🚀 Alauda Global Legal Agent (V5 Ultimate) User Manual
+# 🚀 Alauda Global Legal Agent (V6.1) User Manual
 
-**Version**: 5.0 (Multi-Role Copilot & Web Dashboard Edition)  
-**Last Updated**: February 22, 2026  
+**Version**: 6.1 (Cloud-Native & Production Hardening Edition)  
+**Last Updated**: February 26, 2026  
 **Target Audience**: Alauda Legal, Delivery, Commercial, and CXO Executive Teams
+
+---
+
+## Cloud Access
+
+- **Streamlit Cloud URL**: [Alauda Global Legal Agent](https://alauda-legal-agent.streamlit.app/)
+*(Bookmark this link for instant access from any device — no installation required)*
 
 ---
 
@@ -21,10 +28,12 @@
 
 This manual provides guidance for the **Alauda Global Legal Agent**, an automated contract review system powered by an end-to-end Large Language Model (LLM). Our vision is to combine the commercial acumen of a senior legal partner with the panoramic reading capabilities of AI to seal fatal loopholes in B2B contracts within seconds.
 
-Following rapid architectural iterations, the system has now evolved to the **V5 Ultimate (Multi-Role Copilot Edition)**:
+Following rapid architectural iterations, the system has now evolved to the **V6.1 (Cloud-Native & Production Hardening Edition)**:
+- **Built-in Free AI Engine**: The system now ships with an embedded Claude Haiku inference engine. Users can access all core features immediately — **no API key required**. Power users may still switch to OpenAI/Anthropic/Google models via the sidebar.
 - **Agnostic LLM Engine**: Decoupled from a single provider, dynamically supporting Google Gemini, OpenAI, Claude, or internal private model gateways.
 - **Structured Defense (Pydantic)**: Utilizes strict JSON data contracts to force the LLM to adaptively output idiomatic legal revision suggestions based on the original language (English/Chinese) of the contract.
 - **Modern Web UI**: Features an advanced visual dashboard built with Streamlit, incorporating Alauda's corporate design system, leaving behind the tedious command line.
+- **Redline Engine Overhaul**: Completely rebuilt Word Track Changes engine with 80-character precision matching, DOM caching, and visual strikethrough markup.
 
 ---
 
@@ -72,7 +81,15 @@ The Agent strictly defends the following 6 SaaS commercial lifelines:
 
 ## 5. Operational Guide (Web App & CLI)
 
-### 5.1 Environment Startup & Web App (Recommended)
+### 5.1 Cloud Access (Recommended)
+Visit [Alauda Global Legal Agent](https://alauda-legal-agent.streamlit.app/) to start immediately — no installation required.
+
+The system ships with a built-in free AI engine (Claude Haiku). **No API key is needed.**
+- **Single-Doc Mode**: Upload a PDF/Word (.docx) document directly.
+- **Multi-Doc Mode**: Package the entire dossier into a `.zip` file for a breathtaking topology and backdoor radar experience.
+- **Bring Your Own Model (Optional)**: Power users may switch to OpenAI/Anthropic/Google via the left sidebar and input their own API Key.
+
+### 5.2 Local Deployment (Developers)
 ```bash
 # Activate the virtual environment
 source .venv/bin/activate
@@ -80,18 +97,15 @@ source .venv/bin/activate
 streamlit run web_app.py
 ```
 Once launched, navigate to `http://localhost:8501`.
-- **Configure Key**: Use the left sidebar to select your preferred LLM engine and input the API Key.
-- **Single-Doc Mode**: Upload a PDF/Word document directly.
-- **Multi-Doc Mode**: Package the entire dossier into a `.zip` file for a breathtaking topology and backdoor radar experience.
 
-### 5.2 CLI Geek Mode
+### 5.3 CLI Geek Mode
 For technical users handling batch tasks, the native command line is available:
 ```bash
 # Review a single file
-python3 alauda_legal_agent.py -f contract.txt -k $GEMINI_API_KEY -o report.md
+python3 alauda_legal_agent.py -f contract.txt -o report.md
 
 # Review a multi-document directory
-python3 alauda_legal_agent.py -d ./customer_bundle/ -k $GEMINI_API_KEY -o report.md
+python3 alauda_legal_agent.py -d ./customer_bundle/ -o report.md
 ```
 
 ---
