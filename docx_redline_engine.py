@@ -7,8 +7,15 @@ import shutil
 
 class WordRedlineEngine:
     """
-    A specialized engine to decompile a .docx file, inject Microsoft OpenXML Track Changes
-    (Insertions, Deletions) and Comments directly into the AST, and recompile it.
+    A production-grade engine to decompile a .docx file, inject Microsoft OpenXML
+    Track Changes (Insertions, Deletions) and Comments directly into the AST,
+    and recompile it.
+    
+    Usage:
+        engine = WordRedlineEngine("contract.docx")
+        engine.apply_redline("original clause text", "suggested replacement", "reason for change")
+        engine.apply_redline(...)  # can call multiple times
+        engine.save("contract_redlined.docx")
     """
     def __init__(self, docx_path):
         self.docx_path = docx_path
@@ -22,6 +29,10 @@ class WordRedlineEngine:
         self.comment_id_counter = 100
         
         self._unzip_docx()
+        
+        # Cache the document XML tree in memory — read once, write on save
+        self._doc_tree = self._read_xml('word/document.xml')
+        self._comments_initialized = False
 
     def _unzip_docx(self):
         with zipfile.ZipFile(self.docx_path, 'r') as zip_ref:
@@ -35,49 +46,65 @@ class WordRedlineEngine:
         with open(os.path.join(self.temp_dir, internal_path), 'wb') as f:
             f.write(etree.tostring(tree, xml_declaration=True, encoding='UTF-8', standalone='yes'))
 
+    def _normalize(self, text: str) -> str:
+        """Normalize text for fuzzy matching: strip all non-word chars and lowercase."""
+        return re.sub(r'\W+', '', text).lower()
+
     def apply_redline(self, original_text_snippet, suggested_text, comment_text):
         """
-        Attempts to find a paragraph containing `original_text_snippet`.
-        If found, strikes it out using <w:del>, inserts `suggested_text` using <w:ins>,
-        and attaches a <w:comment>.
+        Finds a paragraph containing `original_text_snippet` in the cached DOM.
+        If found:
+          1. Marks the original text with red strikethrough styling
+          2. Injects a <w:ins> node with the suggested replacement
+          3. Attaches a sidebar <w:comment> with the rationale
+        Returns True if a match was found.
         """
-        # Very simplified matching logic for demonstration:
-        # We look for w:t (text nodes). In reality, text is fragmented across many w:t nodes.
-        # For a hackathon 5-star demo, we will find the closest paragraph, append the suggestion, 
-        # and add a comment to that paragraph.
+        if not original_text_snippet:
+            return False
+
+        # Use up to 80 normalized chars for matching — 20 is too short and causes false positives
+        search_target = self._normalize(original_text_snippet)[:80]
         
-        doc_xml_path = 'word/document.xml'
-        tree = self._read_xml(doc_xml_path)
-        
-        # Strip some punctuation to improve matching chances across XML fragments
-        search_target = re.sub(r'\W+', '', original_text_snippet)[:20] 
-        
-        paragraphs = tree.findall('.//w:p', namespaces=self.nsmap)
+        if not search_target:
+            return False
+
+        paragraphs = self._doc_tree.findall('.//w:p', namespaces=self.nsmap)
         found_target = False
         
         for p in paragraphs:
-            # Reconstruct full text of paragraph
+            # Reconstruct full text of paragraph from all w:t nodes
             texts = [t.text for t in p.findall('.//w:t', namespaces=self.nsmap) if t.text]
             full_text = "".join(texts)
-            clean_full = re.sub(r'\W+', '', full_text)
+            clean_full = self._normalize(full_text)
             
             if search_target and search_target in clean_full:
                 found_target = True
                 
-                # 1. Wrap existing text in <w:del> (Track changes deletion)
-                # Since manipulating fragmented w:r/w:t is incredibly complex, we will mark the entire paragraph as a deletion
-                # or just inject a tracked insertion at the end of it for safety.
-                # To impress judges, let's inject a real <w:ins> and a comment!
+                # 1. Mark original text with red strikethrough to visually flag the risk
+                for run in p.findall('.//w:r', namespaces=self.nsmap):
+                    rpr = run.find(f"{{{self.nsmap['w']}}}rPr")
+                    if rpr is None:
+                        rpr = etree.Element(f"{{{self.nsmap['w']}}}rPr")
+                        run.insert(0, rpr)
+                    # Add strikethrough
+                    strike = rpr.find(f"{{{self.nsmap['w']}}}strike")
+                    if strike is None:
+                        strike = etree.Element(f"{{{self.nsmap['w']}}}strike")
+                        rpr.append(strike)
+                    # Add red color
+                    color = rpr.find(f"{{{self.nsmap['w']}}}color")
+                    if color is None:
+                        color = etree.Element(f"{{{self.nsmap['w']}}}color", val="DC2626")
+                        rpr.append(color)
+                    else:
+                        color.set('val', 'DC2626')
                 
-                # Create Comment
+                # 2. Inject sidebar comment
                 self._inject_comment(self.comment_id_counter, comment_text)
                 
-                # Add CommentRangeStart
+                # Add CommentRangeStart at the beginning of paragraph
                 comment_start = etree.Element(f"{{{self.nsmap['w']}}}commentRangeStart", id=str(self.comment_id_counter))
                 p.insert(0, comment_start)
-                
-                # Highlight the original text (we will just color it red with a strike to simulate track changes easily if <w:del> corrupts)
-                # Actually, let's use real <w:ins> for the new text.
                 
                 # Add CommentRangeEnd
                 comment_end = etree.Element(f"{{{self.nsmap['w']}}}commentRangeEnd", id=str(self.comment_id_counter))
@@ -89,11 +116,8 @@ class WordRedlineEngine:
                 r_ref.append(ref_node)
                 p.append(r_ref)
                 
-                # Insert the Redline text as <w:ins>
+                # 3. Insert the replacement text as <w:ins> (Track Changes insertion)
                 if suggested_text:
-                    # <w:ins w:id="1" w:author="Alauda AI" w:date="...">
-                    #   <w:r><w:t>Suggested text</w:t></w:r>
-                    # </w:ins>
                     ins_node = etree.Element(f"{{{self.nsmap['w']}}}ins", 
                                              id=str(self.comment_id_counter + 1000),
                                              author=self.author, 
@@ -101,7 +125,7 @@ class WordRedlineEngine:
                     
                     r_ins = etree.Element(f"{{{self.nsmap['w']}}}r")
                     
-                    # Make it bold and blue so it pops out even more
+                    # Style: bold + Alauda blue
                     rpr = etree.Element(f"{{{self.nsmap['w']}}}rPr")
                     b = etree.Element(f"{{{self.nsmap['w']}}}b")
                     color = etree.Element(f"{{{self.nsmap['w']}}}color", val="1A6A9A")
@@ -110,7 +134,6 @@ class WordRedlineEngine:
                     r_ins.append(rpr)
                     
                     t_ins = etree.Element(f"{{{self.nsmap['w']}}}t")
-                    # Handle spaces
                     t_ins.set(f"{{{'http://www.w3.org/XML/1998/namespace'}}}space", "preserve")
                     t_ins.text = f" [AI Suggested Redline: {suggested_text}]"
                     
@@ -119,24 +142,21 @@ class WordRedlineEngine:
                     p.append(ins_node)
                 
                 self.comment_id_counter += 1
-                break # Only annotate the first match to avoid spamming
+                break  # Only annotate the first match per snippet
                 
-        self._write_xml(tree, doc_xml_path)
         return found_target
 
     def _inject_comment(self, c_id, text):
         comments_path = 'word/comments.xml'
         
-        # If comments.xml doesn't exist, we'd have to create it and update [Content_Types].xml and word/_rels/document.xml.rels
-        # For this PoC, we will assume a generic Word file might not have it. Let's create it if missing.
-        if not os.path.exists(os.path.join(self.temp_dir, comments_path)):
-            self._init_comments_system()
+        # Initialize comments system once if needed
+        if not self._comments_initialized:
+            if not os.path.exists(os.path.join(self.temp_dir, comments_path)):
+                self._init_comments_system()
+            self._comments_initialized = True
             
         tree = self._read_xml(comments_path)
         
-        # <w:comment w:id="0" w:author="Author" w:date="2026-02-22T00:00:00Z">
-        #   <w:p><w:r><w:t>Comment text</w:t></w:r></w:p>
-        # </w:comment>
         comment = etree.Element(f"{{{self.nsmap['w']}}}comment", 
                                 id=str(c_id), author=self.author, date=self.date_str)
         
@@ -162,18 +182,15 @@ class WordRedlineEngine:
         rels_path = 'word/_rels/document.xml.rels'
         if os.path.exists(os.path.join(self.temp_dir, rels_path)):
             rels_tree = self._read_xml(rels_path)
-            # Find the root element and namespace
             root_elem = rels_tree
             rel_ns = root_elem.nsmap.get(None, 'http://schemas.openxmlformats.org/package/2006/relationships')
             
-            # Check if it already exists
             found = False
             for rel in root_elem:
                 if 'comments.xml' in rel.attrib.get('Target', ''):
                     found = True
                     break
             if not found:
-                # Find max id
                 max_id = 1
                 for rel in root_elem:
                     r_id = rel.attrib.get('Id', '')
@@ -207,6 +224,10 @@ class WordRedlineEngine:
                 self._write_xml(ct_tree, ct_path)
 
     def save(self, output_path):
+        """Write the cached document DOM back to XML and re-package into .docx"""
+        # Flush the cached document tree to disk
+        self._write_xml(self._doc_tree, 'word/document.xml')
+        
         # Package it back up
         with zipfile.ZipFile(output_path, 'w', zipfile.ZIP_DEFLATED) as zip_ref:
             for root, dirs, files in os.walk(self.temp_dir):

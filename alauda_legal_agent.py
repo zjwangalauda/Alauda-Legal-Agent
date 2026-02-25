@@ -9,13 +9,20 @@ from pydantic import BaseModel, Field
 # ---------------------------------------------------------
 # 1. AI 依赖装载与兜底机制 (Dependencies & Fallbacks)
 # ---------------------------------------------------------
+# 核心 LangChain 组件（必须）
 try:
     from langchain_core.prompts import ChatPromptTemplate
-    from langchain_google_genai import ChatGoogleGenerativeAI
     from langchain_core.output_parsers import PydanticOutputParser
     has_langchain = True
 except ImportError:
     has_langchain = False
+
+# Google Gemini 可选依赖（不影响 OpenAI/Claude 通路）
+try:
+    from langchain_google_genai import ChatGoogleGenerativeAI
+    has_google = True
+except ImportError:
+    has_google = False
 
 def extract_text_from_file(file_path: str) -> str:
     """提取各种格式文档的纯文本"""
@@ -28,7 +35,7 @@ def extract_text_from_file(file_path: str) -> str:
                 reader = pypdf.PdfReader(f)
                 for page in reader.pages:
                     text += (page.extract_text() or "") + "\n"
-        elif ext in ['.docx', '.doc']:
+        elif ext == '.docx':
             from docx import Document
             doc = Document(file_path)
             for p in doc.paragraphs:
@@ -37,6 +44,8 @@ def extract_text_from_file(file_path: str) -> str:
                 for row in table.rows:
                     row_data = [cell.text.strip() for cell in row.cells if cell.text.strip()]
                     if row_data: text += " | ".join(row_data) + "\n"
+        elif ext == '.doc':
+            print(f"⚠️ 旧版 .doc 格式不受支持，请转换为 .docx 后重试: {file_path}")
         else:
             with open(file_path, "r", encoding="utf-8") as f:
                 text = f.read()
@@ -160,6 +169,8 @@ def run_llm_inference(text: str, mode: str, api_key: str, model_provider: str = 
     
     # 动态支持多种底层大模型 (Agnostic LLM Provider)
     if model_provider == "google":
+        if not has_google:
+            raise RuntimeError("Google Gemini 依赖未安装 (langchain-google-genai)，请切换其他引擎或安装依赖。")
         llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro", temperature=0.1, max_output_tokens=8192, google_api_key=api_key)
     elif model_provider == "openai":
         from langchain_openai import ChatOpenAI
@@ -168,7 +179,7 @@ def run_llm_inference(text: str, mode: str, api_key: str, model_provider: str = 
         from langchain_anthropic import ChatAnthropic
         llm = ChatAnthropic(model="claude-3-5-sonnet-20241022", temperature=0.1, max_tokens=8192, api_key=api_key)
     else:
-        # Default fallback to an OpenAI compatible endpoint (DeepSeek, VLLM, etc.)
+        # OpenAI-compatible endpoint (DeepSeek, Claude-proxy, VLLM, etc.)
         from langchain_openai import ChatOpenAI
         llm = ChatOpenAI(model=model_provider, temperature=0.1, max_tokens=8192, api_key=api_key, base_url=base_url)
 
@@ -298,7 +309,7 @@ def render_multi_doc_report(report: MultiDocReviewReport, output_file: str):
 # 6. 主执行入口 (Main CLI)
 # ---------------------------------------------------------
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Alauda Ultimate AI Legal Agent (V4)")
+    parser = argparse.ArgumentParser(description="Alauda Global Legal Agent (V6)")
     parser.add_argument("-f", "--file", help="[单文档模式] 要审查的文件路径 (.txt, .md, .pdf, .docx)")
     parser.add_argument("-d", "--dir", help="[多文档模式] 包含一组关联合同的目录，执行跨文档知识图谱关联审计")
     parser.add_argument("-o", "--output", default="ai_review_report.md", help="输出的Markdown报告路径")
@@ -342,7 +353,7 @@ if __name__ == "__main__":
             print(f"✅ 单文档智能审计完成: {args.output}")
             
     else:
-        print("💡 Alauda AI Legal Agent (V4 Ultimate)")
+        print("💡 Alauda Global Legal Agent (V6)")
         print("请选择工作模式：")
         print("  1. 单文档分析: python3 alauda_legal_agent.py -f contract.pdf")
         print("  2. 多文档关联: python3 alauda_legal_agent.py -d ./contract_bundle_dir/")

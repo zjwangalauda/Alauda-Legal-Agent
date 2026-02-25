@@ -318,6 +318,7 @@ with col2:
             
             # 临时沙盒处理
             try:
+                redlined_path = None
                 if mode == "📄 单文档快速审计 (Single-Doc)":
                     with tempfile.NamedTemporaryFile(delete=False, suffix=Path(uploaded_file.name).suffix) as tmp_file:
                         tmp_file.write(uploaded_file.getvalue())
@@ -328,7 +329,7 @@ with col2:
                     
                     # V6 Native Redlining Logic
                     redlined_path = None
-                    if enable_redline and report and tmp_path.lower().endswith('.docx') and report.legal_reviews:
+                    if enable_redline and report and tmp_path.lower().endswith('.docx') and hasattr(report, 'legal_reviews') and report.legal_reviews:
                         redlined_path = tmp_path.replace(".docx", "_redlined.docx")
                         try:
                             shutil.copy(tmp_path, redlined_path)
@@ -462,12 +463,30 @@ with col2:
         st.markdown("---")
         col_dl1, col_dl2 = st.columns(2)
         with col_dl1:
-            md_export = f"# {report.contract_name if hasattr(report, 'contract_name') else report.project_name} 综合审计决议报告\n\n"
-            md_export += f"## 👨‍💼 CXO 审批建议\n{report.cxo_view.approval_recommendation}\n\n"
-            md_export += f"**战略指导**: {report.cxo_view.strategic_advice}\n"
+            report_name = report.contract_name if hasattr(report, 'contract_name') else report.project_name
+            md_export = f"# {report_name} 综合审计决议报告\n\n"
+            md_export += f"## 👨‍💼 CXO 审批建议\n- **决议**: {report.cxo_view.approval_recommendation}\n"
+            md_export += f"- **致命阻碍**: {report.cxo_view.deal_breaker_summary}\n"
+            md_export += f"- **战略指导**: {report.cxo_view.strategic_advice}\n\n---\n\n"
+            md_export += f"## 📈 商务运营核心要素\n"
+            for c in report.commercial_summary:
+                md_export += f"- **{c.key_metric}**: {c.extracted_value}\n  > 运营影响：{c.operational_impact}\n\n"
+            md_export += "---\n\n## ⚖️ 法务风险审查\n\n"
+            items = getattr(report, 'legal_reviews', None) or getattr(report, 'hidden_backdoors', None) or []
+            for i, item in enumerate(items, 1):
+                if hasattr(item, 'original_text'):
+                    md_export += f"### {i}. {item.dimension} [{item.risk_level}]\n"
+                    md_export += f"**原文**: {item.original_text}\n\n**分析**: {item.rationale}\n\n"
+                    if item.suggested_revision:
+                        md_export += f"**建议修改**: {item.suggested_revision}\n\n"
+                else:
+                    md_export += f"### {i}. {item.dimension}\n"
+                    md_export += f"**主协议条款**: {item.master_clause}\n\n**越权条款 ({item.source_doc})**: {item.overriding_clause}\n\n"
+                    md_export += f"**风险分析**: {item.risk_analysis}\n\n**拦截方案**: {item.suggested_action}\n\n"
+                md_export += "---\n\n"
             st.download_button("⬇️ 导出审计报告 (.md)", data=md_export, file_name="review_report.md")
         
-        if 'redlined_path' in locals() and redlined_path and os.path.exists(redlined_path):
+        if redlined_path and os.path.exists(redlined_path):
             with col_dl2:
                 with open(redlined_path, "rb") as f:
                     st.download_button(
@@ -479,8 +498,7 @@ with col2:
     elif start_btn:
         st.error("处理失败，请检查网络或确认文档内容是否有效。")
 
-    report = st.session_state.get('current_report', None)
-    if not report and not start_btn:
+    if not st.session_state.get('current_report') and not start_btn:
         # 初始空白状态提示
         st.markdown("""
         <div style="text-align: center; padding: 50px; background: white; border-radius: 12px; border: 1px dashed #CBD5E1; color: #94A3B8 !important;">
