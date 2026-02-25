@@ -1,8 +1,9 @@
-streamlit
-pydantic
-docx2txt
-pypdf
-google-genai
-openai
-python-docx
-anthropic
+streamlit>=1.31.0
+pydantic>=2.0.0
+pypdf>=4.0.1
+python-docx>=1.1.0
+lxml>=4.9.0
+langchain-core>=0.1.0
+langchain-google-genai>=1.0.0
+langchain-openai>=0.0.2
+langchain-anthropic>=0.1.0
