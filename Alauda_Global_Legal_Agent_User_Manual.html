@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alauda Global Legal Agent (V6.1) 用户手册</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; background: #F8FAFC; color: #1E293B; line-height: 1.7; }
+        .header { background: linear-gradient(135deg, #004D99 0%, #003366 100%); color: #fff; padding: 48px 0 40px; text-align: center; }
+        .header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+        .header .meta { font-size: 0.95rem; opacity: 0.85; line-height: 1.6; }
+        .container { max-width: 900px; margin: -24px auto 60px; padding: 0 24px; }
+        .cloud-banner { background: linear-gradient(90deg, #EFF6FF, #DBEAFE); border: 1px solid #93C5FD; border-radius: 10px; padding: 20px 28px; margin-bottom: 28px; text-align: center; }
+        .cloud-banner a { color: #004D99; font-weight: 700; font-size: 1.1rem; text-decoration: none; }
+        .cloud-banner a:hover { text-decoration: underline; }
+        .cloud-banner p { font-size: 0.88rem; color: #64748B; margin-top: 4px; }
+        .card { background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); padding: 36px 40px; margin-bottom: 28px; border: 1px solid #E2E8F0; }
+        .card h2 { font-size: 1.35rem; color: #004D99; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #E2E8F0; }
+        .card h3 { font-size: 1.1rem; color: #1E293B; margin: 20px 0 10px; }
+        .card p { margin-bottom: 12px; font-size: 0.95rem; }
+        .card ul, .card ol { padding-left: 22px; margin-bottom: 12px; }
+        .card ul li, .card ol li { margin-bottom: 8px; font-size: 0.95rem; }
+        .card ul li strong { color: #004D99; }
+        .card ul ul { margin-top: 6px; }
+        .card ul ul li { font-size: 0.9rem; color: #475569; }
+        table { width: 100%; border-collapse: collapse; margin: 12px 0 16px; font-size: 0.9rem; }
+        th { background: #004D99; color: #fff; text-align: left; padding: 10px 14px; font-weight: 600; }
+        td { padding: 10px 14px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+        tr:nth-child(even) td { background: #F8FAFC; }
+        code { background: #F1F5F9; padding: 2px 6px; border-radius: 4px; font-size: 0.88rem; color: #0F172A; }
+        pre { background: #1E293B; color: #E2E8F0; padding: 16px 20px; border-radius: 8px; overflow-x: auto; margin: 12px 0; font-size: 0.88rem; line-height: 1.6; }
+        blockquote { border-left: 4px solid #004D99; background: #EFF6FF; padding: 12px 18px; margin: 10px 0; border-radius: 0 6px 6px 0; font-size: 0.92rem; color: #334155; font-style: italic; }
+        .pyramid { display: flex; flex-direction: column; gap: 0; margin: 16px 0; }
+        .pyramid-level { padding: 16px 20px; border-radius: 8px; margin-bottom: 8px; }
+        .pyramid-level.apex { background: linear-gradient(90deg, #FEF3C7, #FDE68A); border-left: 5px solid #F59E0B; }
+        .pyramid-level.middle { background: linear-gradient(90deg, #DBEAFE, #BFDBFE); border-left: 5px solid #3B82F6; }
+        .pyramid-level.base { background: linear-gradient(90deg, #F1F5F9, #E2E8F0); border-left: 5px solid #64748B; }
+        .pyramid-level h4 { margin-bottom: 6px; font-size: 1rem; }
+        .pyramid-level ul { padding-left: 18px; margin: 0; }
+        .pyramid-level li { font-size: 0.9rem; margin-bottom: 4px; }
+        .report-section { background: #FAFBFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 20px 24px; margin: 12px 0; }
+        .report-section h4 { color: #004D99; margin-bottom: 8px; }
+        .footer { text-align: center; padding: 30px 0 40px; font-size: 0.85rem; color: #94A3B8; }
+        .footer a { color: #004D99; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>🚀 Alauda Global Legal Agent (V6.1)</h1>
+    <div class="meta">
+        用户手册<br>
+        版本 6.1 (Cloud-Native &amp; Production Hardening Edition)<br>
+        更新日期：2026年2月26日 &nbsp;|&nbsp; 适用对象：法务、交付、商务与高管团队
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="cloud-banner">
+        <a href="https://alauda-legal-agent.streamlit.app/" target="_blank">☁️ 点击直接访问 Alauda Global Legal Agent (Streamlit Cloud)</a>
+        <p>建议收藏此链接，支持电脑与移动端访问，无需安装任何软件</p>
+    </div>
+
+    <!-- 1. 核心愿景 -->
+    <div class="card">
+        <h2>1. 核心愿景与架构演进</h2>
+        <p>本系统为 <strong>Alauda (灵雀云)</strong> 提供一套基于端到端大语言模型 (LLM) 的自动化合同审查系统。我们的愿景是将资深法务 Partner 的商业嗅觉与 AI 的全景阅读能力结合，从而在极短时间内封堵 B2B 合同中的致命隐患。</p>
+        <p>系统已演进至 <strong>V6.1</strong>：</p>
+        <ul>
+            <li><strong>内置免费 AI 引擎</strong>：系统已内置 Claude Haiku 推理引擎。用户无需配置 API Key 即可使用全部核心功能，开箱即用。高级用户仍可在侧边栏切换至 OpenAI/Anthropic/Google 等自有模型。</li>
+            <li><strong>模型无关化 (Agnostic LLM)</strong>：动态支持 Google Gemini, OpenAI, Claude 以及公司内网私有化模型网关。</li>
+            <li><strong>结构化防御 (Pydantic)</strong>：通过强类型 JSON 数据契约，强制大模型根据原文语言（中/英）自适应输出地道的法律修改建议。</li>
+            <li><strong>现代化 Web UI</strong>：采用 Streamlit 构建的 Alauda 企业视觉体系可视化数据看板。</li>
+            <li><strong>Redline 引擎重建</strong>：全新的 Word 文档 Track Changes 引擎，支持 80 字符精准匹配、DOM 缓存与视觉删除线标记。</li>
+        </ul>
+    </div>
+
+    <!-- 2. 三重视角 -->
+    <div class="card">
+        <h2>2. V5 独家特性：三重视角 Copilot</h2>
+        <p>系统化身为拥有"三重人格"的高级商业幕僚。针对每一份上传的合同或案卷，拆解为三层金字塔视角：</p>
+        <div class="pyramid">
+            <div class="pyramid-level apex">
+                <h4>👨‍💼 核心管理层 (CXO) 审批台 — 塔尖</h4>
+                <ul>
+                    <li>给出极其明确的决策建议（【建议直接签约】/【有条件通过】/【强烈建议拒签】）。</li>
+                    <li>提炼阻碍签约的"致命因素 (Deal Breakers)"。</li>
+                    <li>撰写包含利益交换和让步红线的"战略博弈指导"。</li>
+                </ul>
+            </div>
+            <div class="pyramid-level middle">
+                <h4>📈 运营与商务履约看板 — 中层</h4>
+                <ul>
+                    <li>为 PMO 和财务团队自动提取庞杂文本中的账期、首付比例、服务期、罚金条款。</li>
+                    <li>自动测算并提示对公司现金流与交付成本的真实业务影响。</li>
+                </ul>
+            </div>
+            <div class="pyramid-level base">
+                <h4>⚖️ 法务合规与红线防御阵地 — 基座</h4>
+                <ul>
+                    <li>逐条列出违反公司 SaaS 政策的高危/中危条款。</li>
+                    <li>给出法务溯源分析，以及可直接用于红线谈判的修正建议 (Redline)。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. 多文档 -->
+    <div class="card">
+        <h2>3. 多文档关联审计机制</h2>
+        <p>大型 B2B 客户经常采用<strong>"明修栈道，暗度陈仓"</strong>的策略：在严格的《主协议 GFA》中答应所有底线，却在某个交付团队草签的《服务说明书 SOW》附件中写上"本 SOW 拥有最高优先级，且供应商需承担无限数据连带责任"。</p>
+        <h3>Agent 的跨文档图谱工作流</h3>
+        <ol>
+            <li><strong>构建效力拓扑</strong>：自动抓取所有文件中的 <code>Order of Precedence</code>，梳理出一张"谁管谁"的效力层级树。</li>
+            <li><strong>后门嗅探 (Backdoor Detection)</strong>：利用百万级 Token 上下文，将高优先级的附件与低优先级主合同的红线进行交叉对比。一旦发现低级别文件中的保护被高级别文件越权推翻，即触发红色防线警报并提供定向爆破条款。</li>
+        </ol>
+    </div>
+
+    <!-- 4. 红线 -->
+    <div class="card">
+        <h2>4. SaaS 商业红线与法务底线</h2>
+        <p>Agent 严格捍卫以下 6 条 SaaS 商业生命线：</p>
+        <table>
+            <thead>
+                <tr><th style="width:130px;">监控维度</th><th>风险红线判定标准与业务逻辑</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>订阅计量</strong></td><td>🔴 拒绝买断/无限使用权 → 🟢 必须基于 Node/Core 等具体 Unit 计量。<br><em>防范客户购买一套授权后在企业内无限制复制。</em></td></tr>
+                <tr><td><strong>赔偿责任</strong></td><td>🔴 拒绝无限赔偿或包含数据丢失 → 🟢 上限为 12个月订阅费 (EULA限$50)。<br><em>实施严格的"双轨制"风控，明确排除间接损失。</em></td></tr>
+                <tr><td><strong>知识产权</strong></td><td>🔴 拒绝派生品归属客户 (Work for Hire) → 🟢 坚守核心 PaaS 底座所有权。<br><em>防止被单一客户买断导致核心代码闭源。</em></td></tr>
+                <tr><td><strong>验收结项</strong></td><td>🔴 拒绝单边书面确认或无限循环拒收 → 🟢 必须包含 10 个工作日默示验收。<br><em>杜绝客户利用内部流程拖延 FAC 结项，强保尾款结算。</em></td></tr>
+                <tr><td><strong>SLA 响应</strong></td><td>🔴 拒绝 &lt;30 分钟内 / 24x7 无限支持 → 🟢 匹配 P1 30mins, P2 2hrs 上限。<br><em>拒绝脱离一线运维中心 (ROTC) 实际承受能力的承诺。</em></td></tr>
+                <tr><td><strong>支持范围</strong></td><td>🔴 拒绝驻场或第三方软件兜底 → 🟢 仅限 Alauda 认证环境内的远程支持。<br><em>明确排除定制代码开发和非认证组件排障以控制成本。</em></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 5. 操作指南 -->
+    <div class="card">
+        <h2>5. 操作指南 (Web App 与 CLI)</h2>
+
+        <h3>5.1 云端直接使用（推荐）</h3>
+        <p>访问 <a href="https://alauda-legal-agent.streamlit.app/" target="_blank" style="color:#004D99;font-weight:600;">Alauda Global Legal Agent</a> 即可立即使用，无需安装任何软件。</p>
+        <p>系统已内置免费 AI 引擎 (Claude Haiku)，<strong>无需配置 API Key</strong>。</p>
+        <ul>
+            <li><strong>单文档模式</strong>：直接上传 PDF/Word (.docx)。</li>
+            <li><strong>多文档模式</strong>：将整个案卷打包为 <code>.zip</code> 上传，体验效力拓扑与后门雷达。</li>
+            <li><strong>自带模型 (可选)</strong>：高级用户可在左侧边栏下拉切换至 OpenAI/Anthropic/Google 等自有模型并填入 API Key。</li>
+        </ul>
+
+        <h3>5.2 本地部署（开发者）</h3>
+        <pre>
+# 激活环境
+source .venv/bin/activate
+# 启动企业级 Web 看板
+streamlit run web_app.py</pre>
+        <p>启动后访问 <code>http://localhost:8501</code>。</p>
+
+        <h3>5.3 CLI 极客模式</h3>
+        <pre>
+# 审查单个文件
+python3 alauda_legal_agent.py -f contract.txt -o report.md
+
+# 审查多文档目录
+python3 alauda_legal_agent.py -d ./customer_bundle/ -o report.md</pre>
+    </div>
+
+    <!-- 6. 报告示例 -->
+    <div class="card">
+        <h2>6. 输出报告实战示例</h2>
+        <p><em>以下为针对某金融机构真实案卷 V5 版多角色输出节选</em></p>
+
+        <div class="report-section">
+            <h4>👨‍💼 核心管理层 (CXO) 审批台</h4>
+            <ul>
+                <li><strong>最终决议</strong>：🔴 <strong>【有条件通过(必须强拆后门)】</strong></li>
+                <li><strong>致命阻碍 (Deal Breakers)</strong>：SOW附件利用优先权推翻了GFA的赔偿上限，带来针对银行数据的无限索赔敞口；且未包含默示验收。</li>
+                <li><strong>战略博弈指导</strong>：这是战略级标杆客户，且首付高达40%能极大缓解现金流。建议不要直接拒签，应由法务 VP 出面，在最高优先级的 Order Form 中强制打上免责补丁。同时在交付端加派资深架构师对冲验收延期风险。</li>
+            </ul>
+        </div>
+
+        <div class="report-section">
+            <h4>📈 运营与商务履约看板</h4>
+            <table>
+                <thead><tr><th>核心要素</th><th>合同摘要</th><th>运营影响测算</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>合同总金额</strong></td><td>300万人民币</td><td>大单，高营收，具有战略意义</td></tr>
+                    <tr><td><strong>付款节奏</strong></td><td>20% - 40% - 40% (分三年付)</td><td>首付偏低，存在长达两年的垫资交付期资金压力</td></tr>
+                    <tr><td><strong>维保周期</strong></td><td>自签收后长达36个月</td><td>维保人力成本极高，需单独核算维保利润率</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="report-section">
+            <h4>⚖️ 法务合规与红线防御阵地 (Legal Risk Matrix)</h4>
+            <p><strong>💥 发现后门 #1：知识产权 (IP Rights) - 平台衍生品强制归属客户 🔴 HIGH</strong></p>
+            <p><strong>🏰 主协议防线 (Master Clause):</strong></p>
+            <blockquote>GFA 11.1(3): MegaBank owns all rights, title and interest in and to Intellectual Property Rights developed during the course of providing Services... including enhancements, modifications or derivative works of materials...</blockquote>
+            <p><strong>🗡️ 越权覆盖点 (Overriding Clause in General Terms.docx):</strong></p>
+            <blockquote>Software Module 5.2 再次强化: Ownership of the Intellectual Property Rights in any customisations... will be governed by the relevant Service Module.</blockquote>
+            <p><strong>💡 致命风险溯源分析：</strong>客户在主框架中规定，无论原先是谁的知识产权（包括 Alauda 核心底座），只要在服务过程中产生了 enhancements 或 derivative works，所有权全部归属客户。这严重阻碍 Alauda 将实践标准化进下一次产品迭代的权利。</p>
+            <p><strong>✅ 法务强拆建议：</strong></p>
+            <pre>删除 GFA 11.1(3) 中的 'enhancements, modifications or derivative works...'
+并在 Order Form 中利用最高优先级添加特约保护：
+'Notwithstanding General Terms 11.1, Supplier retains all ownership
+to its pre-existing core platform and any derivative works thereof.
+MegaBank only owns custom deliverables explicitly stated as Work for Hire.'</pre>
+        </div>
+    </div>
+
+</div>
+
+<div class="footer">
+    <p>Alauda Global Legal Agent — 您的智能法务与商务中枢引擎</p>
+    <p style="margin-top: 4px;">&copy; 2026 <a href="https://www.alauda.cn" target="_blank">Alauda (灵雀云)</a></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alauda Global Legal Agent - Release Notes</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; background: #F8FAFC; color: #1E293B; line-height: 1.7; }
+        .header { background: linear-gradient(135deg, #004D99 0%, #003366 100%); color: #fff; padding: 48px 0 40px; text-align: center; }
+        .header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+        .header p { font-size: 1rem; opacity: 0.85; }
+        .container { max-width: 880px; margin: -24px auto 60px; padding: 0 24px; }
+        .card { background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); padding: 36px 40px; margin-bottom: 28px; border: 1px solid #E2E8F0; }
+        .version-badge { display: inline-block; background: #004D99; color: #fff; font-size: 0.85rem; font-weight: 600; padding: 4px 14px; border-radius: 20px; margin-bottom: 6px; }
+        .version-badge.old { background: #64748B; }
+        .card h2 { font-size: 1.35rem; color: #004D99; margin: 8px 0 4px; }
+        .card .date { font-size: 0.9rem; color: #64748B; margin-bottom: 18px; }
+        .card h3 { font-size: 1.1rem; color: #1E293B; margin: 22px 0 10px; padding-bottom: 6px; border-bottom: 2px solid #E2E8F0; }
+        .card ul { padding-left: 22px; margin-bottom: 10px; }
+        .card ul li { margin-bottom: 8px; font-size: 0.95rem; }
+        .card ul li strong { color: #004D99; }
+        .card ul ul { margin-top: 6px; }
+        .card ul ul li { font-size: 0.9rem; color: #475569; }
+        code { background: #F1F5F9; padding: 2px 6px; border-radius: 4px; font-size: 0.88rem; color: #0F172A; }
+        .footer { text-align: center; padding: 30px 0 40px; font-size: 0.85rem; color: #94A3B8; }
+        .footer a { color: #004D99; text-decoration: none; }
+        hr.section-divider { border: none; border-top: 1px solid #E2E8F0; margin: 0; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>🚀 Alauda Global Legal Agent</h1>
+    <p>Release Notes — 版本发布日志</p>
+</div>
+
+<div class="container">
+
+    <!-- V6.1 -->
+    <div class="card">
+        <span class="version-badge">V6.1 — Latest</span>
+        <h2>Cloud-Native &amp; Production Hardening Edition</h2>
+        <div class="date">2026-02-26</div>
+
+        <h3>🔥 核心突破 (Major Features)</h3>
+        <ul>
+            <li><strong>内置免费 AI 引擎 (Built-in Free AI Engine)</strong>：系统现已内置 Claude Haiku 推理引擎，用户无需配置任何 API Key 即可直接使用全部核心功能。零配置、开箱即用。</li>
+            <li><strong>Streamlit Cloud 全球部署</strong>：系统已正式部署至 Streamlit Community Cloud，实现 7x24 小时全球在线访问，免运维高可用。</li>
+            <li><strong>Redline 引擎全面重建 (DocxRedlineEngine Overhaul)</strong>：
+                <ul>
+                    <li>文本匹配精度从 20 字符提升至 80 字符，大幅降低误标记率。</li>
+                    <li>引入 DOM 缓存机制，避免每次 <code>apply_redline()</code> 重复解析 XML，性能显著提升。</li>
+                    <li>新增视觉删除线标记 (Strikethrough Markup)，风险条款在 Word 文档中一目了然。</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>🔧 优化与修复 (Improvements &amp; Fixes) — 共 9 项生产级缺陷修复</h3>
+        <ul>
+            <li><strong>LangChain 依赖解耦</strong>：将 <code>has_langchain</code> (核心框架) 与 <code>has_google</code> (可选 Google 模型) 分离。修复了当 <code>langchain-google-genai</code> 未安装时，所有 LLM 路径（含 OpenAI/Claude）均回退至 Mock 模式的致命缺陷。</li>
+            <li><strong>MultiDocReviewReport 安全访问</strong>：Redline 引擎现使用 <code>hasattr()</code> 安全检查字段，避免 <code>AttributeError</code> 崩溃。</li>
+            <li><strong>Markdown 导出修复</strong>：修复了多文档报告导出时内容截断和格式错乱的问题。</li>
+            <li><strong>Streamlit Secrets 注入修复</strong>：使用 <code>try/except</code> 包裹 <code>st.secrets.get()</code> 调用，解决无 <code>secrets.toml</code> 文件时的异常问题。</li>
+            <li><strong>CLI 渲染器兼容</strong>：修复命令行模式下因 V5 数据结构变更导致的报告渲染崩溃。</li>
+            <li><strong><code>.doc</code> 格式声明移除</strong>：移除了对旧版 <code>.doc</code> 格式的虚假支持声明（仅支持 <code>.docx</code>/<code>.pdf</code>/<code>.txt</code>）。</li>
+            <li><strong>依赖清单完善</strong>：<code>requirements.txt</code> 补全了 <code>langchain-core</code>, <code>langchain-openai</code>, <code>langchain-anthropic</code>, <code>lxml</code> 等遗漏依赖。</li>
+            <li><strong>安全加固</strong>：<code>.gitignore</code> 强化，确保敏感文件永不进入版本控制。</li>
+            <li><strong>冗余文件清理</strong>：移除了 <code>.html</code>, <code>.pdf</code>, <code>.png</code> 等构建产物，保持仓库整洁。</li>
+        </ul>
+    </div>
+
+    <!-- V5.0 -->
+    <div class="card">
+        <span class="version-badge old">V5.0</span>
+        <h2>Multi-Role Copilot &amp; Web Dashboard Edition</h2>
+        <div class="date">2026-02-22</div>
+
+        <h3>🔥 核心突破 (Major Features)</h3>
+        <ul>
+            <li><strong>多角色决策中枢 (Multi-Role Copilot)</strong>：彻底重构了底层数据契约，Agent 化身"三重商业幕僚"：
+                <ul>
+                    <li>👨‍💼 <strong>核心管理层 (CXO) 审批台</strong>：自动生成带有红绿灯状态的最终签约决议、致命阻碍提取及战略博弈指导。</li>
+                    <li>📈 <strong>运营与商务履约看板</strong>：专为 PMO 与财务打造，自动提取账期节奏、维保年限、违约罚金。</li>
+                    <li>⚖️ <strong>法务合规防御阵地</strong>：保留强大的红黑线对照与多文档后门嗅探能力。</li>
+                </ul>
+            </li>
+            <li><strong>现代化可视化看板 (Web UI Dashboard)</strong>：基于 Streamlit 的 Web App 工作台，深度融合 Alauda 官网企业级视觉规范。</li>
+            <li><strong>模型无关化架构 (Agnostic LLM Engine)</strong>：支持下拉动态切换 OpenAI, Anthropic, 或公司私有化兼容网关。</li>
+        </ul>
+
+        <h3>🔧 优化与修复 (Improvements &amp; Fixes)</h3>
+        <ul>
+            <li><strong>中英双语自适应输出</strong>：若输入合同为中文，系统全量输出符合中国法律行规的中文修改建议。</li>
+            <li><strong>UI 组件重绘</strong>：修复浅色模式下的字体反白不可见问题。</li>
+            <li><strong>CLI 渲染器对齐</strong>：修复多文档审计时渲染崩溃。</li>
+        </ul>
+    </div>
+
+    <!-- V4.0 -->
+    <div class="card">
+        <span class="version-badge old">V4.0</span>
+        <h2>Semantic LLM &amp; Multi-Doc Knowledge Graph Edition</h2>
+        <div class="date">2026-02-21</div>
+
+        <h3>🔥 核心突破 (Major Features)</h3>
+        <ul>
+            <li><strong>底层架构重写</strong>：将基于正则表达式的"老旧专家系统"彻底进化为基于 Gemini 1.5/3.1 Pro 百万上下文的大模型语义推理架构。</li>
+            <li><strong>多文档图谱交叉审查</strong>：首创针对大型 B2B 采购案卷的联查模式，精准嗅探隐蔽的商业后门陷阱。</li>
+            <li><strong>结构化防御 (Pydantic Output)</strong>：利用 LangChain 的强类型输出控制，将 LLM 不羁的语言强制收束至统一的业务评估结构中。</li>
+        </ul>
+    </div>
+
+    <!-- V1-3 -->
+    <div class="card">
+        <span class="version-badge old">V1.0 – V3.0</span>
+        <h2>早期版本 (Regex Expert System)</h2>
+        <ul>
+            <li>基于 Python 正则表达式与关键词扫描。</li>
+            <li>确立了灵雀云 (Alauda) SaaS 商业底线的 6 大维度规则库（双轨制赔偿、默示验收、限制支持范围等）。</li>
+        </ul>
+    </div>
+
+</div>
+
+<div class="footer">
+    <p>Alauda Global Legal Agent &mdash; 灵雀云智能法务与商务中枢引擎</p>
+    <p style="margin-top: 4px;">&copy; 2026 <a href="https://www.alauda.cn" target="_blank">Alauda (灵雀云)</a></p>
+</div>
+
+</body>
+</html>

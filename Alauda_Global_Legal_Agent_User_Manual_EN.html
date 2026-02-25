@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alauda Global Legal Agent (V6.1) User Manual</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: #F8FAFC; color: #1E293B; line-height: 1.7; }
+        .header { background: linear-gradient(135deg, #004D99 0%, #003366 100%); color: #fff; padding: 48px 0 40px; text-align: center; }
+        .header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+        .header .meta { font-size: 0.95rem; opacity: 0.85; line-height: 1.6; }
+        .container { max-width: 900px; margin: -24px auto 60px; padding: 0 24px; }
+        .cloud-banner { background: linear-gradient(90deg, #EFF6FF, #DBEAFE); border: 1px solid #93C5FD; border-radius: 10px; padding: 20px 28px; margin-bottom: 28px; text-align: center; }
+        .cloud-banner a { color: #004D99; font-weight: 700; font-size: 1.1rem; text-decoration: none; }
+        .cloud-banner a:hover { text-decoration: underline; }
+        .cloud-banner p { font-size: 0.88rem; color: #64748B; margin-top: 4px; }
+        .card { background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); padding: 36px 40px; margin-bottom: 28px; border: 1px solid #E2E8F0; }
+        .card h2 { font-size: 1.35rem; color: #004D99; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #E2E8F0; }
+        .card h3 { font-size: 1.1rem; color: #1E293B; margin: 20px 0 10px; }
+        .card p { margin-bottom: 12px; font-size: 0.95rem; }
+        .card ul, .card ol { padding-left: 22px; margin-bottom: 12px; }
+        .card ul li, .card ol li { margin-bottom: 8px; font-size: 0.95rem; }
+        .card ul li strong { color: #004D99; }
+        .card ul ul { margin-top: 6px; }
+        .card ul ul li { font-size: 0.9rem; color: #475569; }
+        table { width: 100%; border-collapse: collapse; margin: 12px 0 16px; font-size: 0.9rem; }
+        th { background: #004D99; color: #fff; text-align: left; padding: 10px 14px; font-weight: 600; }
+        td { padding: 10px 14px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+        tr:nth-child(even) td { background: #F8FAFC; }
+        code { background: #F1F5F9; padding: 2px 6px; border-radius: 4px; font-size: 0.88rem; color: #0F172A; }
+        pre { background: #1E293B; color: #E2E8F0; padding: 16px 20px; border-radius: 8px; overflow-x: auto; margin: 12px 0; font-size: 0.88rem; line-height: 1.6; }
+        blockquote { border-left: 4px solid #004D99; background: #EFF6FF; padding: 12px 18px; margin: 10px 0; border-radius: 0 6px 6px 0; font-size: 0.92rem; color: #334155; font-style: italic; }
+        .pyramid { display: flex; flex-direction: column; gap: 0; margin: 16px 0; }
+        .pyramid-level { padding: 16px 20px; border-radius: 8px; margin-bottom: 8px; }
+        .pyramid-level.apex { background: linear-gradient(90deg, #FEF3C7, #FDE68A); border-left: 5px solid #F59E0B; }
+        .pyramid-level.middle { background: linear-gradient(90deg, #DBEAFE, #BFDBFE); border-left: 5px solid #3B82F6; }
+        .pyramid-level.base { background: linear-gradient(90deg, #F1F5F9, #E2E8F0); border-left: 5px solid #64748B; }
+        .pyramid-level h4 { margin-bottom: 6px; font-size: 1rem; }
+        .pyramid-level ul { padding-left: 18px; margin: 0; }
+        .pyramid-level li { font-size: 0.9rem; margin-bottom: 4px; }
+        .report-section { background: #FAFBFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 20px 24px; margin: 12px 0; }
+        .report-section h4 { color: #004D99; margin-bottom: 8px; }
+        .footer { text-align: center; padding: 30px 0 40px; font-size: 0.85rem; color: #94A3B8; }
+        .footer a { color: #004D99; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>🚀 Alauda Global Legal Agent (V6.1)</h1>
+    <div class="meta">
+        User Manual<br>
+        Version 6.1 (Cloud-Native &amp; Production Hardening Edition)<br>
+        Last Updated: February 26, 2026 &nbsp;|&nbsp; Target Audience: Legal, Delivery, Commercial &amp; CXO Teams
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="cloud-banner">
+        <a href="https://alauda-legal-agent.streamlit.app/" target="_blank">☁️ Launch Alauda Global Legal Agent (Streamlit Cloud)</a>
+        <p>Bookmark this link for instant access from any device — no installation required</p>
+    </div>
+
+    <!-- 1. Core Vision -->
+    <div class="card">
+        <h2>1. Core Vision &amp; Architectural Evolution</h2>
+        <p>The <strong>Alauda Global Legal Agent</strong> is an automated contract review system powered by an end-to-end Large Language Model (LLM). Our vision is to combine the commercial acumen of a senior legal partner with the panoramic reading capabilities of AI to seal fatal loopholes in B2B contracts within seconds.</p>
+        <p>The system has evolved to <strong>V6.1</strong>:</p>
+        <ul>
+            <li><strong>Built-in Free AI Engine</strong>: Ships with an embedded Claude Haiku inference engine. Users can access all core features immediately — <strong>no API key required</strong>. Power users may still switch to OpenAI/Anthropic/Google models via the sidebar.</li>
+            <li><strong>Agnostic LLM Engine</strong>: Dynamically supports Google Gemini, OpenAI, Claude, or internal private model gateways.</li>
+            <li><strong>Structured Defense (Pydantic)</strong>: Strict JSON data contracts force the LLM to adaptively output idiomatic legal revision suggestions based on the contract's original language.</li>
+            <li><strong>Modern Web UI</strong>: Advanced visual dashboard built with Streamlit, incorporating Alauda's corporate design system.</li>
+            <li><strong>Redline Engine Overhaul</strong>: Completely rebuilt Word Track Changes engine with 80-character precision matching, DOM caching, and visual strikethrough markup.</li>
+        </ul>
+    </div>
+
+    <!-- 2. Multi-Role Copilot -->
+    <div class="card">
+        <h2>2. V5 Exclusive Feature: Multi-Role Copilot</h2>
+        <p>The system has transformed into an advanced commercial strategist with a "triple persona." For every uploaded dossier, the system deconstructs it into a three-tier pyramid:</p>
+        <div class="pyramid">
+            <div class="pyramid-level apex">
+                <h4>👨‍💼 CXO Executive Decision Desk — The Apex</h4>
+                <ul>
+                    <li>Provides an unequivocal approval recommendation ([Sign Directly] / [Conditional Approval] / [Reject]).</li>
+                    <li>Distills fatal impediments ("Deal Breakers").</li>
+                    <li>Authors a "Strategic Playbook" containing trade-off strategies and redline boundaries.</li>
+                </ul>
+            </div>
+            <div class="pyramid-level middle">
+                <h4>📈 Commercial &amp; Operations Dashboard — The Middle</h4>
+                <ul>
+                    <li>Automatically extracts critical commercial metrics — total contract value, payment terms, service periods, and penalty clauses — for PMO and Finance.</li>
+                    <li>Calculates and highlights the real operational and cash flow impact.</li>
+                </ul>
+            </div>
+            <div class="pyramid-level base">
+                <h4>⚖️ Legal &amp; Compliance Defense Matrix — The Foundation</h4>
+                <ul>
+                    <li>Itemizes all high/medium risk clauses that violate company SaaS policies.</li>
+                    <li>Provides legal rationale and ready-to-use Redline revisions.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Multi-Doc -->
+    <div class="card">
+        <h2>3. Multi-Doc Dependency Graph Auditing</h2>
+        <p>In large B2B procurements, clients often employ a "Trojan Horse" strategy: agreeing to all baselines in the strict Master Agreement (GFA), only to secretly insert an overriding clause into a Statement of Work (SOW) signed by a delivery team.</p>
+        <h3>The Agent's Cross-Document Graph Workflow</h3>
+        <ol>
+            <li><strong>Topology Construction</strong>: Automatically extracts the <code>Order of Precedence</code> from all files, constructing a hierarchical tree of authority.</li>
+            <li><strong>Backdoor Detection</strong>: Utilizing a million-token context, it cross-references high-priority appendices against the protective redlines of the low-priority master contract. If lower-level protections are overridden, it triggers a red alert and provides a targeted demolition clause.</li>
+        </ol>
+    </div>
+
+    <!-- 4. Baselines -->
+    <div class="card">
+        <h2>4. SaaS Commercial &amp; Legal Baselines</h2>
+        <p>The Agent strictly defends the following 6 SaaS commercial lifelines:</p>
+        <table>
+            <thead>
+                <tr><th style="width:150px;">Dimension</th><th>Risk Baseline &amp; Business Logic</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Subscription Metrics</strong></td><td>🔴 Reject perpetual/unlimited use → 🟢 Must be measured by specific Units (Node/Core).<br><em>Prevents customers from duplicating a single license enterprise-wide.</em></td></tr>
+                <tr><td><strong>Liability Cap</strong></td><td>🔴 Reject unlimited liability or data loss inclusion → 🟢 Capped at 12 months subscription fees (EULA free tier capped at $50).<br><em>Enforces strict dual-track risk control, excluding indirect losses.</em></td></tr>
+                <tr><td><strong>IP Rights</strong></td><td>🔴 Reject derivatives owned by customer (Work for Hire) → 🟢 Retain ownership of core PaaS foundation.<br><em>Prevents single-customer buyout leading to closed-sourcing of core code.</em></td></tr>
+                <tr><td><strong>Acceptance</strong></td><td>🔴 Reject unilateral written confirmation or infinite rejection loops → 🟢 Must include a 10-business-day Deemed Acceptance mechanism.<br><em>Prevents customers from delaying the FAC to secure prompt payment.</em></td></tr>
+                <tr><td><strong>SLA Response</strong></td><td>🔴 Reject &lt;30 min / 24x7 unlimited support → 🟢 Match operational caps of P1 30mins, P2 2hrs.<br><em>Rejects commitments exceeding the frontline Operations Center's capacity.</em></td></tr>
+                <tr><td><strong>Support Scope</strong></td><td>🔴 Reject on-site or third-party software catch-alls → 🟢 Remote support only within Alauda certified environments.<br><em>Explicitly excludes custom code development to control fulfillment costs.</em></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 5. Operational Guide -->
+    <div class="card">
+        <h2>5. Operational Guide (Web App &amp; CLI)</h2>
+
+        <h3>5.1 Cloud Access (Recommended)</h3>
+        <p>Visit <a href="https://alauda-legal-agent.streamlit.app/" target="_blank" style="color:#004D99;font-weight:600;">Alauda Global Legal Agent</a> to start immediately — no installation required.</p>
+        <p>The system ships with a built-in free AI engine (Claude Haiku). <strong>No API key is needed.</strong></p>
+        <ul>
+            <li><strong>Single-Doc Mode</strong>: Upload a PDF/Word (.docx) document directly.</li>
+            <li><strong>Multi-Doc Mode</strong>: Package the entire dossier into a <code>.zip</code> file for topology and backdoor radar.</li>
+            <li><strong>Bring Your Own Model (Optional)</strong>: Power users may switch to OpenAI/Anthropic/Google via the left sidebar.</li>
+        </ul>
+
+        <h3>5.2 Local Deployment (Developers)</h3>
+        <pre>
+# Activate the virtual environment
+source .venv/bin/activate
+# Launch the enterprise-grade Web Dashboard
+streamlit run web_app.py</pre>
+        <p>Once launched, navigate to <code>http://localhost:8501</code>.</p>
+
+        <h3>5.3 CLI Geek Mode</h3>
+        <pre>
+# Review a single file
+python3 alauda_legal_agent.py -f contract.txt -o report.md
+
+# Review a multi-document directory
+python3 alauda_legal_agent.py -d ./customer_bundle/ -o report.md</pre>
+    </div>
+
+    <!-- 6. Case Study -->
+    <div class="card">
+        <h2>6. Output Report Case Study</h2>
+        <p><em>The following is an excerpt from a V5 Multi-Role output based on a real dossier from a major financial institution.</em></p>
+
+        <div class="report-section">
+            <h4>👨‍💼 CXO Executive Decision Desk</h4>
+            <ul>
+                <li><strong>Final Decision</strong>: 🔴 <strong>[Conditional Approval (Must dismantle backdoors)]</strong></li>
+                <li><strong>Deal Breakers</strong>: The SOW appendix uses precedence rules to override the GFA's liability cap, introducing an unlimited data claim exposure; additionally, it lacks a deemed acceptance mechanism.</li>
+                <li><strong>Strategic Playbook</strong>: This is a strategic benchmark client, and the 40% upfront payment significantly eases cash flow. It is advised not to reject outright. Instead, the VP of Legal should mandate an overriding protection clause in the highest-priority Order Form. Simultaneously, assign senior architects to mitigate acceptance delay risks.</li>
+            </ul>
+        </div>
+
+        <div class="report-section">
+            <h4>📈 Commercial &amp; Operations Dashboard</h4>
+            <table>
+                <thead><tr><th>Core Metric</th><th>Contract Extract</th><th>Operational Impact</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Total Contract Value</strong></td><td>3 Million RMB</td><td>Major deal, high revenue, high strategic significance.</td></tr>
+                    <tr><td><strong>Payment Terms</strong></td><td>20% - 40% - 40% (Over 3 years)</td><td>Low upfront payment creates significant working capital pressure.</td></tr>
+                    <tr><td><strong>Warranty Period</strong></td><td>36 months post-acceptance</td><td>Extremely high maintenance labor costs; warranty margin requires separate accounting.</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="report-section">
+            <h4>⚖️ Legal Risk Matrix</h4>
+            <p><strong>💥 Backdoor #1: IP Rights — Forced Customer Ownership of Platform Derivatives 🔴 HIGH</strong></p>
+            <p><strong>🏰 Master Clause Defense:</strong></p>
+            <blockquote>GFA 11.1(3): MegaBank owns all rights, title and interest in and to Intellectual Property Rights developed during the course of providing Services... including enhancements, modifications or derivative works of materials...</blockquote>
+            <p><strong>🗡️ Overriding Clause in General Terms.docx:</strong></p>
+            <blockquote>Software Module 5.2 reinforcement: Ownership of the Intellectual Property Rights in any customisations... will be governed by the relevant Service Module.</blockquote>
+            <p><strong>💡 Risk Trace Analysis:</strong> The customer stipulates that regardless of original IP ownership (including Alauda's core foundation), any enhancements or derivative works generated during service provision belong entirely to the customer. This severely hinders Alauda's right to standardize these practices into the next product iteration.</p>
+            <p><strong>✅ Suggested Counter-Measure:</strong></p>
+            <pre>Delete 'enhancements, modifications or derivative works...' from GFA 11.1(3)
+and add a special protection utilizing the highest priority in the Order Form:
+'Notwithstanding General Terms 11.1, Supplier retains all ownership
+to its pre-existing core platform and any derivative works thereof.
+MegaBank only owns custom deliverables explicitly stated as Work for Hire.'</pre>
+        </div>
+    </div>
+
+</div>
+
+<div class="footer">
+    <p>Alauda Global Legal Agent — Your intelligent legal and commercial command center.</p>
+    <p style="margin-top: 4px;">&copy; 2026 <a href="https://www.alauda.cn" target="_blank">Alauda (灵雀云)</a></p>
+</div>
+
+</body>
+</html>
