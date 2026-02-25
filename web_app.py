@@ -252,11 +252,26 @@ with st.sidebar:
         if custom_model:
             provider_map["第三方/私有兼容接口 (Custom)"] = custom_model
 
-    api_key = st.text_input("API Key (必填)", type="password", help="请提供对应的服务商鉴权密钥")
+    api_key = st.text_input("API Key (选填)", type="password", help="如不填写，系统将自动使用灵雀云内置的免费 AI 引擎")
 
-            
+    # 内置免费引擎回退逻辑
+    using_builtin = False
     if not api_key:
-        st.warning("⚠️ 未配置密钥。系统将运行在本地 Mock 演示模式。")
+        try:
+            builtin_key = st.secrets.get("BUILTIN_API_KEY", "")
+            builtin_url = st.secrets.get("BUILTIN_BASE_URL", "")
+            builtin_model = st.secrets.get("BUILTIN_MODEL", "claude-3-5-haiku-20241022")
+            if builtin_key:
+                api_key = builtin_key
+                base_url = builtin_url
+                model_provider = "第三方/私有兼容接口 (Custom)"
+                provider_map["第三方/私有兼容接口 (Custom)"] = builtin_model
+                using_builtin = True
+                st.success("🎁 已启用灵雀云内置免费 AI 引擎 (Claude Haiku)，可直接使用！")
+            else:
+                st.warning("⚠️ 未配置密钥，且内置引擎不可用。系统将运行在本地 Mock 演示模式。")
+        except Exception:
+            st.warning("⚠️ 未配置密钥。系统将运行在本地 Mock 演示模式。")
     
     st.markdown("---")
     st.markdown("### 🎯 审核基线雷达")
