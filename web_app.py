@@ -260,7 +260,7 @@ with st.sidebar:
         try:
             builtin_key = st.secrets.get("BUILTIN_API_KEY", "")
             builtin_url = st.secrets.get("BUILTIN_BASE_URL", "")
-            builtin_model = st.secrets.get("BUILTIN_MODEL", "claude-3-5-haiku-20241022")
+            builtin_model = st.secrets.get("BUILTIN_MODEL", "claude-haiku-4-5-20251001")
             if builtin_key:
                 api_key = builtin_key
                 base_url = builtin_url
