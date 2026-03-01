@@ -230,6 +230,22 @@ class WordRedlineEngine:
                 root_elem.append(override)
                 self._write_xml(ct_tree, ct_path)
 
+    # --- Context manager & cleanup (L-01 fix) ---
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.cleanup()
+        return False
+
+    def __del__(self):
+        self.cleanup()
+
+    def cleanup(self) -> None:
+        """Remove the temporary directory if it still exists."""
+        if hasattr(self, 'temp_dir') and os.path.exists(self.temp_dir):
+            shutil.rmtree(self.temp_dir, ignore_errors=True)
+
     def save(self, output_path: str) -> None:
         """Write the cached document DOM back to XML and re-package into .docx"""
         # Flush the cached document tree to disk
@@ -248,4 +264,4 @@ class WordRedlineEngine:
                     zip_ref.write(file_path, arcname)
 
         # Cleanup
-        shutil.rmtree(self.temp_dir)
+        self.cleanup()

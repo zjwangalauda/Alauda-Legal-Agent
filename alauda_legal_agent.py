@@ -301,7 +301,7 @@ def get_mock_response(mode: str) -> Union[ComprehensiveReviewReport, MultiDocRev
 # 5. 报告渲染器 (Report Renderers)
 # ---------------------------------------------------------
 def render_single_doc_report(report: ComprehensiveReviewReport, output_file: str) -> None:
-    md = "# 🚀 Alauda AI Agent (V6.1) 综合决议报告 - 单文档\n\n"
+    md = "# 🚀 Alauda AI Agent (V6.2) 综合决议报告 - 单文档\n\n"
     md += f"> **案卷名称**: {report.contract_name}\n"
     md += "> **智能引擎**: Gemini Pro (Legal & Commercial Copilot)\n\n"
 
@@ -331,7 +331,7 @@ def render_single_doc_report(report: ComprehensiveReviewReport, output_file: str
         f.write(md)
 
 def render_multi_doc_report(report: MultiDocReviewReport, output_file: str) -> None:
-    md = "# 🕸️ Alauda AI Agent (V6.1) 跨文档综合决议报告\n\n"
+    md = "# 🕸️ Alauda AI Agent (V6.2) 跨文档综合决议报告\n\n"
     md += f"> **审计案卷**: {report.project_name}\n"
     md += "> **智能引擎**: Gemini Pro (Knowledge Graph & Strategic Copilot)\n\n"
 
@@ -366,7 +366,7 @@ def render_multi_doc_report(report: MultiDocReviewReport, output_file: str) -> N
 # 6. 主执行入口 (Main CLI)
 # ---------------------------------------------------------
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Alauda Global Legal Agent (V6.1)")
+    parser = argparse.ArgumentParser(description="Alauda Global Legal Agent (V6.2)")
     parser.add_argument("-f", "--file", help="[单文档模式] 要审查的文件路径 (.txt, .md, .pdf, .docx)")
     parser.add_argument("-d", "--dir", help="[多文档模式] 包含一组关联合同的目录，执行跨文档知识图谱关联审计")
     parser.add_argument("-o", "--output", default="ai_review_report.md", help="输出的Markdown报告路径")
@@ -422,7 +422,7 @@ if __name__ == "__main__":
             logger.info("单文档智能审计完成: %s", args.output)
 
     else:
-        print("Alauda Global Legal Agent (V6.1)")
+        print("Alauda Global Legal Agent (V6.2)")
         print("请选择工作模式：")
         print("  1. 单文档分析: python3 alauda_legal_agent.py -f contract.pdf")
         print("  2. 多文档关联: python3 alauda_legal_agent.py -d ./contract_bundle_dir/")

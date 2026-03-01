@@ -1,0 +1,190 @@
+/* Alauda Legal Agent — Global Theme (extracted from web_app.py) */
+
+/* 全局背景与字体 */
+.stApp {
+    background-color: #F8FAFC;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+/* 强制重置各种基础元素的字体颜色，避免在浅色背景下字体变白 */
+p, h1, h2, h3, h4, h5, h6, li, label, .stMarkdown {
+    color: #111827 !important;
+}
+
+/* 隐藏 Streamlit 默认的 Footer 和三条杠菜单，但保留 Header 保证侧边栏按钮存活 */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+
+/* 让头部背景保持存在但是非常淡，确保内部组件可见 */
+header {
+    background-color: rgba(248, 250, 252, 0.95) !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+}
+
+/* 极度暴力的覆盖：只要是 header 里面的 svg 图标，全部染成深蓝色 */
+header svg {
+    fill: #1A6A9A !important;
+    color: #1A6A9A !important;
+    stroke: #1A6A9A !important;
+}
+
+/* 强制重置 header 内所有的交互元素颜色 */
+header button, header div, header span {
+    color: #1A6A9A !important;
+}
+
+/* 顶部导航栏 / Hero Section 样式 */
+.hero-container {
+    background: linear-gradient(135deg, #0F2B46 0%, #1A6A9A 100%);
+    padding: 40px 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.hero-logo-box {
+    background-color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 24px;
+    color: #1A6A9A !important;
+    letter-spacing: 1px;
+}
+.hero-title {
+    font-size: 2.2rem !important;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.5px;
+    color: #FFFFFF !important;
+}
+.hero-subtitle {
+    font-size: 1.1rem !important;
+    color: #EAF6FC !important;
+    margin-top: 5px;
+    opacity: 0.9;
+}
+
+/* 上传区块美化 */
+.css-1n76uvr, .css-1y4p8pa {
+    background-color: white;
+    border: 2px dashed #CBD5E1;
+    border-radius: 12px;
+    padding: 30px;
+}
+
+/* 修复上传文件后的文件名文字颜色，防止和白色背景冲突 */
+[data-testid="stFileUploadDropzone"] * {
+    color: #1E293B !important;
+}
+[data-testid="stUploadedFile"] * {
+    color: #1E293B !important;
+}
+
+/* 主按钮美化 */
+.stButton>button {
+    background-color: #3BAEE4 !important;
+    color: white !important;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 2rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(59, 174, 228, 0.2);
+}
+.stButton>button * {
+    color: white !important;
+}
+.stButton>button:hover {
+    background-color: #2A8ABF !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(59, 174, 228, 0.3);
+}
+
+/* 风险卡片样式设计 */
+.risk-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border: 1px solid #E2E8F0;
+}
+.risk-high { border-left: 6px solid #EF4444; }
+.risk-medium { border-left: 6px solid #F59E0B; }
+
+.risk-title {
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    color: #1E293B !important;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.risk-badge-high {
+    background: #FEE2E2; color: #DC2626 !important; padding: 4px 10px; border-radius: 20px; font-size: 0.85rem !important; font-weight: bold;
+}
+.risk-badge-medium {
+    background: #FEF3C7; color: #D97706 !important; padding: 4px 10px; border-radius: 20px; font-size: 0.85rem !important; font-weight: bold;
+}
+
+.risk-section-title {
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    color: #64748B !important;
+    text-transform: uppercase;
+    margin-top: 15px;
+    margin-bottom: 8px;
+}
+.original-text {
+    background-color: #F8FAFC;
+    color: #475569 !important;
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #E2E8F0;
+    font-size: 0.9rem !important;
+}
+.rationale-text {
+    color: #334155 !important;
+    line-height: 1.6;
+}
+.revision-box {
+    background-color: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    color: #166534 !important;
+    padding: 16px;
+    border-radius: 8px;
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    font-size: 0.95rem !important;
+    margin-top: 10px;
+}
+
+/* 修正输入框颜色 */
+.stTextInput input {
+    color: #111827 !important;
+    background-color: white !important;
+    border: 1px solid #CBD5E1 !important;
+}
+
+/* 确保侧边栏可见并强制调浅背景，防止看不见字 */
+[data-testid="stSidebar"] {
+    background-color: #F1F5F9 !important;
+    display: block !important;
+    visibility: visible !important;
+}
+
+/* 恢复被可能误杀的 toggle 按钮 */
+button[kind="header"] {
+    visibility: visible !important;
+    color: #1E293B !important;
+}

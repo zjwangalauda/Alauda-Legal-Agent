@@ -33,7 +33,7 @@ st.markdown("""
     </div>
     <div>
         <h1 class="hero-title">Global Legal Agent</h1>
-        <p class="hero-subtitle">V6.1 Semantic AI Edition · 专为企业级 SaaS/PaaS 商业模式打造的自动化合同审查大脑</p>
+        <p class="hero-subtitle">V6.2 Semantic AI Edition · 专为企业级 SaaS/PaaS 商业模式打造的自动化合同审查大脑</p>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -114,7 +114,7 @@ with col1:
         st.info("💡 适合处理单一的 Master Agreement、EULA 或 Order Form。支持 PDF, Word, TXT 格式。")
         uploaded_file = st.file_uploader("拖拽合同文件至此", type=['pdf', 'docx', 'txt'])
 
-        # V6.1 Feature Toggle
+        # V6.2 Feature Toggle
         st.markdown("##### 🚀 高级选项 (Advanced Options)")
         enable_redline = st.checkbox("自动生成原生 Word 批注版 (.docx Track Changes)", value=True, help="如果勾选，系统将深入 Word 底层 AST，直接在原文件中打上红色修订标记和侧边栏法务批注。注意：仅对上传的 .docx 文件有效。")
 
@@ -132,6 +132,11 @@ with col2:
 
             # 临时沙盒处理
             try:
+                # L-06 fix: clean up previous redlined temp file
+                old_redlined = st.session_state.get('redlined_path')
+                if old_redlined and os.path.exists(old_redlined):
+                    os.unlink(old_redlined)
+
                 redlined_path = None
                 if mode == "📄 单文档快速审计 (Single-Doc)":
                     with tempfile.NamedTemporaryFile(delete=False, suffix=Path(uploaded_file.name).suffix) as tmp_file:
@@ -150,7 +155,7 @@ with col2:
 
                         report = run_llm_inference(text, "single", api_key, model_provider=provider_map[model_provider], base_url=base_url)
 
-                        # V6.1 Native Redlining Logic
+                        # V6.2 Native Redlining Logic
                         redlined_path = None
                         if enable_redline and report and tmp_path.lower().endswith('.docx') and hasattr(report, 'legal_reviews') and report.legal_reviews:
                             redlined_path = tmp_path.replace(".docx", "_redlined.docx")
@@ -176,6 +181,11 @@ with col2:
 
                         extract_dir = os.path.join(temp_dir, "extracted")
                         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+                            # L-02 fix: validate paths to prevent zip slip
+                            for member in zip_ref.namelist():
+                                member_path = os.path.realpath(os.path.join(extract_dir, member))
+                                if not member_path.startswith(os.path.realpath(extract_dir) + os.sep) and member_path != os.path.realpath(extract_dir):
+                                    raise ValueError(f"拒绝解压: 检测到路径穿越攻击 ({member})")
                             zip_ref.extractall(extract_dir)
 
                         all_text = ""
