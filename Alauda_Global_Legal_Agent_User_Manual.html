@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alauda Global Legal Agent (V6.1) 用户手册</title>
+    <title>Alauda Global Legal Agent (V6.2) 用户手册</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; background: #F8FAFC; color: #1E293B; line-height: 1.7; }
@@ -48,11 +48,11 @@
 <body>
 
 <div class="header">
-    <h1>🚀 Alauda Global Legal Agent (V6.1)</h1>
+    <h1>🚀 Alauda Global Legal Agent (V6.2)</h1>
     <div class="meta">
         用户手册<br>
-        版本 6.1 (Cloud-Native &amp; Production Hardening Edition)<br>
-        更新日期：2026年2月26日 &nbsp;|&nbsp; 适用对象：法务、交付、商务与高管团队
+        版本 6.2 (Diagnostic Remediation &amp; CI/CD Edition)<br>
+        更新日期：2026年3月2日 &nbsp;|&nbsp; 适用对象：法务、交付、商务与高管团队
     </div>
 </div>
 
@@ -67,13 +67,14 @@
     <div class="card">
         <h2>1. 核心愿景与架构演进</h2>
         <p>本系统为 <strong>Alauda (灵雀云)</strong> 提供一套基于端到端大语言模型 (LLM) 的自动化合同审查系统。我们的愿景是将资深法务 Partner 的商业嗅觉与 AI 的全景阅读能力结合，从而在极短时间内封堵 B2B 合同中的致命隐患。</p>
-        <p>系统已演进至 <strong>V6.1</strong>：</p>
+        <p>系统已演进至 <strong>V6.2</strong>：</p>
         <ul>
             <li><strong>内置免费 AI 引擎</strong>：系统已内置 Claude Haiku 推理引擎。用户无需配置 API Key 即可使用全部核心功能，开箱即用。高级用户仍可在侧边栏切换至 OpenAI/Anthropic/Google 等自有模型。</li>
             <li><strong>模型无关化 (Agnostic LLM)</strong>：动态支持 Google Gemini, OpenAI, Claude 以及公司内网私有化模型网关。</li>
             <li><strong>结构化防御 (Pydantic)</strong>：通过强类型 JSON 数据契约，强制大模型根据原文语言（中/英）自适应输出地道的法律修改建议。</li>
             <li><strong>现代化 Web UI</strong>：采用 Streamlit 构建的 Alauda 企业视觉体系可视化数据看板。</li>
             <li><strong>Redline 引擎重建</strong>：全新的 Word 文档 Track Changes 引擎，支持 80 字符精准匹配、DOM 缓存与视觉删除线标记。</li>
+            <li><strong>CI/CD 与容器化 (V6.2)</strong>：新增 GitHub Actions 自动化流水线（ruff lint + pytest）、Docker 容器化部署与 12 个核心单元测试。</li>
         </ul>
     </div>
 
@@ -165,6 +166,20 @@ python3 alauda_legal_agent.py -f contract.txt -o report.md
 
 # 审查多文档目录
 python3 alauda_legal_agent.py -d ./customer_bundle/ -o report.md</pre>
+
+        <h3>5.4 Docker 容器化部署</h3>
+        <pre>
+docker build -t legal-agent .
+docker run -p 8501:8501 legal-agent</pre>
+        <p>启动后访问 <code>http://localhost:8501</code>。</p>
+
+        <h3>5.5 测试与代码质量</h3>
+        <pre>
+pip install pytest ruff
+# 运行单元测试（12 个用例）
+python -m pytest tests/ -v
+# 代码质量检查
+ruff check .</pre>
     </div>
 
     <!-- 6. 报告示例 -->

@@ -37,9 +37,27 @@
 
 <div class="container">
 
+    <!-- V6.2 -->
+    <div class="card">
+        <span class="version-badge">V6.2 — Latest</span>
+        <h2>Diagnostic Remediation &amp; CI/CD Edition</h2>
+        <div class="date">2026-03-02</div>
+
+        <h3>🏗️ 工程化基建 (Infrastructure)</h3>
+        <ul>
+            <li><strong>依赖版本锁定</strong>：<code>requirements.txt</code> 全部采用 <code>==</code> 精确版本锁定（基于当前安装版本），避免部署时因上游更新导致不可复现的构建失败。新增遗漏的 <code>tenacity</code> 依赖声明。</li>
+            <li><strong>GitHub Actions CI/CD</strong>：新增 <code>.github/workflows/ci.yml</code>，每次 Push / PR 自动执行 <code>ruff</code> 代码检查 + <code>pytest</code> 全量测试，确保主干稳定。</li>
+            <li><strong>Docker 容器化</strong>：新增 <code>Dockerfile</code>，基于 <code>python:3.11-slim</code> 的轻量化镜像，端口 8501，一条命令即可部署。</li>
+            <li><strong>基础测试套件</strong>：新增 <code>tests/test_core.py</code>，12 个单元测试覆盖 Pydantic 模型验证、Mock 响应正确性、文件提取函数错误处理与 MAX_CONTRACT_CHARS 常量检查。</li>
+            <li><strong>代码质量修复</strong>：修复 21 个 ruff lint 错误（12 个 F541 冗余 f-string 前缀 + 9 个 E701 单行多语句），全量通过 <code>ruff check .</code>。</li>
+            <li><strong>.gitignore 补全</strong>：添加 <code>.pytest_cache/</code>、<code>.mypy_cache/</code>、<code>.ruff_cache/</code> 缓存目录。</li>
+            <li><strong>README.md</strong>：新增标准项目 README，含功能概述、快速启动、项目结构、测试与 Docker 部署指南。</li>
+        </ul>
+    </div>
+
     <!-- V6.1 -->
     <div class="card">
-        <span class="version-badge">V6.1 — Latest</span>
+        <span class="version-badge old">V6.1</span>
         <h2>Cloud-Native &amp; Production Hardening Edition</h2>
         <div class="date">2026-02-26</div>
 

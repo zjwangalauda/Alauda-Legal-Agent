@@ -1,5 +1,18 @@
 # 🚀 Alauda Global Legal Agent - Release Notes
 
+## [v6.2] - 2026-03-02 (Diagnostic Remediation & CI/CD Edition)
+
+### 🏗️ 工程化基建 (Infrastructure)
+- **依赖版本锁定**：`requirements.txt` 全部采用 `==` 精确版本锁定（基于当前安装版本），避免部署时因上游更新导致不可复现的构建失败。新增遗漏的 `tenacity` 依赖声明。
+- **GitHub Actions CI/CD**：新增 `.github/workflows/ci.yml`，每次 Push / PR 自动执行 `ruff` 代码检查 + `pytest` 全量测试，确保主干稳定。
+- **Docker 容器化**：新增 `Dockerfile`，基于 `python:3.11-slim` 的轻量化镜像，端口 8501，一条命令即可部署。
+- **基础测试套件**：新增 `tests/test_core.py`，12 个单元测试覆盖 Pydantic 模型验证（ComprehensiveReviewReport / MultiDocReviewReport）、Mock 响应正确性、文件提取函数错误处理与 MAX_CONTRACT_CHARS 常量检查。
+- **代码质量修复**：修复 21 个 ruff lint 错误（12 个 F541 冗余 f-string 前缀 + 9 个 E701 单行多语句），全量通过 `ruff check .`。
+- **.gitignore 补全**：添加 `.pytest_cache/`、`.mypy_cache/`、`.ruff_cache/` 缓存目录。
+- **README.md**：新增标准项目 README，含功能概述、快速启动、项目结构、测试与 Docker 部署指南。
+
+---
+
 ## [v6.1] - 2026-02-26 (Cloud-Native & Production Hardening Edition)
 
 ### 🔥 核心突破 (Major Features)

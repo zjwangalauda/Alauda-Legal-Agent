@@ -1,7 +1,7 @@
 # 🚀 Alauda Global Legal Agent (V6.1) 用户手册
 
-**版本**: 6.1 (Cloud-Native & Production Hardening Edition)  
-**更新日期**: 2026年2月26日  
+**版本**: 6.2 (Diagnostic Remediation & CI/CD Edition)
+**更新日期**: 2026年3月2日
 **适用对象**: Alauda (灵雀云) 法务、交付、商务与高管团队
 
 ---
@@ -19,7 +19,7 @@
 2. [V5 独家特性：三重视角 Copilot](#2-v5-独家特性三重视角-copilot)
 3. [多文档关联审计机制](#3-多文档关联审计机制)
 4. [SaaS 商业红线与法务底线](#4-saas-商业红线与法务底线)
-5. [操作指南 (Web App 与 CLI)](#5-操作指南-web-app-与-cli)
+5. [操作指南 (Web App, CLI, Docker & Testing)](#5-操作指南-web-app-与-cli)
 6. [输出报告实战示例](#6-输出报告实战示例)
 
 ---
@@ -28,12 +28,13 @@
 
 本手册旨在为 **Alauda (灵雀云)** 提供一套基于端到端大语言模型 (LLM) 的自动化合同审查系统。我们的愿景是将资深法务 Partner 的商业嗅觉与 AI 的全景阅读能力结合，从而在极短时间内封堵 B2B 合同中的致命隐患。
 
-经过架构迭代，系统目前已演进至 **V6.1 (Cloud-Native & Production Hardening Edition)**：
+经过架构迭代，系统目前已演进至 **V6.2 (Diagnostic Remediation & CI/CD Edition)**：
 - **内置免费 AI 引擎**：系统已内置 Claude Haiku 推理引擎。用户无需配置 API Key 即可使用全部核心功能，开箱即用。高级用户仍可在侧边栏切换至 OpenAI/Anthropic/Google 等自有模型。
 - **模型无关化 (Agnostic LLM)**：底层脱离单一模型绑定，动态支持 Google Gemini, OpenAI, Claude 以及公司内网私有化模型网关。
 - **结构化防御 (Pydantic)**：通过强类型 JSON 数据契约，强制大模型根据原文语言（中/英）自适应输出地道的法律修改建议。
 - **现代化 Web UI**：采用 Streamlit 构建了带有 Alauda 企业视觉体系的高级可视化数据看板，彻底告别枯燥的命令行。
 - **Redline 引擎重建**：全新的 Word 文档 Track Changes 引擎，支持 80 字符精准匹配、DOM 缓存与视觉删除线标记。
+- **CI/CD 与容器化 (V6.2)**：新增 GitHub Actions 自动化流水线（ruff lint + pytest）、Docker 容器化部署与 12 个核心单元测试。
 
 ---
 
@@ -106,6 +107,22 @@ python3 alauda_legal_agent.py -f contract.txt -o report.md
 
 # 审查多文档目录
 python3 alauda_legal_agent.py -d ./customer_bundle/ -o report.md
+```
+
+### 5.4 Docker 容器化部署
+```bash
+docker build -t legal-agent .
+docker run -p 8501:8501 legal-agent
+```
+启动后访问 `http://localhost:8501`。
+
+### 5.5 测试与代码质量
+```bash
+pip install pytest ruff
+# 运行单元测试（12 个用例）
+python -m pytest tests/ -v
+# 代码质量检查
+ruff check .
 ```
 
 ---

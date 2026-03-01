@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alauda Global Legal Agent (V6.1) User Manual</title>
+    <title>Alauda Global Legal Agent (V6.2) User Manual</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: #F8FAFC; color: #1E293B; line-height: 1.7; }
@@ -48,11 +48,11 @@
 <body>
 
 <div class="header">
-    <h1>🚀 Alauda Global Legal Agent (V6.1)</h1>
+    <h1>🚀 Alauda Global Legal Agent (V6.2)</h1>
     <div class="meta">
         User Manual<br>
-        Version 6.1 (Cloud-Native &amp; Production Hardening Edition)<br>
-        Last Updated: February 26, 2026 &nbsp;|&nbsp; Target Audience: Legal, Delivery, Commercial &amp; CXO Teams
+        Version 6.2 (Diagnostic Remediation &amp; CI/CD Edition)<br>
+        Last Updated: March 2, 2026 &nbsp;|&nbsp; Target Audience: Legal, Delivery, Commercial &amp; CXO Teams
     </div>
 </div>
 
@@ -67,13 +67,14 @@
     <div class="card">
         <h2>1. Core Vision &amp; Architectural Evolution</h2>
         <p>The <strong>Alauda Global Legal Agent</strong> is an automated contract review system powered by an end-to-end Large Language Model (LLM). Our vision is to combine the commercial acumen of a senior legal partner with the panoramic reading capabilities of AI to seal fatal loopholes in B2B contracts within seconds.</p>
-        <p>The system has evolved to <strong>V6.1</strong>:</p>
+        <p>The system has evolved to <strong>V6.2</strong>:</p>
         <ul>
             <li><strong>Built-in Free AI Engine</strong>: Ships with an embedded Claude Haiku inference engine. Users can access all core features immediately — <strong>no API key required</strong>. Power users may still switch to OpenAI/Anthropic/Google models via the sidebar.</li>
             <li><strong>Agnostic LLM Engine</strong>: Dynamically supports Google Gemini, OpenAI, Claude, or internal private model gateways.</li>
             <li><strong>Structured Defense (Pydantic)</strong>: Strict JSON data contracts force the LLM to adaptively output idiomatic legal revision suggestions based on the contract's original language.</li>
             <li><strong>Modern Web UI</strong>: Advanced visual dashboard built with Streamlit, incorporating Alauda's corporate design system.</li>
             <li><strong>Redline Engine Overhaul</strong>: Completely rebuilt Word Track Changes engine with 80-character precision matching, DOM caching, and visual strikethrough markup.</li>
+            <li><strong>CI/CD &amp; Containerization (V6.2)</strong>: Added GitHub Actions pipeline (ruff lint + pytest), Docker containerized deployment, and 12 core unit tests.</li>
         </ul>
     </div>
 
@@ -165,6 +166,20 @@ python3 alauda_legal_agent.py -f contract.txt -o report.md
 
 # Review a multi-document directory
 python3 alauda_legal_agent.py -d ./customer_bundle/ -o report.md</pre>
+
+        <h3>5.4 Docker Deployment</h3>
+        <pre>
+docker build -t legal-agent .
+docker run -p 8501:8501 legal-agent</pre>
+        <p>Once launched, navigate to <code>http://localhost:8501</code>.</p>
+
+        <h3>5.5 Testing &amp; Code Quality</h3>
+        <pre>
+pip install pytest ruff
+# Run unit tests (12 test cases)
+python -m pytest tests/ -v
+# Code quality check
+ruff check .</pre>
     </div>
 
     <!-- 6. Case Study -->
