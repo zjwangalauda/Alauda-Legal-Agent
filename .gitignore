@@ -25,3 +25,8 @@ venv/
 
 # Streamlit logs/cache (config.toml should be kept)
 # .streamlit/
+
+# Testing / Linting caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
