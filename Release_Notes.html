@@ -37,9 +37,36 @@
 
 <div class="container">
 
+    <!-- V6.2.1 -->
+    <div class="card">
+        <span class="version-badge">V6.2.1 — Latest</span>
+        <h2>Security &amp; Quality Hardening Edition</h2>
+        <div class="date">2026-03-02</div>
+
+        <h3>🛡️ 安全加固 (Security Hardening)</h3>
+        <ul>
+            <li><strong>临时目录泄漏修复 (P1)</strong>：WordRedlineEngine 新增 __enter__/__exit__/cleanup() 生命周期管理，杜绝 /tmp 空间泄漏。</li>
+            <li><strong>ZIP Slip 路径穿越防御 (P2)</strong>：多文档 ZIP 解压前新增路径校验，阻断目录穿越攻击。</li>
+            <li><strong>DevContainer XSRF 警告 (P2)</strong>：devcontainer.json 添加 XSRF 禁用警告注释。</li>
+        </ul>
+
+        <h3>🧪 测试覆盖率跃升 (Testing)</h3>
+        <ul>
+            <li><strong>测试用例从 12 → 38</strong>：新增 26 个单元测试覆盖 Redline 引擎、ZIP Slip 防护、版本字符串一致性。</li>
+        </ul>
+
+        <h3>🏗️ 工程化改进 (Infrastructure)</h3>
+        <ul>
+            <li>CI/CD 增强：pip 缓存 + pytest-cov 覆盖率报告</li>
+            <li>版本字符串对齐：5 处 V6.1 → V6.2</li>
+            <li>临时文件清理</li>
+            <li>Docker 优化：新增 .dockerignore</li>
+        </ul>
+    </div>
+
     <!-- V6.2 -->
     <div class="card">
-        <span class="version-badge">V6.2 — Latest</span>
+        <span class="version-badge old">V6.2</span>
         <h2>Diagnostic Remediation &amp; CI/CD Edition</h2>
         <div class="date">2026-03-02</div>
 

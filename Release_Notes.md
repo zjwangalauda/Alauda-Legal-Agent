@@ -1,5 +1,23 @@
 # 🚀 Alauda Global Legal Agent - Release Notes
 
+## [v6.2.1] - 2026-03-02 (Security & Quality Hardening Edition)
+
+### 🛡️ 安全加固 (Security Hardening)
+- **临时目录泄漏修复 (P1)**：`WordRedlineEngine` 新增 `__enter__`/`__exit__`/`cleanup()` 生命周期管理。即使 `save()` 未被调用（如处理异常中断），临时目录也会被自动清理，杜绝 `/tmp` 空间泄漏。
+- **ZIP Slip 路径穿越防御 (P2)**：多文档 ZIP 解压前新增路径校验，拒绝包含 `../../` 等目录穿越的恶意条目，阻断潜在的文件覆写攻击。
+- **DevContainer XSRF 警告 (P2)**：在 `.devcontainer/devcontainer.json` 中添加注释，明确标注 XSRF 保护仅在本地开发环境中禁用，禁止用于生产部署。
+
+### 🧪 测试覆盖率跃升 (Testing)
+- **测试用例从 12 → 38**：新增 26 个单元测试，覆盖 Redline 引擎上下文管理器、ZIP Slip 防护向量、版本字符串一致性等。
+
+### 🏗️ 工程化改进 (Infrastructure)
+- **CI/CD 增强**：GitHub Actions 新增 `pip` 缓存与 `pytest-cov` 覆盖率报告（最低阈值 20%）。
+- **版本字符串对齐**：修复源码中 5 处残留的 V6.1 引用，全部更新为 V6.2。
+- **临时文件清理**：每次新文档处理前自动清理上一次生成的 Redlined DOCX 临时文件。
+- **Docker 优化**：新增 `.dockerignore`，排除非运行时文件。
+
+---
+
 ## [v6.2] - 2026-03-02 (Diagnostic Remediation & CI/CD Edition)
 
 ### 🏗️ 工程化基建 (Infrastructure)

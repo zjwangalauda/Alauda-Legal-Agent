@@ -1,6 +1,6 @@
 # 🚀 Alauda Global Legal Agent (V6.1) User Manual
 
-**Version**: 6.2 (Diagnostic Remediation & CI/CD Edition)
+**Version**: 6.2.1 (Security & Quality Hardening Edition)
 **Last Updated**: March 2, 2026
 **Target Audience**: Alauda Legal, Delivery, Commercial, and CXO Executive Teams
 
@@ -28,7 +28,7 @@
 
 This manual provides guidance for the **Alauda Global Legal Agent**, an automated contract review system powered by an end-to-end Large Language Model (LLM). Our vision is to combine the commercial acumen of a senior legal partner with the panoramic reading capabilities of AI to seal fatal loopholes in B2B contracts within seconds.
 
-Following rapid architectural iterations, the system has now evolved to the **V6.2 (Diagnostic Remediation & CI/CD Edition)**:
+Following rapid architectural iterations, the system has now evolved to the **V6.2.1 (Security & Quality Hardening Edition)**:
 - **Built-in Free AI Engine**: The system now ships with an embedded Claude Haiku inference engine. Users can access all core features immediately — **no API key required**. Power users may still switch to OpenAI/Anthropic/Google models via the sidebar.
 - **Agnostic LLM Engine**: Decoupled from a single provider, dynamically supporting Google Gemini, OpenAI, Claude, or internal private model gateways.
 - **Structured Defense (Pydantic)**: Utilizes strict JSON data contracts to force the LLM to adaptively output idiomatic legal revision suggestions based on the original language (English/Chinese) of the contract.
@@ -119,7 +119,7 @@ Once launched, navigate to `http://localhost:8501`.
 ### 5.5 Testing & Code Quality
 ```bash
 pip install pytest ruff
-# Run unit tests (12 test cases)
+# Run unit tests (38 test cases)
 python -m pytest tests/ -v
 # Code quality check
 ruff check .
